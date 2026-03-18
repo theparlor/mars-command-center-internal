@@ -139,9 +139,11 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 </div>
 
 <div class="hero">
-  <div class="stat-card"><div class="num">15</div><div class="label">Total Courses</div></div>
+  <div class="stat-card"><div class="num">16</div><div class="label">Total Courses</div></div>
   <div class="stat-card"><div class="num">4</div><div class="label">Categories</div></div>
-  <div class="stat-card"><div class="num">4</div><div class="label">Delivery Phases</div></div>
+  <div class="stat-card"><div class="num">7 LT</div><div class="label">Leadership Team</div></div>
+  <div class="stat-card"><div class="num">4 F</div><div class="label">Formal Training</div></div>
+  <div class="stat-card"><div class="num">3 T</div><div class="label">Team Sessions</div></div>
   <div class="stat-card"><div class="num">20</div><div class="label">Week Engagement</div></div>
   <div class="stat-card"><div class="num">3</div><div class="label">Triggered (On-Demand)</div></div>
 </div>
@@ -182,108 +184,116 @@ const BG_LIGHT = {
 const CATEGORIES = [
   {key:'foundations',label:'Foundations',icon:'🧭',desc:'Core agile concepts for consultants supporting client transformations. Understand why agile and product thinking matter, how to identify barriers, and develop strategies to support organizational change.'},
   {key:'customer',label:'Customer Centricity',icon:'🎯',desc:'Help teams shift from assumption-driven to evidence-based product decisions. Persona creation, hypothesis testing, story mapping, goal setting, and outcome tracking.'},
-  {key:'delivery',label:'Delivery',icon:'🚀',desc:'Essential planning and execution methods — adaptive roadmaps, customer-focused user stories, and flow optimization that deliver better business outcomes.'},
-  {key:'frameworks',label:'Frameworks & Practices',icon:'⚙️',desc:'Foundational frameworks including Scrum, Kanban, roles & responsibilities, and team dynamics for effective product development.'}
+  {key:'delivery',label:'Delivery',icon:'🚀',desc:'Essential planning and execution methods — flow optimization, estimation, user stories, backlog management, and adaptive planning.'},
+  {key:'frameworks',label:'Frameworks',icon:'⚙️',desc:'Foundational frameworks including Scrum, roles & responsibilities, psychological safety, and team dynamics for effective product development.'}
 ];
 
+const FORMAT_LEGEND = {C:'Coaching',LT:'Leadership Team',F:'Formal Training',T:'Team Session'};
 const COURSES = [
   // FOUNDATIONS
-  {id:'agile-mindset',cat:'foundations',title:'Agile Mindset',
-   week:'Wk 1',phase:'Phase 1',format:'Workshop',duration:'Half day',audience:'All teams (x2 rooms)',
+  {id:'agile-mindset',cat:'foundations',title:'Agile Mindset',seq:1,status:'complete',locked:true,
+   week:'Wk 1',phase:'Phase 1',format:'Coaching',formatCode:'C',duration:'Half day',audience:'All teams (x2 rooms)',
    desc:'While many organizations use Scrum, many organizational structures hold them back into traditional development modes. Teams learn how agile development creates better business outcomes by enabling incremental learning and delivery. They work together to identify organizational barriers that inhibit adoption of Agile principles.',
    objectives:['Identify how incremental delivery could benefit organizations','Identify organizational barriers to Agile Manifesto principles','Compare traditional and agile mindsets','Identify potential mitigation strategies to the natural human resistance to continuous improvement'],
    agenda:['Value of Agility','Agile Manifesto','Agile Mindset','Continuous Improvement'],
    materials:'ready',matNote:'Deck + Handout + Worksheets'},
 
-  {id:'estimation',cat:'delivery',title:'Estimation',
-   week:'Wk 5',phase:'Phase 2',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'estimation',cat:'delivery',title:'Estimation',seq:5,
+   week:'Wk 6',phase:'Phase 2',format:'Team Session',formatCode:'T',duration:'~2 hrs',audience:'All teams',scheduled:'Apr 3',
    desc:'Effective estimation enables teams to forecast delivery, plan sprints accurately, and communicate realistic timelines. Participants learn relative sizing techniques and how to estimate team capacity considering velocity, sprint capacity, and availability factors.',
    objectives:['Understand the purpose of estimation in agile planning','Apply story pointing techniques including relative sizing, Fibonacci sequence, and T-shirt sizing','Calculate and interpret team velocity','Estimate sprint capacity accounting for team availability','Use capacity-based planning to forecast delivery timelines'],
    agenda:['Why We Estimate','Story Pointing','Relative Sizing','Fibonacci & T-Shirt Sizing','Team Velocity','Sprint Capacity','Availability & Planning'],
    materials:'gap',matNote:'Needs development'},
 
-  {id:'product-mindset',cat:'foundations',title:'Product Mindset',
-   week:'Wk 11',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'dod-dor',cat:'delivery',title:'Definition of Done / Ready',seq:6,
+   week:'Wk 6–7',phase:'Phase 2',format:'Team Session',formatCode:'T',duration:'~2 hrs (x2 sessions)',audience:'All teams',scheduled:'Apr 6 & Apr 13',
+   desc:'Teams define and align on their own Definitions of Done and Ready. Two-part session: first session establishes the framework and initial definitions, second session refines based on first sprint experience. Teams leave with written, team-owned DoD and DoR.',
+   objectives:['Understand why Definition of Done matters for quality and predictability','Create a team-specific Definition of Done','Understand why Definition of Ready matters for sprint success','Create a team-specific Definition of Ready','Practice evaluating backlog items against DoR criteria'],
+   agenda:['What is Done?','Why Done Matters','Building Your DoD','What is Ready?','Building Your DoR','Practice & Refinement'],
+   materials:'gap',matNote:'Needs development — two-session format'},
+
+  {id:'product-mindset',cat:'foundations',title:'Product Mindset',seq:13,
+   week:'Wk 11',phase:'Phase 3',format:'Leadership Team',formatCode:'LT',duration:'~2 hrs',audience:'Leadership first, then all teams',
    desc:'Teams often spend months building wrong solutions because they jump straight from company strategy to delivery. Participants learn how a product mindset addresses those problems and explore how their organization could move closer to a product mindset. They explore how product vision and strategy keep teams focused on customer problems rather than solutions.',
    objectives:['Distinguish between project and product approaches when making decisions','Apply product principles to identify improvement opportunities in their context','Describe how vision and strategy connect and their importance in product development','Recognize the value of product discovery and its impact on product development'],
    agenda:['Projects vs Products','From Project to Product','Product Management Vacuum','Product Discovery'],
    materials:'ready',matNote:'Deck + Generated Content'},
 
-  {id:'navigating-change',cat:'foundations',title:'Navigating Change',
-   week:'Wk 13',phase:'Phase 4',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'navigating-change',cat:'foundations',title:'Navigating Change',seq:14,
+   week:'Wk 13',phase:'Phase 4',format:'Coaching + Formal',formatCode:'C, F',duration:'~2 hrs',audience:'All teams',
    desc:'Resistance to change is a normal part of the human condition. This course helps teams identify concrete steps for engagement. Participants reflect on where they can become owners of the change and help move the change initiative forward. They practice converting areas of concern into positive action and increased engagement.',
    objectives:['Recognize resistance to change as a natural response','Identify change agent archetypes and the value each brings to navigating change','Explain the levels of change engagement and benefits of increased engagement','Identify opportunities for team ownership during organizational change'],
    agenda:['Resistance to Change','Change Archetypes','Change Engagement','Change Ownership'],
    materials:'ready',matNote:'Deck + Handout'},
 
   // CUSTOMER CENTRICITY
-  {id:'challenging-assumptions',cat:'customer',title:'Challenging Assumptions (Personas & Hypothesis Testing)',
-   week:'Wk 14–19',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+  {id:'challenging-assumptions',cat:'customer',title:'Challenging Assumptions',seq:10,
+   week:'Wk 14–19',phase:'Triggered',format:'Leadership Team',formatCode:'LT',duration:'TBD',audience:'Leadership first',
    desc:'Teams unknowingly make assumptions about customers without validation, leading to products that miss the mark. Participants learn to use personas to understand their customer\'s context and motivations, then create hypotheses and tests to validate those insights.',
    objectives:['Explain what personas are and why they are useful','Create a pragmatic persona for team use in product development','Create testable hypotheses about customer assumptions','Design methods to test product hypotheses'],
    agenda:['Personas','Product Hypothesis','Hypothesis Testing'],
    materials:'gap',matNote:'SOW deliverable — needs development'},
 
-  {id:'aligning-on-value',cat:'customer',title:'Aligning on Value (Story Maps & MVP)',
-   week:'Wk 14–19',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+  {id:'aligning-on-value',cat:'customer',title:'Aligning on Value – Story Maps & MVP',seq:11,
+   week:'Wk 14–19',phase:'Triggered',format:'Coaching',formatCode:'C',duration:'TBD',audience:'Coaching session',
    desc:'Without understanding the big picture of the customer and their situation, teams end up mechanically building from sterile requirements documents. This course shows the value of taking the time to understand the goal of the customer in their day-to-day life. Participants create a Story Map to break down work into pieces that focus on customer value.',
    objectives:['Articulate the value of a visual representation over text documentation','Explain the structure of user story maps','Use a persona and user goal to provide focus for the story map','Create a user story map to visualize user experiences','Define an MVP for maximum learning with minimum effort'],
    agenda:['Why We Story Map','User Story Maps','MVP'],
    materials:'gap',matNote:'SOW deliverable — needs development'},
 
-  {id:'customer-outcomes',cat:'customer',title:'Customer Outcomes & Leading/Lagging Indicators',
-   week:'Wk 14–19',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+  {id:'customer-outcomes',cat:'customer',title:'Customer Outcomes – Leading/Lagging Indicators',seq:12,
+   week:'Wk 14–19',phase:'Triggered',format:'Leadership Team',formatCode:'LT',duration:'TBD',audience:'Leadership first',
    desc:'Teams make big commitments based on assumptions, then discover months later they built the wrong thing. This course teaches teams to set customer-focused goals, use leading indicators to track progress early, and test assumptions through small experiments before major investment.',
    objectives:['Identify opportunities for smaller increments','Create customer-focused product goals that bridge strategy and execution','Distinguish between leading and lagging indicators','Use leading indicators as early signals for progress towards goals','Understand the benefits of involving the whole team in understanding customers'],
    agenda:['Make Small Bets','Product Goals','Measuring Progress','Whole Team Discovery'],
    materials:'gap',matNote:'SOW deliverable — needs development'},
 
   // DELIVERY
-  {id:'planning-adaptability',cat:'delivery',title:'Planning for Adaptability',
-   week:'Wk 9',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'planning-adaptability',cat:'delivery',title:'Adaptability',seq:15,
+   week:'Wk 9',phase:'Phase 3',format:'Formal Training',formatCode:'F',duration:'~2 hrs',audience:'All teams',
    desc:'Traditional planning assumes we can predict the future and focuses on implementation rather than customer value. Participants learn to organize work around customer outcomes instead of technical components, prioritize capabilities based on customer value and learning potential, and create roadmaps that acknowledge uncertainty.',
    objectives:['Articulate the advantages of adaptable planning over traditional planning','Organize work by customer outcomes rather than technical components','Identify factors used to prioritize product capabilities based on their potential impact and feasibility','Create and maintain a roadmap that acknowledges uncertainty and plans for learning'],
    agenda:['Traditional vs Adaptable Planning','Organizing Work','Prioritization','Roadmaps'],
    materials:'partial',matNote:'Content exists — needs Subaru customization'},
 
-  {id:'effective-user-stories',cat:'delivery',title:'User Stories & Backlog Fundamentals',
-   week:'Wk 7',phase:'Phase 2',format:'Workshop',duration:'Half day',audience:'All teams',
+  {id:'effective-user-stories',cat:'delivery',title:'User Stories, Tasks, B.L. Fundamentals',seq:7,
+   week:'Wk 7',phase:'Phase 2',format:'Formal Training',formatCode:'F',duration:'Half day',audience:'All teams',
    desc:'User stories that contain dependencies, are too big or have unclear test criteria slow teams down. Participants will learn to identify when stories fail to meet INVEST criteria. They will practice splitting stories, writing them to focus on value, and writing testable acceptance criteria. Combined with backlog structure, prioritization techniques, and refinement cadence.',
    objectives:['Recognize warning signs that stories violate INVEST criteria','Apply INVEST to evaluate if user stories are ready for development','Break down large user stories into smaller, manageable pieces','Write story descriptions that clearly communicate intent','Write testable acceptance criteria that define story completion'],
    agenda:['INVEST','Splitting Stories','Descriptions','Acceptance Criteria','Backlog Structure','Prioritization','Refinement Cadence'],
    materials:'ready',matNote:'Deck + Handout + Slide Export'},
 
-  {id:'user-story-writing',cat:'delivery',title:'User Story Writing',
-   week:'Wk 7',phase:'Phase 2',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'user-story-writing',cat:'delivery',title:'Backlog Item Writing',seq:8,
+   week:'Wk 7',phase:'Phase 2',format:'Team Session',formatCode:'T',duration:'~2 hrs',audience:'All teams',
    desc:'Participants learn practical techniques for writing clear, valuable user stories that communicate intent and enable team collaboration. This course focuses on story description formats, acceptance criteria patterns, and techniques that help teams understand and deliver customer value.',
    objectives:['Write user story descriptions that clearly communicate customer intent','Develop testable acceptance criteria that define story completion','Apply common user story formats to organize work around customer value','Collaborate effectively using stories as communication vehicles'],
    agenda:['Story Formats','Descriptions & Intent','Acceptance Criteria','Story Refinement'],
    materials:'gap',matNote:'Needs development'},
 
-  {id:'achieving-flow',cat:'delivery',title:'Achieving Flow',
-   week:'Wk 11',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'achieving-flow',cat:'delivery',title:'Achieving Flow',seq:2,
+   week:'Wk 11',phase:'Phase 3',format:'Leadership Team',formatCode:'LT',duration:'~2 hrs',audience:'Leadership first, then all teams',
    desc:'Teams get stuck in cycles where senior members become bottlenecks while junior members wait on sidelines. Through hands-on exercises, participants experience how small batch sizes, limited WIP, focusing on overall flow, knowledge sharing, and self-organization reduce these problems.',
    objectives:['Understand why smaller batch sizes create faster time to value and reduce risk','Articulate the productivity loss due to multi-tasking','Explain the importance of prioritizing flow over individual utilization','Articulate the importance of knowledge sharing','Describe the benefits of self-organizing teams'],
    agenda:['Batch Size','Work in Progress','Shared Learning','Self-Organizing Teams'],
    materials:'ready',matNote:'Deck + Handout + Notes + Worksheets'},
 
-  {id:'story-splitting',cat:'delivery',title:'Story Splitting Deep-Dive',
-   week:'Wk 9',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+  {id:'story-splitting',cat:'delivery',title:'Backlog Item Splitting Deep Dive',seq:9,
+   week:'Wk 9',phase:'Phase 3',format:'Formal Training',formatCode:'F',duration:'~2 hrs',audience:'All teams',
    desc:'Advanced story splitting techniques, vertical slicing, small batch delivery. Building on the foundations from Effective User Stories, teams practice advanced decomposition patterns.',
    objectives:['Apply vertical slicing techniques to decompose features','Identify dependencies that prevent independent delivery','Practice splitting stories while preserving customer value','Use splitting patterns to reduce batch size and accelerate feedback'],
    agenda:['Vertical Slicing','Splitting Patterns','Dependency Identification','Practice Exercises'],
    materials:'partial',matNote:'Builds on User Stories deck'},
 
   // FRAMEWORKS
-  {id:'scrum-fundamentals',cat:'frameworks',title:'Scrum Fundamentals',
-   week:'Wk 1',phase:'Phase 1',format:'Workshop',duration:'~2 hrs',audience:'All teams (x1 room)',
+  {id:'scrum-fundamentals',cat:'frameworks',title:'Fundamentals – Scrum',seq:3,locked:true,
+   week:'Wk 1',phase:'Phase 1',format:'Formal Training',formatCode:'F',duration:'~2 hrs',audience:'All teams (x1 room)',
    desc:'Many teams struggle with Scrum because they don\'t understand the principles that make it work. Through hands-on exercises, participants build foundational competency in Scrum\'s structure: the roles, events, artifacts, and the empirical principles that guide effective product development.',
    objectives:['Appreciate the value of empiricism in fostering a learning-oriented team environment','Recognize the importance of Scrum values to a team\'s success','Understand the structure and organization of the Scrum Framework','Grasp the meaning and purpose of Scrum roles, ceremonies, and artifacts','Explore Scrum Anti-Patterns and how to address them'],
    agenda:['Foundations of Scrum','Scrum Roles','Scrum Ceremonies','Scrum Artifacts','Review'],
    materials:'ready',matNote:'Deck + Handout + Worksheets (Subaru version)'},
 
-  {id:'scrum-roles',cat:'frameworks',title:'Scrum Roles & Responsibilities',
-   week:'Wk 1',phase:'Phase 1',format:'Interactive',duration:'~90 min',audience:'All teams + leaders',
+  {id:'scrum-roles',cat:'frameworks',title:'Roles & Responsibilities',seq:4,locked:true,status:'complete',
+   week:'Wk 1',phase:'Phase 1',format:'Formal Training',formatCode:'F',duration:'~90 min',audience:'All teams + leaders',
    desc:'Teams often struggle when Product Owners become gatekeepers, Scrum Masters turn into project managers, or Developers wait for assignments. Through interactive exercises, participants explore behavioral patterns that distinguish effective Scrum roles from common dysfunctions.',
    objectives:['Distinguish between effective patterns and anti-patterns for POs, SMs, and Developers','Identify how roles can support each other in adopting effective patterns','Experience the difference between manager-led and self-managing team dynamics'],
    agenda:['Self-Managing Teams','Product Owner Patterns','Scrum Master Patterns','Developer Patterns'],
@@ -296,8 +306,8 @@ const COURSES = [
    agenda:['Foundations','Principles','Practices','Pull Systems','Review'],
    materials:'cancelled',matNote:'Cancelled — not delivered'},
 
-  {id:'psych-safety',cat:'frameworks',title:'Building Psychological Safety',
-   week:'On-Demand',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+  {id:'psych-safety',cat:'frameworks',title:'Psych Safety',seq:16,
+   week:'On-Demand',phase:'Triggered',format:'Leadership Team',formatCode:'LT',duration:'TBD',audience:'Leadership first',
    desc:'Helps teams identify their biggest effectiveness challenges and build awareness of how individual differences impact team dynamics. Teams share personal trust factors, reflect on psychological safety barriers, explore conflict styles, and practice shifting from blame to learning.',
    objectives:['Describe the elements of the trust equation and their importance','Understand psychological safety stages','Differentiate between healthy and unhealthy conflict','Recognize cognitive biases that reinforce blame culture','Apply blameless approaches to team failures'],
    agenda:['Trust','Psychological Safety','Managing Conflict','Dealing with Failure'],
@@ -320,7 +330,8 @@ const MATERIALS_MAP = {
   'challenging-assumptions':['No materials yet'],
   'aligning-on-value':['No materials yet'],
   'customer-outcomes':['No materials yet'],
-  'psych-safety':['Content framework exists']
+  'psych-safety':['Content framework exists'],
+  'dod-dor':['No materials yet — two-session format']
 };
 
 let activeFilter = 'all';
@@ -379,19 +390,28 @@ function render() {
     const grid = document.createElement('div');
     grid.className = 'course-grid';
 
+    // Sort by sequence number within category
+    courses.sort((a, b) => (a.seq || 99) - (b.seq || 99));
+
     courses.forEach(c => {
       const card = document.createElement('div');
       card.className = 'course-card';
       card.dataset.cat = c.cat;
       card.style.borderLeftColor = color;
+      if (c.status === 'complete') card.style.opacity = '0.7';
+
+      const statusBadges = [];
+      if (c.locked) statusBadges.push('<span class="badge" style="background:#FEF3C7;color:#92400E">🔒</span>');
+      if (c.status === 'complete') statusBadges.push('<span class="badge" style="background:#D1FAE5;color:#065F46">✅</span>');
+      if (c.scheduled) statusBadges.push(`<span class="badge badge-week">📅 ${c.scheduled}</span>`);
 
       card.innerHTML = `
         <div class="cc-header">
-          <div class="cc-title">${c.title}</div>
+          <div class="cc-title"><span style="color:${color};font-size:12px;margin-right:6px">#${c.seq || '—'}</span>${c.title}</div>
           <div class="cc-badges">
-            <span class="badge badge-phase${c.phase==='Cancelled'?' badge-cancelled':''}">${c.phase}</span>
-            ${c.week !== '—' ? `<span class="badge badge-week">${c.week}</span>` : ''}
-            ${c.format !== '—' ? `<span class="badge badge-format">${c.format}</span>` : ''}
+            ${c.phase !== 'Cancelled' ? `<span class="badge badge-phase">${c.phase}</span>` : '<span class="badge badge-cancelled">Cancelled</span>'}
+            ${c.formatCode ? `<span class="badge badge-format">${c.formatCode}</span>` : ''}
+            ${statusBadges.join('')}
           </div>
         </div>
         <div class="cc-body">
