@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Subaru M.A.R.S. — Command Center</title>
+<link rel="stylesheet" href="mars-ui/mars-ui.css">
 <style>
 /* ═══════════════════════════════════════════════════════════════
    MARS COMMAND CENTER — Navigation Hub
@@ -675,10 +676,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 <div style="height:3px;background:linear-gradient(90deg,var(--subaru-blue) 0%,var(--star-cluster) 50%,var(--subaru-blue) 100%);"></div>
 <div class="page-footer">
   <div>Subaru M.A.R.S. Agile Transformation · Prepared by Turnberry Solutions</div>
-  <div>Command Center v1.0 · Updated March 2026</div>
+  <div>Command Center v0.2 · Updated March 2026</div>
 </div>
 
-<!-- ════════ SMOOTH SCROLL ════════ -->
+<!-- ════════ SHELL + SMOOTH SCROLL ════════ -->
+<script src="mars-ui/mars-shell.js"></script>
 <script>
 document.querySelectorAll('.quick-nav a').forEach(a => {
   a.addEventListener('click', function(e) {
