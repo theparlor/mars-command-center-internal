@@ -6,38 +6,21 @@
 <link rel="stylesheet" href="../mars-ui/mars-ui.css">
 <title>Subaru M.A.R.S. — Engagement Schedule</title>
 <style>
-.accent-bar{height:4px;background:#00205B;width:100%}
-  :root {
-    /* Subaru Chrome (client-facing) */
-    --subaru-blue: #00205B;
-    --star-cluster: #1D4F91;
-    --lane-admin: #53565A;
-    --white: #FFFFFF;
-    /* Lane Colors (engagement-neutral) */
-    --lane-training: #1976D2; --tint-training: #E3F2FD; --text-training: #0D47A1;
-    --lane-coaching: #7B1FA2; --tint-coaching: #F3E5F5; --text-coaching: #4A148C;
-    --lane-jira: #00897B;  --tint-jira: #E0F2F1;  --text-jira: #004D40;
-    --lane-ocm: #EF6C00;   --tint-ocm: #FFF3E0;   --text-ocm: #BF360C;
-    --lane-milestones: #C62828;   --tint-milestones: #FFEBEE;   --text-milestones: #B71C1C;
-    --lane-admin: #546E7A;  --tint-admin: #ECEFF1;  --text-admin: #37474F;
-    /* Status */
-    --status-ontrack: #2E7D32; --status-atrisk: #FFB300; --status-blocked: #C62828;
-    /* Structural */
-    --text-primary: #1F2937; --text-secondary: #6B7280; --stat-bg: #F3F4F6; --border-soft: #E5E7EB;
-  }
+  .accent-bar { height: 4px; background: var(--subaru-blue); width: 100%; }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; color: var(--text-primary); background: var(--white); line-height: 1.55; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; color: var(--text-primary); background: var(--surface); line-height: 1.55; }
 
   .header { background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 100%); color: white; padding: 36px 48px 28px; }
   .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
-  .header .subtitle { font-size: 15px; color:#6B7280; margin-bottom: 16px; }
-  .header .meta { display: flex; gap: 28px; font-size: 12.5px; color:#6B7280; flex-wrap: wrap; }
+  .header .subtitle { font-size: 15px; color: rgba(255, 255, 255, 0.8); margin-bottom: 16px; }
+  .header .meta { display: flex; gap: 28px; font-size: 12.5px; color: rgba(255, 255, 255, 0.7); flex-wrap: wrap; }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
 
   .legend { display: flex; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; }
-  .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+  .legend-dot { width: 13px; height: 13px; border-radius: var(--shape-sm); flex-shrink: 0; }
 
   .phase-banner { background: var(--subaru-blue); color: white; padding: 11px 18px; border-radius: 8px 8px 0 0; font-size: 14px; font-weight: 700; letter-spacing: 0.4px; margin-top: 28px; display: flex; justify-content: space-between; align-items: center; }
   .phase-banner .phase-dates { font-weight: 400; font-size: 12.5px; opacity: 0.8; }
@@ -45,19 +28,19 @@
   .phase-banner.phase-3 { background: var(--lane-admin); }
   .phase-banner.milestone { background: var(--lane-milestones); }
 
-  .section-note { font-size: 12.5px; color: var(--text-secondary); font-style: italic; padding: 8px 14px; background: #F9FAFB; border-left: 2px solid #D1D5DB; }
+  .section-note { font-size: 12.5px; color: var(--text-secondary); font-style: italic; padding: 8px 14px; background: var(--surface-dim); border-left: 2px solid var(--border-soft); }
 
   .week-grid { border: 1px solid var(--border-soft); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
   .week-row { display: grid; grid-template-columns: 100px 1fr; border-bottom: 1px solid var(--border-soft); min-height: 60px; }
   .week-row:last-child { border-bottom: none; }
 
-  .week-label { background: var(--stat-bg); padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border-soft); }
+  .week-label { background: var(--surface-container); padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border-soft); }
   .week-label .week-num { font-size: 13px; font-weight: 700; color: var(--subaru-blue); }
   .week-label .week-date { font-size: 10.5px; color: var(--text-secondary); }
 
   .week-content { padding: 8px 14px; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
 
-  .activity { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 4px; font-size: 12px; font-weight: 500; line-height: 1.4; }
+  .activity { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: var(--shape-sm); font-size: 12px; font-weight: 500; line-height: 1.4; }
   .activity.training { background: var(--tint-training); color: var(--text-training); border-left: 3px solid var(--lane-training); }
   .activity.coaching { background: var(--tint-coaching); color: var(--text-coaching); border-left: 3px solid var(--lane-coaching); }
   .activity.jira { background: var(--tint-jira); color: var(--text-jira); border-left: 3px solid var(--lane-jira); }
@@ -70,19 +53,19 @@
   .activity-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
 
   .status { font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.4px; margin-left: 3px; }
-  .status.done { background: #D1FAE5; color: #065F46; }
-  .status.active { background: #FEF3C7; color: #92400E; }
+  .status.done { background: var(--status-ontrack-bg); color: var(--status-ontrack); }
+  .status.active { background: var(--status-atrisk-bg); color: var(--status-atrisk); }
 
   .week-row.milestone-row { background: var(--tint-milestones); }
   .week-row.milestone-row .week-label { background: var(--lane-milestones); }
   .week-row.milestone-row .week-label .week-num,
   .week-row.milestone-row .week-label .week-date { color: white; }
 
-  .week-row.current { background: #FFFBEB; border-left: 4px solid var(--status-atrisk); }
-  .week-row.current .week-label { background: #FEF3C7; }
+  .week-row.current { background: var(--status-atrisk-bg); border-left: 4px solid var(--status-atrisk); }
+  .week-row.current .week-label { background: var(--status-atrisk-bg); }
 
   .cohort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
-  .cohort-card { background: white; border: 1px solid var(--border-soft); border-radius: 6px; padding: 14px 18px; }
+  .cohort-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--shape-md); padding: 14px 18px; }
   .cohort-card h4 { font-size: 14px; color: var(--subaru-blue); margin-bottom: 6px; }
   .cohort-card .coach { font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
   .cohort-card .coach.a { color: var(--lane-coaching); }
@@ -90,13 +73,13 @@
   .cohort-card .role { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px; }
   .cohort-card .teams { font-size: 12px; color: var(--text-primary); line-height: 1.6; }
 
-  .notes { margin-top: 28px; padding: 20px; background: var(--stat-bg); border-radius: 8px; }
+  .notes { margin-top: 28px; padding: 20px; background: var(--surface-container); border-radius: var(--shape-md); }
   .notes h3 { font-size: 15px; color: var(--subaru-blue); margin-bottom: 10px; }
-  .notes li { font-size: 12.5px; color: #4B5563; margin-bottom: 5px; }
+  .notes li { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 5px; }
   .notes ul { padding-left: 18px; margin-top: 6px; }
 
-  .footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
-.footer { margin-top: 40px; padding-top: 16px; border-top:1px solid #E5E7EB; font-size: 11.5px; color: var(--text-secondary); display: flex; justify-content: space-between; }
+  .footer-bar { height: 3px; background: linear-gradient(90deg, var(--subaru-blue) 0%, var(--star-cluster) 50%, var(--subaru-blue) 100%); margin-top: 24px; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border-soft); font-size: 11.5px; color: var(--text-secondary); display: flex; justify-content: space-between; }
 
   @media print {
     .header { padding: 20px; }
@@ -149,7 +132,7 @@
     </div>
   </div>
 
-  <div style="font-size:12px; color:var(--text-secondary); margin: 8px 0 20px; padding: 8px 12px; background: #F9FAFB; border-radius: 4px;">
+  <div style="font-size:12px; color:var(--text-secondary); margin: 8px 0 20px; padding: 8px 12px; background: var(--surface-dim); border-radius: var(--shape-sm);">
     <strong>Role clarity:</strong> Dean & Brien are lead agile coaches. Louise is OCM lead with coaching coverage/support. Jason is engagement lead with focus on leadership, JIRA revamp and coaching support. Omar is the JIRA admin working closely with Jason and the managers. Office Hours staffed by Dean & Brien.
   </div>
 

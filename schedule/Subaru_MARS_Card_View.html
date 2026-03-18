@@ -4,45 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../mars-ui/mars-ui.css">
-<title>Subaru M.A.R.S. — Card View</title>
+<title>Subaru M.A.R.S. — Activity Cards</title>
 <style>
-.accent-bar{height:4px;background:#00205B;width:100%}
-:root {
-  /* Subaru Chrome (client-facing) */
-  --subaru-blue: #00205B;
-  --star-cluster: #1D4F91;
-  --lane-admin: #53565A;
-  --white: #FFFFFF;
-  /* Lane Colors (engagement-neutral) */
-  --lane-training: #1976D2; --train-lt: #E3F2FD;
-  --lane-coaching: #7B1FA2; --coach-lt: #F3E5F5;
-  --lane-jira: #00897B;  --jira-lt: #E0F2F1;
-  --lane-ocm: #EF6C00;   --ocm-lt: #FFF3E0;
-  --lane-milestones: #C62828;   --mile-lt: #FFEBEE;
-  /* Structural */
-  --text-primary: #1F2937; --text-secondary: #6B7280; --border-soft: #E5E7EB;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:#f8f9fa;color:var(--text-primary)}
-.header{background:linear-gradient(135deg,var(--subaru-blue) 0%,var(--star-cluster) 100%);color:white;padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:22px;font-weight:800;letter-spacing:-0.3px}
-.controls{background:white;padding:12px 32px;border-bottom:2px solid var(--star-cluster);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.controls select{padding:4px 10px;border:1px solid #ccc;border-radius:4px;font-size:12px}
-.controls label{font-size:12px;font-weight:700;color:var(--subaru-blue)}
-.board{padding:20px 32px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;min-height:60vh}
-.column{background:#eef2f5;border-radius:8px;padding:12px;min-height:200px}
-.col-header{font-size:14px;font-weight:800;color:white;padding:10px 14px;border-radius:6px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.col-header .count{background:rgba(255,255,255,.3);padding:1px 8px;border-radius:10px;font-size:12px}
-.card{background:white;border-radius:6px;padding:12px;margin-bottom:10px;border-left:4px solid;box-shadow:0 1px 3px rgba(0,0,0,.08);cursor:pointer;transition:all .15s}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.15)}
-.card-title{font-weight:700;font-size:13px;margin-bottom:4px}
-.card-meta{font-size:11px;color:#4A4A4A;margin-bottom:4px}
-.card-week{font-size:10px;background:#f0f0f0;display:inline-block;padding:1px 6px;border-radius:8px;margin-top:4px}
-.card-owner{font-size:10px;color:var(--star-cluster);font-weight:600}
-.phase-badge{font-size:10px;padding:2px 8px;border-radius:10px;color:white;display:inline-block;margin-bottom:8px}
-.footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
-.footer{background:#F9FAFB;border-top:1px solid #E5E7EB;color:#6B7280;padding:12px 32px;font-size:11px;display:flex;justify-content:space-between;margin-top:24px}
-@media(max-width:900px){.board{grid-template-columns:1fr}}
+  .accent-bar { height: 4px; background: var(--subaru-blue); width: 100%; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--surface-dim); color: var(--text-primary); }
+
+  .header { background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 100%); color: white; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
+
+  .controls { background: var(--surface); padding: 12px 32px; border-bottom: 2px solid var(--star-cluster); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .controls select { padding: 4px 10px; border: 1px solid var(--border-soft); border-radius: var(--shape-sm); font-size: 12px; }
+  .controls label { font-size: 12px; font-weight: 700; color: var(--subaru-blue); }
+
+  .board { padding: 20px 32px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; min-height: 60vh; }
+  .column { background: var(--surface-container); border-radius: var(--shape-md); padding: 12px; min-height: 200px; }
+
+  .col-header { font-size: 14px; font-weight: 800; color: white; padding: 10px 14px; border-radius: var(--shape-sm); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .col-header .count { background: rgba(255, 255, 255, 0.3); padding: 1px 8px; border-radius: 10px; font-size: 12px; }
+
+  .card { background: var(--surface); border-radius: var(--shape-sm); padding: 12px; margin-bottom: 10px; border-left: 4px solid; box-shadow: var(--elevation-1); cursor: pointer; transition: all 0.15s; }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--elevation-2); }
+
+  .card-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .card-meta { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+  .card-week { font-size: 10px; background: var(--surface-dim); display: inline-block; padding: 1px 6px; border-radius: 8px; margin-top: 4px; }
+  .card-owner { font-size: 10px; color: var(--star-cluster); font-weight: 600; }
+
+  .phase-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; color: white; display: inline-block; margin-bottom: 8px; }
+
+  .footer-bar { height: 3px; background: linear-gradient(90deg, var(--subaru-blue) 0%, var(--star-cluster) 50%, var(--subaru-blue) 100%); margin-top: 24px; }
+  .footer { background: var(--surface-container); border-top: 1px solid var(--border-soft); color: var(--text-secondary); padding: 12px 32px; font-size: 11px; display: flex; justify-content: space-between; margin-top: 24px; }
+
+  @media (max-width: 900px) {
+    .board { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -50,7 +47,7 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 
 <div class="header">
   <div>
-    <h1>Subaru M.A.R.S. — Card View</h1>
+    <h1>Subaru M.A.R.S. — Activity Cards</h1>
     <div style="font-size:12px;opacity:.8">Engagement Activities by Workstream · 5 Lanes · 20 Weeks</div>
   </div>
   <div style="text-align:right;font-size:11px;opacity:.7">
