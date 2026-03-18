@@ -4,9 +4,9 @@
 > Updated by Claude at the end of each work session.
 > Read this first when resuming after an interruption.
 
-**Last Updated:** 2026-03-18 (session 1, late evening)
-**Current Version:** v0.3.1 (deployed, CDN cache busted)
-**Next Version:** v0.4 (deeper pages, content refresh, Turnberry Team section)
+**Last Updated:** 2026-03-18 (session 1, end of day)
+**Current Version:** v0.4 (deployed — Design Review Board nav redesign)
+**Next Version:** v0.5 (deeper pages, persona boards, content refresh)
 
 ---
 
@@ -26,9 +26,12 @@
 
 | Task | Priority | Dependencies |
 |------|----------|--------------|
-| **Clean up residual text** on Gantt page ("DRIVE" / subtitle leaking outside .header class) | P1 | — |
-| **Fix deploy.sh step 6b** — sed quoting issue causes script exit; needs bash escaping fix | P1 | — |
-| **Rename "Interactive Gantt"** to "Gantt Chart" in Command Center card title | P2 | — |
+| **Build Engineering & Architecture Review Board** using Hero Persona Generator | P1 | Generator pattern |
+| **Build Product Advisory Panel** using Hero Persona Generator | P1 | Generator pattern |
+| **Build Quality Red Team** using Hero Persona Generator | P2 | Generator pattern |
+| **Build Executive Stakeholder Simulator** | P2 | Generator pattern |
+| **Fix deploy.sh step 6b** — sed quoting issue in bash causes script exit | P1 | — |
+| **Clean up residual text** on Gantt page (subtitle leaking outside .header class) | P2 | — |
 | **Set up local git tracking** for Workspaces deliverables | P3 | — |
 
 ---
@@ -64,6 +67,11 @@
 | **Fixed hero header suppression** — CSS rule hides .header, .top-bar, .header-bar, .accent-bar inside shell | 2026-03-18 |
 | **Fixed CDN cache** — force-busted GitHub Pages cache for CSS rule deployment | 2026-03-18 |
 | **Visual QA passed** — Card View, Gantt Chart, Interview Guide all rendering clean | 2026-03-18 |
+| **Created Design Review Board** — 5 expert personas (Vera, Marcus, Suki, Declan, Elena) | 2026-03-18 |
+| **Ran first board critique** — navigation diagnosed as Severity 3, 4→2 mechanism reduction | 2026-03-18 |
+| **Implemented v0.4 nav redesign** — removed sibling tabs, removed quick-nav pills, consolidated 10→6 sections, subtler breadcrumb | 2026-03-18 |
+| **Created Hero Persona Generator** — reusable pattern for building expert persona teams | 2026-03-18 |
+| **Deployed v0.4** to both repos | 2026-03-18 |
 
 ---
 

@@ -205,21 +205,22 @@ body {
 .mars-nav.open { transform: translateX(0); }
 
 /* Pinned sidebar (v0.4 — persistent on ≥1280px, below topbar) */
-.mars-nav.pinned {
-  transform: translateX(0);
-  top: var(--topbar-height);
+nav.mars-nav.pinned {
+  transform: translateX(0) !important;
+  top: var(--topbar-height) !important;
+  bottom: 0;
   box-shadow: var(--elevation-1);
   z-index: 900;
 }
-.mars-nav.pinned .mars-nav-header {
-  margin-top: 0; /* No need for topbar offset when pinned — already starts below */
+nav.mars-nav.pinned .mars-nav-header {
+  margin-top: 0 !important;
 }
 
 .mars-nav-header {
   padding: 12px 16px 10px;
+  padding-top: calc(var(--topbar-height) + 12px); /* Push below fixed topbar in modal mode */
   border-bottom: 1px solid var(--outline-variant);
   flex-shrink: 0;
-  margin-top: var(--topbar-height); /* Push below the fixed topbar */
 }
 .mars-nav-header h2 {
   font-size: 13px; font-weight: 700; color: var(--subaru-blue);
