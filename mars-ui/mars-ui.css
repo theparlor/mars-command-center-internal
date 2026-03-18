@@ -294,12 +294,15 @@ body {
 /* When the shell is active, per-page headers are redundant.
    The shell topbar + breadcrumb + sibling nav replaces them.
    The Command Center's .hero is preserved (it's the hub hero, not a nav header). */
+/* Hide per-page navigation chrome that conflicts with the shell */
 .mars-content .header,
 .mars-content > header,
-.mars-content .header-bar {
+.mars-content .header-bar,
+.mars-content > .accent-bar,
+.mars-content .top-bar {
   display: none !important;
 }
-/* Preserve the Command Center's hero banner */
+/* Preserve the Command Center's hero banner (it's content, not nav chrome) */
 .mars-content .hero {
   display: block !important;
 }
