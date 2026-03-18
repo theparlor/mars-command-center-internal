@@ -4,80 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../mars-ui/mars-ui.css">
-<title>Subaru M.A.R.S. — Calendar & Look-Ahead</title>
+<title>Subaru M.A.R.S. — Calendar View</title>
 <style>
-  :root {
-    /* === BRAND: Subaru (Client Accent) === */
-    --subaru-blue: #00205B;
-    --star-cluster: #1D4F91;
-    --bright-blue: #00AEEF;
-    /* === SERVICE LANES === */
-    --lane-training: #1976D2;
-    --lane-coaching: #7B1FA2;
-    --lane-jira: #00897B;
-    --lane-ocm: #EF6C00;
-    --lane-admin: #546E7A;
-    --lane-milestones: #C62828;
-    --lane-customer: #1565C0;
-    --lane-delivery: #E65100;
-    /* === LANE TINTS === */
-    --tint-training: #E8F1FB;
-    --tint-coaching: #F3E5F9;
-    --tint-jira: #E0F2F1;
-    --tint-ocm: #FFF3E0;
-    --tint-admin: #ECEFF1;
-    --tint-milestones: #FFEBEE;
-    /* === LANE TEXT === */
-    --text-training: #0D47A1;
-    --text-coaching: #4A148C;
-    --text-jira: #004D40;
-    --text-ocm: #BF360C;
-    --text-admin: #37474F;
-    --text-milestones: #B71C1C;
-    /* === STATUS === */
-    --status-ontrack: #2E7D32;
-    --status-atrisk: #FFB300;
-    --status-blocked: #C62828;
-    --status-ontrack-bg: #E8F5E9;
-    --status-atrisk-bg: #FFF8E1;
-    --status-blocked-bg: #FFEBEE;
-    /* === SURFACE & CHROME === */
-    --white: #FFFFFF;
-    --stat-bg: #F9FAFB;
-    --border-soft: #E5E7EB;
-    --text-primary: #1F2937;
-    --text-secondary: #6B7280;
-    --text-muted: #9CA3AF;
-    /* === INTERNAL ACCENT === */
-    --amber: #E67E22;
-    --amber-light: #FEF3C7;
-    /* === CALLOUT === */
-    --yellow-callout: #FFFDE7;
-    --yellow-border: #FBC02D;
-    /* === TURNBERRY PARTNER === */
-    --tb-navy: #032D3E;
-    --tb-accent: #349ED8;
-    --tb-teal: #06597A;
-  }
-.accent-bar{height:4px;background:#00205B;width:100%}
+.accent-bar{height:4px;background:var(--subaru-blue);width:100%}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:#f8f9fa;color:#1A1A1A}
-.header{background:linear-gradient(135deg,#00205B 0%,#1D4F91 100%);border-bottom:1px solid #E5E7EB;color:#ffffff;padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
+body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:var(--surface);color:#1A1A1A}
+.header{background:linear-gradient(135deg,var(--subaru-blue) 0%,var(--star-cluster) 100%);border-bottom:1px solid var(--border-soft);color:#ffffff;padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
 .header h1{font-size:24px;font-weight:800;letter-spacing:-0.3px}
 .header .meta{font-size:12px;color:rgba(255,255,255,0.7)}
-.hero{background:#F9FAFB;border-bottom:1px solid #E5E7EB;color:#1A1A1A;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.hero{background:var(--surface-dim);border-bottom:1px solid var(--border-soft);color:#1A1A1A;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
 .hero-card{background:rgba(255,255,255,.1);border-radius:8px;padding:16px}
 .hero-card h3{font-size:14px;font-weight:700;margin-bottom:8px;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:0.5px}
 .hero-card .big{font-size:36px;font-weight:700}
 .hero-card .sub{font-size:12px;opacity:.7}
-.controls{background:white;padding:12px 32px;border-bottom:1px solid #E5E7EB;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.controls{background:white;padding:12px 32px;border-bottom:1px solid var(--border-soft);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .filter-btn{padding:6px 14px;border:1px solid #ccc;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s;background:white}
 .filter-btn:hover{background:#e8f0fd}
-.filter-btn.active{background:#00205B;color:white;border-color:#00205B}
+.filter-btn.active{background:var(--subaru-blue);color:white;border-color:var(--subaru-blue)}
 .calendar{padding:16px 32px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
 .week-card{background:white;border-radius:8px;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:all .2s}
 .week-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.12)}
-.week-card.current{border-color:#1D4F91;border-width:2px}
+.week-card.current{border-color:var(--star-cluster);border-width:2px}
 .week-card.past{opacity:.6}
 .wc-header{padding:12px 16px;font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
 .wc-header .dates{font-size:11px;font-weight:400;color:rgba(255,255,255,.8)}
@@ -88,8 +35,8 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 .act-label{font-size:12px;font-weight:700;line-height:1.3}
 .act-meta{font-size:11px;color:#4A4A4A}
 .act-lane{font-size:10px;padding:1px 6px;border-radius:10px;color:white;display:inline-block;margin-top:2px}
-.footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
-.footer{background:#F9FAFB;border-top:1px solid #E5E7EB;color:#6B7280;padding:12px 32px;font-size:11px;display:flex;justify-content:space-between;margin-top:24px}
+.footer-bar{height:3px;background:linear-gradient(90deg,var(--subaru-blue) 0%,var(--star-cluster) 50%,var(--subaru-blue) 100%);margin-top:24px}
+.footer{background:var(--surface-dim);border-top:1px solid var(--border-soft);color:var(--text-secondary);padding:12px 32px;font-size:11px;display:flex;justify-content:space-between;margin-top:24px}
 </style>
 </head>
 <body>
@@ -97,7 +44,7 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 
 <div class="header">
   <div>
-    <h1>Subaru M.A.R.S. — Engagement Calendar</h1>
+    <h1>Subaru M.A.R.S. — Calendar View</h1>
     <div class="meta">Weekly Look-Ahead · 20-Week Engagement · Feb 23 – Jul 17, 2026</div>
   </div>
   <div style="text-align:right">
@@ -109,7 +56,7 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 <div class="hero" id="hero"></div>
 
 <div class="controls">
-  <span style="font-size:12px;font-weight:700;color:#00205B">Filter:</span>
+  <span style="font-size:12px;font-weight:700;color:var(--subaru-blue)">Filter:</span>
   <div class="filter-btn active" data-filter="all" onclick="setFilter(this)">All</div>
   <div class="filter-btn" data-filter="training" onclick="setFilter(this)">Training</div>
   <div class="filter-btn" data-filter="coaching" onclick="setFilter(this)">Coaching</div>
@@ -129,9 +76,9 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 <script>
 const START = new Date(2026, 1, 23);
 /* Lane colors aligned to Visual Communication System */
-const COLORS = {training:'#1976D2',coaching:'#7B1FA2',jira:'#00897B',ocm:'#EF6C00',planning:'#C62828'};
+const COLORS = {training:'var(--lane-training)',coaching:'var(--lane-coaching)',jira:'var(--lane-jira)',ocm:'var(--lane-ocm)',planning:'var(--lane-milestones)'};
 /* Phase header colors use Subaru chrome */
-const PHASE_COLORS = ['#1D4F91','#00205B','#1D4F91','#1D4F91','#1D4F91','#1D4F91','#C62828','#53565A','#53565A','#53565A','#53565A','#53565A','#53565A','#C62828','#53565A','#53565A','#53565A','#53565A','#53565A','#53565A','#C62828'];
+const PHASE_COLORS = ['var(--star-cluster)','var(--subaru-blue)','var(--star-cluster)','var(--star-cluster)','var(--star-cluster)','var(--star-cluster)','var(--lane-milestones)','#53565A','#53565A','#53565A','#53565A','#53565A','#53565A','var(--lane-milestones)','#53565A','#53565A','#53565A','#53565A','#53565A','#53565A','var(--lane-milestones)'];
 const PHASES = ['Prep','Kickoff & Discovery','Coaching Begins','Coaching Deepens','Foundational Training','Pre-Plan Prep','Pre-Planning','Applied Training','Applied Training','Applied Training','Applied Training','Applied Training','PI Readiness','PI Planning #1','Self-Sufficiency','Self-Sufficiency','Self-Sufficiency','Maturity','Maturity','Sustain','PI Planning #2 / Close'];
 
 const WEEK_ACTIVITIES = {
@@ -189,7 +136,7 @@ function renderHero() {
       <div class="big">${pct}%</div>
       <div class="sub">${weeksLeft} weeks remaining</div>
       <div style="background:rgba(255,255,255,.2);height:6px;border-radius:3px;margin-top:8px">
-        <div style="background:#1D4F91;height:6px;border-radius:3px;width:${pct}%"></div>
+        <div style="background:var(--star-cluster);height:6px;border-radius:3px;width:${pct}%"></div>
       </div>
     </div>
     <div class="hero-card">

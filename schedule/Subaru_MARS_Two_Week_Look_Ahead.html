@@ -4,37 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../mars-ui/mars-ui.css">
-<title>Subaru M.A.R.S. — Leadership Update</title>
+<title>Subaru M.A.R.S. — Two-Week Look Ahead</title>
 <style>
-.accent-bar{height:4px;background:#00205B;width:100%}
-  :root {
-    /* Subaru Chrome (client-facing) */
-    --subaru-blue: #00205B;
-    --star-cluster: #1D4F91;
-    --lane-admin: #53565A;
-    --white: #FFFFFF;
-    /* Lane Colors (engagement-neutral) */
-    --lane-training: #1976D2;   --train-lt: #E3F2FD;  --train-dk: #0D47A1;
-    --lane-coaching: #7B1FA2;   --coach-lt: #F3E5F5;  --coach-dk: #4A148C;
-    --lane-jira: #00897B;    --jira-lt: #E0F2F1;   --jira-dk: #004D40;
-    --lane-ocm: #EF6C00;     --ocm-lt: #FFF3E0;    --ocm-dk: #BF360C;
-    --lane-milestones: #C62828;    --mile-lt: #FFEBEE;   --mile-dk: #B71C1C;
-    --lane-admin: #546E7A;   --admin-lt: #ECEFF1;  --admin-dk: #37474F;
-    /* Status */
-    --status-ontrack: #2E7D32; --status-atrisk: #FFB300; --status-blocked: #C62828;
-    /* Structural */
-    --text-primary: #1F2937;
-    --text-secondary: #6B7280;
-    --light-bg: #F8FAFC;
-    --card-bg: #FFFFFF;
-    --border-soft: #E5E7EB;
-  }
+.accent-bar{height:4px;background:var(--subaru-blue);width:100%}
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    background: var(--light-bg);
+    background: var(--surface);
     color: var(--text-primary);
     line-height: 1.6;
   }
@@ -68,7 +46,7 @@
   .header .subtitle {
     font-size: 0.85rem;
     font-weight: 400;
-    color:#6B7280;
+    color:var(--text-secondary);
   }
 
   .header .meta-row {
@@ -77,7 +55,7 @@
     margin-top: 1rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color:#6B7280;
+    color:var(--text-secondary);
   }
 
   .container {
@@ -87,7 +65,7 @@
   }
 
   .strategic-context {
-    background: var(--card-bg);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
     border-left: 4px solid var(--star-cluster);
     border-radius: 8px;
@@ -154,7 +132,7 @@
   }
 
   .activity-card {
-    background: var(--card-bg);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
@@ -181,7 +159,7 @@
   .activity-card.type-ocm::before { background: var(--lane-ocm); }
   .activity-card.type-training::before { background: var(--lane-training); }
   .activity-card.type-milestone::before { background: var(--lane-milestones); }
-  .activity-card.type-admin::before { background: var(--lane-admin); }
+  .activity-card.type-admin::before { background: #53565A; }
 
   .activity-card .card-header {
     display: flex;
@@ -206,12 +184,12 @@
     white-space: nowrap;
   }
 
-  .tag-coaching { background: var(--coach-lt); color: var(--lane-coaching); }
-  .tag-jira { background: var(--jira-lt); color: var(--lane-jira); }
-  .tag-ocm { background: var(--ocm-lt); color: var(--lane-ocm); }
-  .tag-training { background: var(--train-lt); color: var(--lane-training); }
-  .tag-milestone { background: var(--mile-lt); color: var(--lane-milestones); }
-  .tag-admin { background: var(--admin-lt); color: var(--lane-admin); }
+  .tag-coaching { background: var(--tint-coaching); color: var(--lane-coaching); }
+  .tag-jira { background: var(--tint-jira); color: var(--lane-jira); }
+  .tag-ocm { background: var(--tint-ocm); color: var(--lane-ocm); }
+  .tag-training { background: var(--tint-training); color: var(--lane-training); }
+  .tag-milestone { background: var(--tint-milestones); color: var(--lane-milestones); }
+  .tag-admin { background: #ECEFF1; color: #546E7A; }
 
   .card-detail {
     font-size: 0.78rem;
@@ -221,13 +199,13 @@
 
   .card-owner {
     font-size: 0.7rem;
-    color: var(--lane-admin);
+    color: #546E7A;
     margin-top: 0.5rem;
     font-weight: 500;
   }
 
   .focus-areas {
-    background: var(--card-bg);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.5rem 2rem;
@@ -250,7 +228,7 @@
   }
 
   .focus-item {
-    background: var(--light-bg);
+    background: var(--surface-dim);
     border-radius: 6px;
     padding: 0.75rem 1rem;
     font-size: 0.78rem;
@@ -268,8 +246,8 @@
   }
 
   .risk-section {
-    background: var(--ocm-lt);
-    border: 1px solid #FFCC80;
+    background: var(--status-atrisk-bg);
+    border: 1px solid var(--status-atrisk);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-top: 1.5rem;
@@ -312,7 +290,7 @@
   .risk-medium { background: var(--status-atrisk); }
 
   .deliverables-section {
-    background: var(--card-bg);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
@@ -373,7 +351,7 @@
   }
 
   .comms-section {
-    background: var(--card-bg);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
@@ -398,18 +376,18 @@
     line-height: 1.6;
   }
 
-  .footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
+  .footer-bar{height:3px;background:linear-gradient(90deg,var(--subaru-blue) 0%,var(--star-cluster) 50%,var(--subaru-blue) 100%);margin-top:24px}
 .footer {
     text-align: center;
     padding: 1.5rem;
     font-size: 0.7rem;
-    color: #6B7280;
-    border-top:1px solid #E5E7EB;
+    color: var(--text-secondary);
+    border-top:1px solid var(--border-soft);
     margin-top: 2rem;
   }
 
   .value-callout {
-    background: linear-gradient(135deg, var(--coach-lt) 0%, var(--train-lt) 100%);
+    background: linear-gradient(135deg, var(--tint-coaching) 0%, var(--tint-training) 100%);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-top: 1rem;
@@ -433,7 +411,7 @@
 
   .value-item {
     font-size: 0.78rem;
-    color: var(--coach-dk);
+    color: #4A148C;
     padding-left: 1rem;
     position: relative;
   }
@@ -447,8 +425,8 @@
   }
 
   .needs-section {
-    background: var(--ocm-lt);
-    border: 1px solid #FFCC80;
+    background: var(--status-atrisk-bg);
+    border: 1px solid var(--status-atrisk);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-top: 1rem;
