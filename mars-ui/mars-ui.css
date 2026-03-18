@@ -290,6 +290,20 @@ body {
 .mars-nav-group.expanded .mars-nav-group-children { max-height: 600px; }
 .mars-nav-group-children .mars-nav-item { padding-left: 52px; font-size: 12.5px; }
 
+/* ─── LEGACY HEADER SUPPRESSION (v0.3.1) ─── */
+/* When the shell is active, per-page headers are redundant.
+   The shell topbar + breadcrumb + sibling nav replaces them.
+   The Command Center's .hero is preserved (it's the hub hero, not a nav header). */
+.mars-content .header,
+.mars-content > header,
+.mars-content .header-bar {
+  display: none !important;
+}
+/* Preserve the Command Center's hero banner */
+.mars-content .hero {
+  display: block !important;
+}
+
 /* ─── CONTENT WRAPPER (v0.3 — handles sidebar offset) ─── */
 .mars-content-wrapper {
   margin-top: var(--topbar-height);
@@ -312,6 +326,7 @@ body {
   border-bottom: 1px solid var(--border-soft);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  position: sticky; top: calc(var(--topbar-height) + 4px); z-index: 90;
 }
 .mars-sibling-tab {
   padding: 10px 16px; font-size: 13px; font-weight: 500;
