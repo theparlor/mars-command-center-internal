@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════
    MARS UI Kit — Material Design 3 patterns, Subaru engagement tokens
-   Version: 0.2.0
+   Version: 0.3.0
 
    Material Design 3 reference values adapted to our engagement design
    system. This file provides the shared component vocabulary for all
@@ -156,14 +156,28 @@ body {
 .mars-hamburger:hover { background: rgba(255,255,255,0.12); }
 .mars-hamburger:active { background: rgba(255,255,255,0.2); }
 
-.mars-topbar-title {
-  font-size: 18px; font-weight: 600; letter-spacing: -0.2px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+/* Topbar breadcrumb (v0.3 — replaces title + subtitle) */
+.mars-topbar-breadcrumb {
+  display: flex; align-items: center; gap: 0;
+  font-size: 14px; white-space: nowrap; overflow: hidden;
 }
-.mars-topbar-subtitle {
-  font-size: 11px; color: rgba(255,255,255,0.7);
-  margin-left: 12px; white-space: nowrap;
+.mars-bc-link {
+  color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500;
+  transition: color var(--duration-short) var(--motion-standard);
 }
+.mars-bc-link:hover { color: #fff; }
+.mars-bc-sep { color: rgba(255,255,255,0.35); font-size: 14px; margin: 0 6px; }
+.mars-bc-current { color: #fff; font-weight: 700; }
+
+/* Home button in topbar */
+.mars-home-btn {
+  color: rgba(255,255,255,0.8); text-decoration: none; font-size: 12px;
+  font-weight: 600; padding: 6px 12px; border-radius: var(--shape-full);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all var(--duration-short) var(--motion-standard);
+}
+.mars-home-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
 .mars-topbar-actions {
   margin-left: auto; display: flex; align-items: center; gap: 8px;
 }
@@ -188,6 +202,13 @@ body {
   display: flex; flex-direction: column;
 }
 .mars-nav.open { transform: translateX(0); }
+
+/* Pinned sidebar (v0.3 — persistent on ≥1280px) */
+.mars-nav.pinned {
+  transform: translateX(0);
+  box-shadow: var(--elevation-1);
+  z-index: 900; /* Below topbar when pinned */
+}
 
 .mars-nav-header {
   padding: 20px 16px 16px;
@@ -269,17 +290,54 @@ body {
 .mars-nav-group.expanded .mars-nav-group-children { max-height: 600px; }
 .mars-nav-group-children .mars-nav-item { padding-left: 52px; font-size: 12.5px; }
 
-/* ─── CONTENT AREA ─── */
-.mars-content {
+/* ─── CONTENT WRAPPER (v0.3 — handles sidebar offset) ─── */
+.mars-content-wrapper {
   margin-top: var(--topbar-height);
   min-height: calc(100vh - var(--topbar-height));
+  transition: margin-left var(--duration-medium) var(--motion-standard);
+}
+.mars-content-wrapper.mars-sidebar-pinned {
+  margin-left: var(--nav-width);
+}
+
+/* ─── CONTENT AREA ─── */
+.mars-content {
   padding: 0;
 }
 
-/* ─── MAIN PAGE CONTAINER ─── */
+/* ─── SIBLING TAB NAVIGATION (v0.3 — new) ─── */
+.mars-sibling-nav {
+  display: flex; gap: 2px; padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-soft);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mars-sibling-tab {
+  padding: 10px 16px; font-size: 13px; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all var(--duration-short) var(--motion-standard);
+}
+.mars-sibling-tab:hover {
+  color: var(--text-primary);
+  background: var(--surface-container);
+}
+.mars-sibling-tab.active {
+  color: var(--subaru-blue);
+  font-weight: 700;
+  border-bottom-color: var(--subaru-blue);
+}
+
+/* ─── PAGE CONTAINERS (v0.3 — left-aligned for contained, full for data) ─── */
 .mars-page {
   max-width: var(--content-max-width);
-  margin: 0 auto;
+  padding: 24px;
+  /* Left-aligned, not centered — stable anchor when sidebar opens */
+}
+.mars-page-full {
+  /* No max-width — content fills available width */
   padding: 24px;
 }
 
@@ -453,7 +511,8 @@ body {
    ═══════════════════════════════════════════════════════════════════════ */
 @media print {
   .mars-topbar, .mars-nav, .mars-nav-scrim, .mars-hamburger,
-  .mars-accent-bar { display: none !important; }
+  .mars-accent-bar, .mars-sibling-nav { display: none !important; }
+  .mars-content-wrapper { margin-top: 0 !important; margin-left: 0 !important; }
   .mars-content { margin-top: 0 !important; }
   .mars-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc; }
   .mars-hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

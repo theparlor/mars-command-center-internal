@@ -11,37 +11,9 @@
    Design: Consultant-Authored, Client-Branded
    Subaru Blue chrome, white canvas, category-colored sections
    ═══════════════════════════════════════════════════════════════ */
-:root {
-  /* Subaru Brand */
-  --subaru-blue: #00205B;
-  --star-cluster: #1D4F91;
-  --bright-blue: #00AEEF;
-  --subaru-gray: #53565A;
-  /* Structural */
-  --text-primary: #1F2937;
-  --text-secondary: #6B7280;
-  --stat-bg: #F9FAFB;
-  --white: #FFFFFF;
-  --border-soft: #E5E7EB;
-  --stat-bg: #F3F4F6;
-  /* Lane Colors (from Gantt) */
-  --lane-training: #1976D2; --tint-training: #E3F2FD; --text-training: #0D47A1;
-  --lane-coaching: #7B1FA2; --tint-coaching: #F3E5F5; --text-coaching: #4A148C;
-  --lane-jira: #00897B;  --tint-jira: #E0F2F1;  --text-jira: #004D40;
-  --lane-ocm: #EF6C00;   --tint-ocm: #FFF3E0;   --text-ocm: #BF360C;
-  --lane-milestones: #C62828;   --tint-milestones: #FFEBEE;   --text-milestones: #B71C1C;
-  --lane-admin: #546E7A;  --tint-admin: #ECEFF1;  --text-admin: #37474F;
-  /* Section accent colors */
-  --schedule-accent: #1976D2;
-  --org-accent: #7B1FA2;
-  --curriculum-accent: #00897B;
-  --status-accent: #EF6C00;
-  --frameworks-accent: #C62828;
-  --brand-accent: #546E7A;
-  --tools-accent: #1D4F91;
-}
+/* All design tokens inherited from mars-ui/mars-ui.css — no :root overrides */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--stat-bg); color: var(--text-primary); line-height: 1.55; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--surface-dim); color: var(--text-primary); line-height: 1.55; }
 
 /* ── ACCENT BAR ── */
 .accent-bar { height: 4px; background: var(--subaru-blue); }
@@ -73,7 +45,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
 /* ── QUICK NAV ── */
 .quick-nav {
-  background: var(--white); border-bottom: 1px solid var(--border-soft);
+  background: var(--surface); border-bottom: 1px solid var(--border-soft);
   padding: 12px 48px; display: flex; gap: 6px; align-items: center;
   flex-wrap: wrap; position: sticky; top: 0; z-index: 100;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -81,7 +53,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 .quick-nav-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; margin-right: 8px; }
 .quick-nav a {
   padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
-  text-decoration: none; color: var(--text-primary); background: var(--stat-bg);
+  text-decoration: none; color: var(--text-primary); background: var(--surface-dim);
   border: 1px solid var(--border-soft); transition: all 0.15s; white-space: nowrap;
 }
 .quick-nav a:hover { background: var(--subaru-blue); color: white; border-color: var(--subaru-blue); }
@@ -108,7 +80,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
 /* ── ARTIFACT CARD ── */
 .card {
-  background: var(--white); border: 1px solid var(--border-soft); border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px;
   overflow: hidden; transition: all 0.2s; cursor: pointer; text-decoration: none;
   color: inherit; display: flex; flex-direction: column;
 }
@@ -118,28 +90,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 .card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary); }
 .card-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
 .card-peek {
-  background: var(--stat-bg); border-radius: 8px; padding: 12px 14px;
+  background: var(--surface-dim); border-radius: 8px; padding: 12px 14px;
   font-size: 11.5px; color: var(--text-secondary); line-height: 1.6;
 }
 .card-peek .peek-label { font-size: 10px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
 .card-peek .peek-item { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
 .card-peek .peek-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .card-footer {
-  padding: 10px 20px; background: var(--stat-bg); border-top: 1px solid var(--border-soft);
+  padding: 10px 20px; background: var(--surface-dim); border-top: 1px solid var(--border-soft);
   display: flex; justify-content: space-between; align-items: center; font-size: 11px;
 }
-.card-format { font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--white); color: var(--text-secondary); border: 1px solid var(--border-soft); }
+.card-format { font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--surface); color: var(--text-secondary); border: 1px solid var(--border-soft); }
 .card-action { color: var(--star-cluster); font-weight: 700; }
 
 /* ── FEATURED CARD (wide, with inline preview) ── */
 .card-featured {
   grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr;
-  background: var(--white); border: 1px solid var(--border-soft); border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px;
   overflow: hidden; transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit;
 }
 .card-featured:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
 .card-featured .card-left { padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
-.card-featured .card-right { background: var(--stat-bg); padding: 20px; border-left: 1px solid var(--border-soft); font-size: 12px; }
+.card-featured .card-right { background: var(--surface-dim); padding: 20px; border-left: 1px solid var(--border-soft); font-size: 12px; }
 
 /* ── MINI GANTT PREVIEW ── */
 .mini-gantt { display: flex; flex-direction: column; gap: 6px; }
@@ -235,7 +207,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     <!-- FEATURED: Reconciled Schedule -->
     <a class="card-featured" href="schedule/Subaru_MARS_Reconciled_Schedule.html">
       <div class="card-left">
-        <div style="height:4px;background:var(--schedule-accent);border-radius:2px;margin-bottom:16px;width:60px"></div>
+        <div style="height:4px;background:var(--lane-training);border-radius:2px;margin-bottom:16px;width:60px"></div>
         <div class="card-title" style="font-size:18px;">Engagement Schedule</div>
         <div class="card-desc">The primary reconciled schedule — 20 weeks, 3 phases, all lanes. Click any activity lane to drill into its detail view.</div>
         <div style="margin-top:12px;"><span class="card-format">HTML</span> <span class="card-action" style="margin-left:8px;">Open Schedule →</span></div>
@@ -271,7 +243,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
     <!-- Gantt Views -->
     <a class="card" href="schedule/Subaru_MARS_Gantt_Views.html">
-      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-training);"></div>
       <div class="card-body">
         <div class="card-title">Interactive Gantt Chart</div>
         <div class="card-desc">Tabbed Gantt with overview, phase detail, and lane views. Full bar-chart timeline with swim lanes.</div>
@@ -289,7 +261,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
     <!-- Calendar View -->
     <a class="card" href="schedule/Subaru_MARS_Calendar_View.html">
-      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-training);"></div>
       <div class="card-body">
         <div class="card-title">Calendar View</div>
         <div class="card-desc">Monthly calendar layout showing all activities by day. Great for "what's happening this week" planning.</div>
@@ -302,7 +274,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
     <!-- Two Week Look Ahead -->
     <a class="card" href="schedule/Subaru_MARS_Two_Week_Look_Ahead.html">
-      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-training);"></div>
       <div class="card-body">
         <div class="card-title">Two-Week Look Ahead</div>
         <div class="card-desc">Rolling two-week view for standup prep and near-term planning. Focus on what's next.</div>
@@ -315,7 +287,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
     <!-- Card View -->
     <a class="card" href="schedule/Subaru_MARS_Card_View.html">
-      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-training);"></div>
       <div class="card-body">
         <div class="card-title">Activity Cards</div>
         <div class="card-desc">Kanban-style card view — each activity as a filterable card with lane, week, and status.</div>
@@ -371,7 +343,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   <div class="card-grid wide">
     <a class="card-featured" href="org/Subaru_MARS_Org_Chart.html">
       <div class="card-left">
-        <div style="height:4px;background:var(--org-accent);border-radius:2px;margin-bottom:16px;width:60px"></div>
+        <div style="height:4px;background:var(--lane-coaching);border-radius:2px;margin-bottom:16px;width:60px"></div>
         <div class="card-title" style="font-size:18px;">Interactive Org Chart</div>
         <div class="card-desc">Collapsible tree view of 156 mapped staff. Filter by FTE vs. consultant, expand/collapse levels, search by name.</div>
         <div style="margin-top:12px;"><span class="card-format">HTML</span> <span class="card-action" style="margin-left:8px;">Open Org Chart →</span></div>
@@ -396,7 +368,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     </a>
 
     <a class="card" href="org/Subaru_MARS_Team_Explorer.html">
-      <div class="card-accent" style="background: var(--org-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-coaching);"></div>
       <div class="card-body">
         <div class="card-title">Team Explorer</div>
         <div class="card-desc">Team-level view — see each scrum team, their composition, coach assignments, and current sprint focus.</div>
@@ -637,7 +609,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
   <div class="card-grid">
     <a class="card" href="../design/Design_System.html">
-      <div class="card-accent" style="background: var(--brand-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-admin);"></div>
       <div class="card-body">
         <div class="card-title">Design System</div>
         <div class="card-desc">Complete design token reference — colors, typography, spacing, component patterns for all output formats.</div>
@@ -649,7 +621,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     </a>
 
     <a class="card" href="../design/brand/Co_Branding_Strategy.html">
-      <div class="card-accent" style="background: var(--brand-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-admin);"></div>
       <div class="card-body">
         <div class="card-title">Co-Branding Strategy</div>
         <div class="card-desc">Turnberry × Subaru co-branding rules — logo placement, height budgets, slide-by-slide placement specs.</div>
@@ -661,7 +633,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     </a>
 
     <a class="card" href="examples/Co_Branded_Example.html">
-      <div class="card-accent" style="background: var(--brand-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-admin);"></div>
       <div class="card-body">
         <div class="card-title">Co-Branded Examples</div>
         <div class="card-desc">Live examples of co-branded artifacts — email templates, web layouts, Miro planograms.</div>
