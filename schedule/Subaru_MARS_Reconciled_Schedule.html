@@ -8,26 +8,26 @@
 .accent-bar{height:4px;background:#00205B;width:100%}
   :root {
     /* Subaru Chrome (client-facing) */
-    --chrome-primary: #00205B;
-    --chrome-secondary: #1D4F91;
-    --chrome-gray: #53565A;
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --lane-admin: #53565A;
     --white: #FFFFFF;
     /* Lane Colors (engagement-neutral) */
-    --train: #1976D2; --train-bg: #E3F2FD; --train-text: #0D47A1;
-    --coach: #7B1FA2; --coach-bg: #F3E5F5; --coach-text: #4A148C;
-    --jira: #00897B;  --jira-bg: #E0F2F1;  --jira-text: #004D40;
-    --ocm: #EF6C00;   --ocm-bg: #FFF3E0;   --ocm-text: #BF360C;
-    --mile: #C62828;   --mile-bg: #FFEBEE;   --mile-text: #B71C1C;
-    --admin: #546E7A;  --admin-bg: #ECEFF1;  --admin-text: #37474F;
+    --lane-training: #1976D2; --tint-training: #E3F2FD; --text-training: #0D47A1;
+    --lane-coaching: #7B1FA2; --tint-coaching: #F3E5F5; --text-coaching: #4A148C;
+    --lane-jira: #00897B;  --tint-jira: #E0F2F1;  --text-jira: #004D40;
+    --lane-ocm: #EF6C00;   --tint-ocm: #FFF3E0;   --text-ocm: #BF360C;
+    --lane-milestones: #C62828;   --tint-milestones: #FFEBEE;   --text-milestones: #B71C1C;
+    --lane-admin: #546E7A;  --tint-admin: #ECEFF1;  --text-admin: #37474F;
     /* Status */
-    --on-track: #2E7D32; --at-risk: #FFB300; --blocked: #C62828;
+    --status-ontrack: #2E7D32; --status-atrisk: #FFB300; --status-blocked: #C62828;
     /* Structural */
-    --text: #1F2937; --gray: #6B7280; --light-gray: #F3F4F6; --border: #E5E7EB;
+    --text-primary: #1F2937; --text-secondary: #6B7280; --stat-bg: #F3F4F6; --border-soft: #E5E7EB;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Helvetica,Arial,sans-serif; color: var(--text); background: var(--white); line-height: 1.55; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; color: var(--text-primary); background: var(--white); line-height: 1.55; }
 
-  .header { background: linear-gradient(135deg, var(--chrome-primary) 0%, var(--chrome-secondary) 100%); color: white; padding: 36px 48px 28px; }
+  .header { background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 100%); color: white; padding: 36px 48px 28px; }
   .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
   .header .subtitle { font-size: 15px; color:#6B7280; margin-bottom: 16px; }
   .header .meta { display: flex; gap: 28px; font-size: 12.5px; color:#6B7280; flex-wrap: wrap; }
@@ -38,64 +38,64 @@
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; }
   .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
 
-  .phase-banner { background: var(--chrome-primary); color: white; padding: 11px 18px; border-radius: 8px 8px 0 0; font-size: 14px; font-weight: 700; letter-spacing: 0.4px; margin-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+  .phase-banner { background: var(--subaru-blue); color: white; padding: 11px 18px; border-radius: 8px 8px 0 0; font-size: 14px; font-weight: 700; letter-spacing: 0.4px; margin-top: 28px; display: flex; justify-content: space-between; align-items: center; }
   .phase-banner .phase-dates { font-weight: 400; font-size: 12.5px; opacity: 0.8; }
-  .phase-banner.phase-2 { background: var(--chrome-secondary); }
-  .phase-banner.phase-3 { background: var(--chrome-gray); }
-  .phase-banner.milestone { background: var(--mile); }
+  .phase-banner.phase-2 { background: var(--star-cluster); }
+  .phase-banner.phase-3 { background: var(--lane-admin); }
+  .phase-banner.milestone { background: var(--lane-milestones); }
 
-  .section-note { font-size: 12.5px; color: var(--gray); font-style: italic; padding: 8px 14px; background: #F9FAFB; border-left: 2px solid #D1D5DB; }
+  .section-note { font-size: 12.5px; color: var(--text-secondary); font-style: italic; padding: 8px 14px; background: #F9FAFB; border-left: 2px solid #D1D5DB; }
 
-  .week-grid { border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
-  .week-row { display: grid; grid-template-columns: 100px 1fr; border-bottom: 1px solid var(--border); min-height: 60px; }
+  .week-grid { border: 1px solid var(--border-soft); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+  .week-row { display: grid; grid-template-columns: 100px 1fr; border-bottom: 1px solid var(--border-soft); min-height: 60px; }
   .week-row:last-child { border-bottom: none; }
 
-  .week-label { background: var(--light-gray); padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); }
-  .week-label .week-num { font-size: 13px; font-weight: 700; color: var(--chrome-primary); }
-  .week-label .week-date { font-size: 10.5px; color: var(--gray); }
+  .week-label { background: var(--stat-bg); padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border-soft); }
+  .week-label .week-num { font-size: 13px; font-weight: 700; color: var(--subaru-blue); }
+  .week-label .week-date { font-size: 10.5px; color: var(--text-secondary); }
 
   .week-content { padding: 8px 14px; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
 
   .activity { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 4px; font-size: 12px; font-weight: 500; line-height: 1.4; }
-  .activity.training { background: var(--train-bg); color: var(--train-text); border-left: 3px solid var(--train); }
-  .activity.coaching { background: var(--coach-bg); color: var(--coach-text); border-left: 3px solid var(--coach); }
-  .activity.jira { background: var(--jira-bg); color: var(--jira-text); border-left: 3px solid var(--jira); }
-  .activity.milestone { background: var(--mile-bg); color: var(--mile-text); border-left: 3px solid var(--mile); font-weight: 700; }
-  .activity.admin { background: var(--admin-bg); color: var(--admin-text); border-left: 3px solid var(--admin); }
-  .activity.ocm { background: var(--ocm-bg); color: var(--ocm-text); border-left: 3px solid var(--ocm); }
+  .activity.training { background: var(--tint-training); color: var(--text-training); border-left: 3px solid var(--lane-training); }
+  .activity.coaching { background: var(--tint-coaching); color: var(--text-coaching); border-left: 3px solid var(--lane-coaching); }
+  .activity.jira { background: var(--tint-jira); color: var(--text-jira); border-left: 3px solid var(--lane-jira); }
+  .activity.milestone { background: var(--tint-milestones); color: var(--text-milestones); border-left: 3px solid var(--lane-milestones); font-weight: 700; }
+  .activity.admin { background: var(--tint-admin); color: var(--text-admin); border-left: 3px solid var(--lane-admin); }
+  .activity.ocm { background: var(--tint-ocm); color: var(--text-ocm); border-left: 3px solid var(--lane-ocm); }
   .activity.completed { opacity: 0.55; }
 
-  .sub-detail { font-size: 11px; color: var(--gray); padding-left: 20px; font-style: italic; }
+  .sub-detail { font-size: 11px; color: var(--text-secondary); padding-left: 20px; font-style: italic; }
   .activity-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
 
   .status { font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.4px; margin-left: 3px; }
   .status.done { background: #D1FAE5; color: #065F46; }
   .status.active { background: #FEF3C7; color: #92400E; }
 
-  .week-row.milestone-row { background: var(--mile-bg); }
-  .week-row.milestone-row .week-label { background: var(--mile); }
+  .week-row.milestone-row { background: var(--tint-milestones); }
+  .week-row.milestone-row .week-label { background: var(--lane-milestones); }
   .week-row.milestone-row .week-label .week-num,
   .week-row.milestone-row .week-label .week-date { color: white; }
 
-  .week-row.current { background: #FFFBEB; border-left: 4px solid var(--at-risk); }
+  .week-row.current { background: #FFFBEB; border-left: 4px solid var(--status-atrisk); }
   .week-row.current .week-label { background: #FEF3C7; }
 
   .cohort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
-  .cohort-card { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; }
-  .cohort-card h4 { font-size: 14px; color: var(--chrome-primary); margin-bottom: 6px; }
+  .cohort-card { background: white; border: 1px solid var(--border-soft); border-radius: 6px; padding: 14px 18px; }
+  .cohort-card h4 { font-size: 14px; color: var(--subaru-blue); margin-bottom: 6px; }
   .cohort-card .coach { font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
-  .cohort-card .coach.a { color: var(--coach); }
-  .cohort-card .coach.b { color: var(--train); }
-  .cohort-card .role { font-size: 11.5px; color: var(--gray); margin-bottom: 6px; }
-  .cohort-card .teams { font-size: 12px; color: var(--text); line-height: 1.6; }
+  .cohort-card .coach.a { color: var(--lane-coaching); }
+  .cohort-card .coach.b { color: var(--lane-training); }
+  .cohort-card .role { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px; }
+  .cohort-card .teams { font-size: 12px; color: var(--text-primary); line-height: 1.6; }
 
-  .notes { margin-top: 28px; padding: 20px; background: var(--light-gray); border-radius: 8px; }
-  .notes h3 { font-size: 15px; color: var(--chrome-primary); margin-bottom: 10px; }
+  .notes { margin-top: 28px; padding: 20px; background: var(--stat-bg); border-radius: 8px; }
+  .notes h3 { font-size: 15px; color: var(--subaru-blue); margin-bottom: 10px; }
   .notes li { font-size: 12.5px; color: #4B5563; margin-bottom: 5px; }
   .notes ul { padding-left: 18px; margin-top: 6px; }
 
   .footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
-.footer { margin-top: 40px; padding-top: 16px; border-top:1px solid #E5E7EB; font-size: 11.5px; color: var(--gray); display: flex; justify-content: space-between; }
+.footer { margin-top: 40px; padding-top: 16px; border-top:1px solid #E5E7EB; font-size: 11.5px; color: var(--text-secondary); display: flex; justify-content: space-between; }
 
   @media print {
     .header { padding: 20px; }
@@ -123,7 +123,7 @@
 <div class="container">
 
   <!-- Coaching Structure -->
-  <h3 style="font-size:14px; color:var(--chrome-primary); margin-bottom: 8px;">Coaching Cohort Structure</h3>
+  <h3 style="font-size:14px; color:var(--subaru-blue); margin-bottom: 8px;">Coaching Cohort Structure</h3>
   <div class="cohort-grid">
     <div class="cohort-card">
       <h4>Cohort A — Dean</h4>
@@ -148,17 +148,17 @@
     </div>
   </div>
 
-  <div style="font-size:12px; color:var(--gray); margin: 8px 0 20px; padding: 8px 12px; background: #F9FAFB; border-radius: 4px;">
+  <div style="font-size:12px; color:var(--text-secondary); margin: 8px 0 20px; padding: 8px 12px; background: #F9FAFB; border-radius: 4px;">
     <strong>Role clarity:</strong> Dean & Brien are lead agile coaches. Louise is OCM lead with coaching coverage/support. Jason is engagement lead with focus on leadership, JIRA revamp and coaching support. Omar is the JIRA admin working closely with Jason and the managers. Office Hours staffed by Dean & Brien.
   </div>
 
   <!-- Legend -->
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--train)"></div>Training</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--coach)"></div>Coaching</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--jira)"></div>JIRA / Metrics</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--ocm)"></div>OCM / Comms</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--mile)"></div>Milestone</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--lane-training)"></div>Training</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--lane-coaching)"></div>Coaching</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--lane-jira)"></div>JIRA / Metrics</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--lane-ocm)"></div>OCM / Comms</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--lane-milestones)"></div>Milestone</div>
   </div>
 
   <!-- ===================== PHASE 1 ===================== -->

@@ -17,19 +17,19 @@
   --bright-blue: #00AEEF;
   --subaru-gray: #53565A;
   /* Structural */
-  --text: #1F2937;
+  --text-primary: #1F2937;
   --text-secondary: #6B7280;
-  --bg: #F9FAFB;
+  --stat-bg: #F9FAFB;
   --white: #FFFFFF;
-  --border: #E5E7EB;
-  --light-gray: #F3F4F6;
+  --border-soft: #E5E7EB;
+  --stat-bg: #F3F4F6;
   /* Lane Colors (from Gantt) */
-  --train: #1976D2; --train-bg: #E3F2FD; --train-text: #0D47A1;
-  --coach: #7B1FA2; --coach-bg: #F3E5F5; --coach-text: #4A148C;
-  --jira: #00897B;  --jira-bg: #E0F2F1;  --jira-text: #004D40;
-  --ocm: #EF6C00;   --ocm-bg: #FFF3E0;   --ocm-text: #BF360C;
-  --mile: #C62828;   --mile-bg: #FFEBEE;   --mile-text: #B71C1C;
-  --admin: #546E7A;  --admin-bg: #ECEFF1;  --admin-text: #37474F;
+  --lane-training: #1976D2; --tint-training: #E3F2FD; --text-training: #0D47A1;
+  --lane-coaching: #7B1FA2; --tint-coaching: #F3E5F5; --text-coaching: #4A148C;
+  --lane-jira: #00897B;  --tint-jira: #E0F2F1;  --text-jira: #004D40;
+  --lane-ocm: #EF6C00;   --tint-ocm: #FFF3E0;   --text-ocm: #BF360C;
+  --lane-milestones: #C62828;   --tint-milestones: #FFEBEE;   --text-milestones: #B71C1C;
+  --lane-admin: #546E7A;  --tint-admin: #ECEFF1;  --text-admin: #37474F;
   /* Section accent colors */
   --schedule-accent: #1976D2;
   --org-accent: #7B1FA2;
@@ -40,7 +40,7 @@
   --tools-accent: #1D4F91;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--stat-bg); color: var(--text-primary); line-height: 1.55; }
 
 /* ── ACCENT BAR ── */
 .accent-bar { height: 4px; background: var(--subaru-blue); }
@@ -72,7 +72,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 
 /* ── QUICK NAV ── */
 .quick-nav {
-  background: var(--white); border-bottom: 1px solid var(--border);
+  background: var(--white); border-bottom: 1px solid var(--border-soft);
   padding: 12px 48px; display: flex; gap: 6px; align-items: center;
   flex-wrap: wrap; position: sticky; top: 0; z-index: 100;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -80,8 +80,8 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 .quick-nav-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; margin-right: 8px; }
 .quick-nav a {
   padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
-  text-decoration: none; color: var(--text); background: var(--light-gray);
-  border: 1px solid var(--border); transition: all 0.15s; white-space: nowrap;
+  text-decoration: none; color: var(--text-primary); background: var(--stat-bg);
+  border: 1px solid var(--border-soft); transition: all 0.15s; white-space: nowrap;
 }
 .quick-nav a:hover { background: var(--subaru-blue); color: white; border-color: var(--subaru-blue); }
 
@@ -92,7 +92,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 .section { margin-bottom: 40px; }
 .section-header {
   display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
-  padding-bottom: 12px; border-bottom: 2px solid var(--border);
+  padding-bottom: 12px; border-bottom: 2px solid var(--border-soft);
 }
 .section-icon {
   width: 40px; height: 40px; border-radius: 10px; display: flex;
@@ -107,38 +107,38 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 
 /* ── ARTIFACT CARD ── */
 .card {
-  background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  background: var(--white); border: 1px solid var(--border-soft); border-radius: 12px;
   overflow: hidden; transition: all 0.2s; cursor: pointer; text-decoration: none;
   color: inherit; display: flex; flex-direction: column;
 }
 .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: #c0c0c0; }
 .card-accent { height: 4px; width: 100%; }
 .card-body { padding: 18px 20px; flex: 1; }
-.card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary); }
 .card-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
 .card-peek {
-  background: var(--light-gray); border-radius: 8px; padding: 12px 14px;
+  background: var(--stat-bg); border-radius: 8px; padding: 12px 14px;
   font-size: 11.5px; color: var(--text-secondary); line-height: 1.6;
 }
-.card-peek .peek-label { font-size: 10px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+.card-peek .peek-label { font-size: 10px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
 .card-peek .peek-item { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
 .card-peek .peek-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .card-footer {
-  padding: 10px 20px; background: var(--light-gray); border-top: 1px solid var(--border);
+  padding: 10px 20px; background: var(--stat-bg); border-top: 1px solid var(--border-soft);
   display: flex; justify-content: space-between; align-items: center; font-size: 11px;
 }
-.card-format { font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--white); color: var(--text-secondary); border: 1px solid var(--border); }
+.card-format { font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--white); color: var(--text-secondary); border: 1px solid var(--border-soft); }
 .card-action { color: var(--star-cluster); font-weight: 700; }
 
 /* ── FEATURED CARD (wide, with inline preview) ── */
 .card-featured {
   grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr;
-  background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  background: var(--white); border: 1px solid var(--border-soft); border-radius: 12px;
   overflow: hidden; transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit;
 }
 .card-featured:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
 .card-featured .card-left { padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
-.card-featured .card-right { background: var(--light-gray); padding: 20px; border-left: 1px solid var(--border); font-size: 12px; }
+.card-featured .card-right { background: var(--stat-bg); padding: 20px; border-left: 1px solid var(--border-soft); font-size: 12px; }
 
 /* ── MINI GANTT PREVIEW ── */
 .mini-gantt { display: flex; flex-direction: column; gap: 6px; }
@@ -149,7 +149,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 
 /* ── MINI TIMELINE ── */
 .mini-timeline { position: relative; padding-left: 20px; }
-.mini-timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.mini-timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border-soft); }
 .tl-item { position: relative; padding: 6px 0 6px 16px; font-size: 11px; }
 .tl-item::before { content: ''; position: absolute; left: -17px; top: 10px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid; background: white; }
 .tl-item .tl-week { font-weight: 700; }
@@ -168,7 +168,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 /* ── FOOTER ── */
 .page-footer {
   max-width: 1300px; margin: 0 auto; padding: 24px 48px 40px;
-  border-top: 1px solid var(--border); display: flex;
+  border-top: 1px solid var(--border-soft); display: flex;
   justify-content: space-between; align-items: center;
   font-size: 11px; color: var(--text-secondary);
 }
@@ -221,7 +221,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 <!-- ─── SECTION: SCHEDULE & TIMELINE ─── -->
 <div class="section" id="schedule">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--train-bg); color: var(--train);">📅</div>
+    <div class="section-icon" style="background: var(--tint-training); color: var(--lane-training);">📅</div>
     <div>
       <h2>Schedule & Timeline</h2>
     </div>
@@ -241,26 +241,26 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
         <div class="peek-label" style="margin-bottom:10px;">PHASE OVERVIEW</div>
         <div class="mini-gantt">
           <div class="mini-lane">
-            <div class="mini-lane-label" style="color:var(--train-text)">Training</div>
-            <div class="mini-bar" style="background:var(--train);width:75%"><span class="mini-bar-text">Wk 1–15 · 14 courses</span></div>
+            <div class="mini-lane-label" style="color:var(--text-training)">Training</div>
+            <div class="mini-bar" style="background:var(--lane-training);width:75%"><span class="mini-bar-text">Wk 1–15 · 14 courses</span></div>
           </div>
           <div class="mini-lane">
-            <div class="mini-lane-label" style="color:var(--coach-text)">Coaching</div>
-            <div class="mini-bar" style="background:var(--coach);width:85%"><span class="mini-bar-text">Wk 2–18 · Embedded + Exec</span></div>
+            <div class="mini-lane-label" style="color:var(--text-coaching)">Coaching</div>
+            <div class="mini-bar" style="background:var(--lane-coaching);width:85%"><span class="mini-bar-text">Wk 2–18 · Embedded + Exec</span></div>
           </div>
           <div class="mini-lane">
-            <div class="mini-lane-label" style="color:var(--jira-text)">Jira/Tools</div>
-            <div class="mini-bar" style="background:var(--jira);width:50%;margin-left:10%"><span class="mini-bar-text">Wk 3–12 · Config & Migration</span></div>
+            <div class="mini-lane-label" style="color:var(--text-jira)">Jira/Tools</div>
+            <div class="mini-bar" style="background:var(--lane-jira);width:50%;margin-left:10%"><span class="mini-bar-text">Wk 3–12 · Config & Migration</span></div>
           </div>
           <div class="mini-lane">
-            <div class="mini-lane-label" style="color:var(--ocm-text)">OCM</div>
-            <div class="mini-bar" style="background:var(--ocm);width:90%"><span class="mini-bar-text">Wk 1–19 · Change Management</span></div>
+            <div class="mini-lane-label" style="color:var(--text-ocm)">OCM</div>
+            <div class="mini-bar" style="background:var(--lane-ocm);width:90%"><span class="mini-bar-text">Wk 1–19 · Change Management</span></div>
           </div>
           <div class="mini-lane">
-            <div class="mini-lane-label" style="color:var(--mile-text)">Milestones</div>
-            <div class="mini-bar" style="background:var(--mile);width:20%;margin-left:5%"><span class="mini-bar-text">Checkpoints</span></div>
-            <div class="mini-bar" style="background:var(--mile);width:15%;margin-left:15%"><span class="mini-bar-text"></span></div>
-            <div class="mini-bar" style="background:var(--mile);width:10%;"><span class="mini-bar-text"></span></div>
+            <div class="mini-lane-label" style="color:var(--text-milestones)">Milestones</div>
+            <div class="mini-bar" style="background:var(--lane-milestones);width:20%;margin-left:5%"><span class="mini-bar-text">Checkpoints</span></div>
+            <div class="mini-bar" style="background:var(--lane-milestones);width:15%;margin-left:15%"><span class="mini-bar-text"></span></div>
+            <div class="mini-bar" style="background:var(--lane-milestones);width:10%;"><span class="mini-bar-text"></span></div>
           </div>
         </div>
       </div>
@@ -274,8 +274,8 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
         <div class="card-desc">Tabbed Gantt with overview, phase detail, and lane views. Full bar-chart timeline with swim lanes.</div>
         <div class="card-peek">
           <div class="peek-label">VIEWS AVAILABLE</div>
-          <div class="peek-item"><span class="peek-dot" style="background:var(--train)"></span> Overview · Phase 1 · Phase 2 · Phase 3</div>
-          <div class="peek-item"><span class="peek-dot" style="background:var(--coach)"></span> Training Lane · Coaching Lane · Jira Lane</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-training)"></span> Overview · Phase 1 · Phase 2 · Phase 3</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-coaching)"></span> Training Lane · Coaching Lane · Jira Lane</div>
         </div>
       </div>
       <div class="card-footer">
@@ -325,7 +325,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 
     <!-- Decision Log -->
     <a class="card" href="schedule/Subaru_MARS_Decision_Log.html">
-      <div class="card-accent" style="background: var(--mile);"></div>
+      <div class="card-accent" style="background: var(--lane-milestones);"></div>
       <div class="card-body">
         <div class="card-title">Decision Log</div>
         <div class="card-desc">13 reconciliation decisions from schedule alignment with Jason. Tracks resolution status and impact.</div>
@@ -344,7 +344,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 
     <!-- Schedule Data -->
     <a class="card" href="schedule/Subaru_MARS_Schedule.xlsx" style="pointer-events:auto;">
-      <div class="card-accent" style="background: var(--admin);"></div>
+      <div class="card-accent" style="background: var(--lane-admin);"></div>
       <div class="card-body">
         <div class="card-title">Schedule Data (Source)</div>
         <div class="card-desc">Master Excel workbook — all activities, dates, owners, and status. Source of truth for schedule views.</div>
@@ -360,7 +360,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 <!-- ─── SECTION: ORGANIZATION ─── -->
 <div class="section" id="organization">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--coach-bg); color: var(--coach);">👥</div>
+    <div class="section-icon" style="background: var(--tint-coaching); color: var(--lane-coaching);">👥</div>
     <div><h2>Organization</h2></div>
     <div class="section-desc">156 staff across 10 teams · Interactive org chart and team explorer</div>
   </div>
@@ -405,7 +405,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
     </a>
 
     <a class="card" href="org/Subaru_MARS_Org_Roster.xlsx" style="pointer-events:auto;">
-      <div class="card-accent" style="background: var(--admin);"></div>
+      <div class="card-accent" style="background: var(--lane-admin);"></div>
       <div class="card-body">
         <div class="card-title">Org Roster (Data)</div>
         <div class="card-desc">Complete roster spreadsheet — names, roles, teams, FTE/consultant status.</div>
@@ -421,7 +421,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 <!-- ─── SECTION: CURRICULUM & TRAINING ─── -->
 <div class="section" id="curriculum">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--jira-bg); color: var(--jira);">📚</div>
+    <div class="section-icon" style="background: var(--tint-jira); color: var(--lane-jira);">📚</div>
     <div><h2>Curriculum & Training</h2></div>
     <div class="section-desc">14 courses across 4 categories · Full Agile Academy with course materials</div>
   </div>
@@ -436,10 +436,10 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
       </div>
       <div class="card-right">
         <div class="peek-label" style="margin-bottom:10px;">CATEGORIES</div>
-        <div class="cat-row"><div class="cat-dot" style="background:var(--train)"></div><div class="cat-name">Agile Foundations</div><div class="cat-count">4 courses</div></div>
-        <div class="cat-row"><div class="cat-dot" style="background:var(--coach)"></div><div class="cat-name">Role-Based Training</div><div class="cat-count">4 courses</div></div>
-        <div class="cat-row"><div class="cat-dot" style="background:var(--jira)"></div><div class="cat-name">Tools & Process</div><div class="cat-count">3 courses</div></div>
-        <div class="cat-row"><div class="cat-dot" style="background:var(--ocm)"></div><div class="cat-name">Leadership & Culture</div><div class="cat-count">3 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--lane-training)"></div><div class="cat-name">Agile Foundations</div><div class="cat-count">4 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--lane-coaching)"></div><div class="cat-name">Role-Based Training</div><div class="cat-count">4 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--lane-jira)"></div><div class="cat-name">Tools & Process</div><div class="cat-count">3 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--lane-ocm)"></div><div class="cat-name">Leadership & Culture</div><div class="cat-count">3 courses</div></div>
         <div style="margin-top:12px;font-size:11px;color:var(--text-secondary);">Each course links to its full material in the Agile Academy</div>
       </div>
     </a>
@@ -473,7 +473,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 <!-- ─── SECTION: STATUS & REPORTING ─── -->
 <div class="section" id="status">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--ocm-bg); color: var(--ocm);">📊</div>
+    <div class="section-icon" style="background: var(--tint-ocm); color: var(--lane-ocm);">📊</div>
     <div><h2>Status & Reporting</h2></div>
     <div class="section-desc">Weekly dashboards and stakeholder updates</div>
   </div>
@@ -486,9 +486,9 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
         <div class="card-desc">16:9 dashboard card — highlight reel, lane status, health indicators, next-week look-ahead. Designed for screen share.</div>
         <div class="card-peek">
           <div class="peek-label">INCLUDES</div>
-          <div class="peek-item"><span class="peek-dot" style="background:var(--train)"></span> Lane-by-lane progress</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-training)"></span> Lane-by-lane progress</div>
           <div class="peek-item"><span class="peek-dot" style="background:#2E7D32"></span> Health indicators (On Track / At Risk / Blocked)</div>
-          <div class="peek-item"><span class="peek-dot" style="background:var(--ocm)"></span> Wins, risks, and next-week plan</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-ocm)"></span> Wins, risks, and next-week plan</div>
         </div>
       </div>
       <div class="card-footer">
@@ -510,7 +510,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
     </a>
 
     <a class="card" href="schedule/Subaru_MARS_Schedule_Email.html">
-      <div class="card-accent" style="background: var(--admin);"></div>
+      <div class="card-accent" style="background: var(--lane-admin);"></div>
       <div class="card-body">
         <div class="card-title">Schedule Email (Paste-Ready)</div>
         <div class="card-desc">Pre-formatted schedule summary for email distribution. Copy-paste into Outlook.</div>
@@ -526,7 +526,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 <!-- ─── SECTION: FRAMEWORKS & MODELS ─── -->
 <div class="section" id="frameworks">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--mile-bg); color: var(--mile);">🏗️</div>
+    <div class="section-icon" style="background: var(--tint-milestones); color: var(--lane-milestones);">🏗️</div>
     <div><h2>Frameworks & Models</h2></div>
     <div class="section-desc">Transformation operating system, leadership models, and engagement architecture</div>
   </div>
@@ -578,7 +578,7 @@ body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: va
 <!-- ─── SECTION: BRAND & DESIGN ─── -->
 <div class="section" id="brand">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--admin-bg); color: var(--admin);">🎨</div>
+    <div class="section-icon" style="background: var(--tint-admin); color: var(--lane-admin);">🎨</div>
     <div><h2>Brand & Design System</h2></div>
     <div class="section-desc">Co-branding strategy, design tokens, and visual consistency standards</div>
   </div>

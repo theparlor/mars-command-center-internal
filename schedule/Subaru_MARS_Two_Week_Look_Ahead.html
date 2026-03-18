@@ -8,38 +8,38 @@
 .accent-bar{height:4px;background:#00205B;width:100%}
   :root {
     /* Subaru Chrome (client-facing) */
-    --chrome-primary: #00205B;
-    --chrome-secondary: #1D4F91;
-    --chrome-gray: #53565A;
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --lane-admin: #53565A;
     --white: #FFFFFF;
     /* Lane Colors (engagement-neutral) */
-    --train: #1976D2;   --train-lt: #E3F2FD;  --train-dk: #0D47A1;
-    --coach: #7B1FA2;   --coach-lt: #F3E5F5;  --coach-dk: #4A148C;
-    --jira: #00897B;    --jira-lt: #E0F2F1;   --jira-dk: #004D40;
-    --ocm: #EF6C00;     --ocm-lt: #FFF3E0;    --ocm-dk: #BF360C;
-    --mile: #C62828;    --mile-lt: #FFEBEE;   --mile-dk: #B71C1C;
-    --admin: #546E7A;   --admin-lt: #ECEFF1;  --admin-dk: #37474F;
+    --lane-training: #1976D2;   --train-lt: #E3F2FD;  --train-dk: #0D47A1;
+    --lane-coaching: #7B1FA2;   --coach-lt: #F3E5F5;  --coach-dk: #4A148C;
+    --lane-jira: #00897B;    --jira-lt: #E0F2F1;   --jira-dk: #004D40;
+    --lane-ocm: #EF6C00;     --ocm-lt: #FFF3E0;    --ocm-dk: #BF360C;
+    --lane-milestones: #C62828;    --mile-lt: #FFEBEE;   --mile-dk: #B71C1C;
+    --lane-admin: #546E7A;   --admin-lt: #ECEFF1;  --admin-dk: #37474F;
     /* Status */
-    --on-track: #2E7D32; --at-risk: #FFB300; --blocked: #C62828;
+    --status-ontrack: #2E7D32; --status-atrisk: #FFB300; --status-blocked: #C62828;
     /* Structural */
-    --text: #1F2937;
-    --gray: #6B7280;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
     --light-bg: #F8FAFC;
     --card-bg: #FFFFFF;
-    --border: #E5E7EB;
+    --border-soft: #E5E7EB;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: Helvetica,Arial,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     background: var(--light-bg);
-    color: var(--text);
+    color: var(--text-primary);
     line-height: 1.6;
   }
 
   .header {
-    background: linear-gradient(135deg, var(--chrome-primary) 0%, var(--chrome-secondary) 100%);
+    background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 100%);
     color: var(--white);
     padding: 2.5rem 3rem;
     position: relative;
@@ -87,8 +87,8 @@
 
   .strategic-context {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--chrome-secondary);
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid var(--star-cluster);
     border-radius: 8px;
     padding: 1.5rem 2rem;
     margin-bottom: 2rem;
@@ -97,7 +97,7 @@
   .strategic-context h2 {
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--chrome-secondary);
+    color: var(--star-cluster);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 0.75rem;
@@ -105,7 +105,7 @@
 
   .strategic-context p {
     font-size: 0.85rem;
-    color: var(--gray);
+    color: var(--text-secondary);
     line-height: 1.7;
   }
 
@@ -121,7 +121,7 @@
   }
 
   .week-badge {
-    background: var(--chrome-primary);
+    background: var(--subaru-blue);
     color: var(--white);
     font-size: 0.7rem;
     font-weight: 700;
@@ -135,12 +135,12 @@
   .week-title {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--chrome-primary);
+    color: var(--subaru-blue);
   }
 
   .week-theme {
     font-size: 0.8rem;
-    color: var(--gray);
+    color: var(--text-secondary);
     font-weight: 500;
     margin-left: auto;
     font-style: italic;
@@ -154,7 +154,7 @@
 
   .activity-card {
     background: var(--card-bg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     position: relative;
@@ -175,12 +175,12 @@
     height: 100%;
   }
 
-  .activity-card.type-coaching::before { background: var(--coach); }
-  .activity-card.type-jira::before { background: var(--jira); }
-  .activity-card.type-ocm::before { background: var(--ocm); }
-  .activity-card.type-training::before { background: var(--train); }
-  .activity-card.type-milestone::before { background: var(--mile); }
-  .activity-card.type-admin::before { background: var(--admin); }
+  .activity-card.type-coaching::before { background: var(--lane-coaching); }
+  .activity-card.type-jira::before { background: var(--lane-jira); }
+  .activity-card.type-ocm::before { background: var(--lane-ocm); }
+  .activity-card.type-training::before { background: var(--lane-training); }
+  .activity-card.type-milestone::before { background: var(--lane-milestones); }
+  .activity-card.type-admin::before { background: var(--lane-admin); }
 
   .activity-card .card-header {
     display: flex;
@@ -192,7 +192,7 @@
   .card-title {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--chrome-primary);
+    color: var(--subaru-blue);
   }
 
   .type-tag {
@@ -205,29 +205,29 @@
     white-space: nowrap;
   }
 
-  .tag-coaching { background: var(--coach-lt); color: var(--coach); }
-  .tag-jira { background: var(--jira-lt); color: var(--jira); }
-  .tag-ocm { background: var(--ocm-lt); color: var(--ocm); }
-  .tag-training { background: var(--train-lt); color: var(--train); }
-  .tag-milestone { background: var(--mile-lt); color: var(--mile); }
-  .tag-admin { background: var(--admin-lt); color: var(--admin); }
+  .tag-coaching { background: var(--coach-lt); color: var(--lane-coaching); }
+  .tag-jira { background: var(--jira-lt); color: var(--lane-jira); }
+  .tag-ocm { background: var(--ocm-lt); color: var(--lane-ocm); }
+  .tag-training { background: var(--train-lt); color: var(--lane-training); }
+  .tag-milestone { background: var(--mile-lt); color: var(--lane-milestones); }
+  .tag-admin { background: var(--admin-lt); color: var(--lane-admin); }
 
   .card-detail {
     font-size: 0.78rem;
-    color: var(--gray);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 
   .card-owner {
     font-size: 0.7rem;
-    color: var(--chrome-gray);
+    color: var(--lane-admin);
     margin-top: 0.5rem;
     font-weight: 500;
   }
 
   .focus-areas {
     background: var(--card-bg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.5rem 2rem;
     margin-bottom: 1rem;
@@ -236,7 +236,7 @@
   .focus-areas h3 {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--chrome-secondary);
+    color: var(--star-cluster);
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -254,14 +254,14 @@
     padding: 0.75rem 1rem;
     font-size: 0.78rem;
     font-weight: 500;
-    color: var(--text);
-    border-left: 3px solid var(--chrome-secondary);
+    color: var(--text-primary);
+    border-left: 3px solid var(--star-cluster);
   }
 
   .focus-item .focus-num {
     font-size: 0.65rem;
     font-weight: 700;
-    color: var(--chrome-secondary);
+    color: var(--star-cluster);
     display: block;
     margin-bottom: 0.15rem;
   }
@@ -277,7 +277,7 @@
   .risk-section h3 {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--at-risk);
+    color: var(--status-atrisk);
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -307,12 +307,12 @@
     margin-top: 1px;
   }
 
-  .risk-high { background: var(--blocked); }
-  .risk-medium { background: var(--at-risk); }
+  .risk-high { background: var(--status-blocked); }
+  .risk-medium { background: var(--status-atrisk); }
 
   .deliverables-section {
     background: var(--card-bg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-top: 1rem;
@@ -321,7 +321,7 @@
   .deliverables-section h3 {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--chrome-primary);
+    color: var(--subaru-blue);
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -333,19 +333,19 @@
     gap: 0.75rem;
     margin-bottom: 0.5rem;
     font-size: 0.78rem;
-    color: var(--gray);
+    color: var(--text-secondary);
   }
 
   .deliverable-check {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--chrome-secondary);
+    border: 2px solid var(--star-cluster);
     border-radius: 4px;
     flex-shrink: 0;
   }
 
   .team-bar {
-    background: var(--chrome-primary);
+    background: var(--subaru-blue);
     color: var(--white);
     padding: 1.25rem 2rem;
     margin-top: 2rem;
@@ -373,7 +373,7 @@
 
   .comms-section {
     background: var(--card-bg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-top: 1rem;
@@ -385,7 +385,7 @@
   .comms-col h3 {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--chrome-secondary);
+    color: var(--star-cluster);
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -393,7 +393,7 @@
 
   .comms-col p {
     font-size: 0.78rem;
-    color: var(--gray);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 
@@ -418,7 +418,7 @@
   .value-callout h3 {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--coach);
+    color: var(--lane-coaching);
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -441,7 +441,7 @@
     content: '\2192';
     position: absolute;
     left: 0;
-    color: var(--coach);
+    color: var(--lane-coaching);
     font-weight: 700;
   }
 
@@ -456,7 +456,7 @@
   .needs-section h3 {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--ocm);
+    color: var(--lane-ocm);
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -475,7 +475,7 @@
     content: '!';
     position: absolute;
     left: 0;
-    color: var(--ocm);
+    color: var(--lane-ocm);
     font-weight: 800;
   }
 

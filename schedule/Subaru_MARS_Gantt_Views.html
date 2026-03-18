@@ -7,66 +7,66 @@
 .accent-bar{height:4px;background:#00205B;width:100%}
   :root {
     /* Subaru Chrome (client-facing) */
-    --chrome-primary: #00205B;
-    --chrome-secondary: #1D4F91;
-    --chrome-gray: #53565A;
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --lane-admin: #53565A;
     --white: #FFFFFF;
     /* Lane Colors (engagement-neutral) */
-    --train: #1976D2; --train-lt: #E3F2FD;
-    --coach: #7B1FA2; --coach-lt: #F3E5F5;
-    --jira: #00897B;  --jira-lt: #E0F2F1;
-    --ocm: #EF6C00;   --ocm-lt: #FFF3E0;
-    --mile: #C62828;   --mile-lt: #FFEBEE;
-    --admin: #546E7A;  --admin-lt: #ECEFF1;
+    --lane-training: #1976D2; --train-lt: #E3F2FD;
+    --lane-coaching: #7B1FA2; --coach-lt: #F3E5F5;
+    --lane-jira: #00897B;  --jira-lt: #E0F2F1;
+    --lane-ocm: #EF6C00;   --ocm-lt: #FFF3E0;
+    --lane-milestones: #C62828;   --mile-lt: #FFEBEE;
+    --lane-admin: #546E7A;  --admin-lt: #ECEFF1;
     /* Status */
-    --on-track: #2E7D32; --at-risk: #FFB300; --blocked: #C62828;
-    --done-green: #D1FAE5; --done-text: #065F46;
-    --active-amber: #FEF3C7; --active-text: #92400E;
+    --status-ontrack: #2E7D32; --status-atrisk: #FFB300; --status-blocked: #C62828;
+    --status-ontrack: #D1FAE5; --done-text: #065F46;
+    --status-atrisk: #FEF3C7; --active-text: #92400E;
     /* Structural */
-    --text: #1F2937; --gray: #6B7280; --border: #E5E7EB;
+    --text-primary: #1F2937; --text-secondary: #6B7280; --border-soft: #E5E7EB;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Helvetica,Arial,sans-serif; color: var(--text); background: #F8FAFC; line-height: 1.5; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; color: var(--text-primary); background: #F8FAFC; line-height: 1.5; }
 
-  .header { background: linear-gradient(135deg, var(--chrome-primary) 0%, var(--chrome-secondary) 100%); color: white; padding: 24px 32px; display: flex; align-items: center; gap: 20px; }
+  .header { background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 100%); color: white; padding: 24px 32px; display: flex; align-items: center; gap: 20px; }
   .header h1 { font-size: 22px; font-weight: 800; }
   .header .meta { margin-left: auto; font-size: 12px; color:#94a3b8; text-align: right; }
 
   .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
 
   /* Progress bar */
-  .progress-strip { display: flex; align-items: center; gap: 16px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-  .progress-strip .label { font-size: 13px; font-weight: 700; color: var(--chrome-primary); white-space: nowrap; }
+  .progress-strip { display: flex; align-items: center; gap: 16px; background: white; border: 1px solid var(--border-soft); border-radius: 8px; padding: 14px 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .progress-strip .label { font-size: 13px; font-weight: 700; color: var(--subaru-blue); white-space: nowrap; }
   .progress-track { flex: 1; height: 10px; background: #E5E7EB; border-radius: 5px; overflow: hidden; position: relative; }
   .progress-fill { height: 100%; border-radius: 5px; transition: width 0.6s ease; }
-  .progress-strip .week-info { font-size: 12px; color: var(--gray); white-space: nowrap; }
+  .progress-strip .week-info { font-size: 12px; color: var(--text-secondary); white-space: nowrap; }
   .status-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
-  .status-badge.done { background: var(--done-green); color: var(--done-text); }
-  .status-badge.active { background: var(--active-amber); color: var(--active-text); }
+  .status-badge.done { background: var(--status-ontrack); color: var(--done-text); }
+  .status-badge.active { background: var(--status-atrisk); color: var(--active-text); }
 
   .legend { display: flex; gap: 20px; margin: 16px 0 24px; flex-wrap: wrap; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; }
   .legend-dot { width: 14px; height: 14px; border-radius: 3px; }
 
-  h2 { font-size: 18px; color: var(--chrome-primary); margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--chrome-secondary); }
+  h2 { font-size: 18px; color: var(--subaru-blue); margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--star-cluster); }
 
   .phase-label { display: inline-block; font-size: 11px; font-weight: 700; color: white; padding: 3px 12px; border-radius: 4px; margin-bottom: 6px; }
 
   /* Tab navigation */
-  .tab-bar { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 2px solid var(--border); padding-bottom: 0; }
-  .tab-btn { padding: 8px 18px; font-size: 13px; font-weight: 600; color: var(--gray); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; margin-bottom: -2px; transition: all 0.2s; }
-  .tab-btn:hover { color: var(--chrome-primary); }
-  .tab-btn.active { color: var(--chrome-primary); border-bottom-color: var(--chrome-primary); }
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 2px solid var(--border-soft); padding-bottom: 0; }
+  .tab-btn { padding: 8px 18px; font-size: 13px; font-weight: 600; color: var(--text-secondary); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; margin-bottom: -2px; transition: all 0.2s; }
+  .tab-btn:hover { color: var(--subaru-blue); }
+  .tab-btn.active { color: var(--subaru-blue); border-bottom-color: var(--subaru-blue); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
   .overview-grid { overflow-x: auto; margin-bottom: 32px; }
   .overview-table { border-collapse: collapse; width: 100%; min-width: 1200px; }
-  .overview-table th { background: var(--chrome-primary); color: white; font-size: 10px; padding: 4px 2px; text-align: center; min-width: 48px; }
+  .overview-table th { background: var(--subaru-blue); color: white; font-size: 10px; padding: 4px 2px; text-align: center; min-width: 48px; }
   .overview-table th.lane-header { text-align: left; padding-left: 8px; min-width: 110px; }
-  .overview-table th.current-wk { background: var(--at-risk); color: #1F2937; font-weight: 800; }
+  .overview-table th.current-wk { background: var(--status-atrisk); color: #1F2937; font-weight: 800; }
   .overview-table th.done-wk { background: #1a3a6e; }
-  .overview-table td { padding: 3px; vertical-align: top; border: 1px solid var(--border); min-width: 48px; height: 60px; }
+  .overview-table td { padding: 3px; vertical-align: top; border: 1px solid var(--border-soft); min-width: 48px; height: 60px; }
   .overview-table td.lane-name { font-weight: 700; font-size: 11px; padding: 8px; border: none; white-space: nowrap; }
   .overview-table td.current-col { background: #FFFBEB; }
   .overview-table td.done-col { background: #F0FDF4; }
@@ -76,10 +76,10 @@
 
   .phase-section, .lane-section { margin-bottom: 28px; }
   .week-grid { display: grid; gap: 8px; }
-  .week-header { font-size: 11px; font-weight: 700; color: var(--chrome-primary); text-align: center; padding: 4px; background: #EEF2F7; border-radius: 4px 4px 0 0; }
-  .week-header.current-wk { background: var(--active-amber); color: var(--active-text); }
-  .week-header.done-wk { background: var(--done-green); color: var(--done-text); }
-  .week-date { font-size: 9px; color: var(--gray); text-align: center; }
+  .week-header { font-size: 11px; font-weight: 700; color: var(--subaru-blue); text-align: center; padding: 4px; background: #EEF2F7; border-radius: 4px 4px 0 0; }
+  .week-header.current-wk { background: var(--status-atrisk); color: var(--active-text); }
+  .week-header.done-wk { background: var(--status-ontrack); color: var(--done-text); }
+  .week-date { font-size: 9px; color: var(--text-secondary); text-align: center; }
   .activity-card { padding: 8px 10px; border-radius: 6px; border-left: 3px solid; margin: 4px 0; font-size: 11px; line-height: 1.4; }
   .activity-card .lane-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
   .activity-card.done-item { opacity: 0.55; }
@@ -88,12 +88,12 @@
   .lane-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
   .lane-card { padding: 10px 12px; border-radius: 8px; border-left: 4px solid; }
   .lane-card .wk-badge { display: inline-block; font-size: 10px; font-weight: 700; color: white; padding: 1px 8px; border-radius: 3px; margin-bottom: 4px; }
-  .lane-card .date { font-size: 10px; color: var(--gray); margin-left: 6px; }
+  .lane-card .date { font-size: 10px; color: var(--text-secondary); margin-left: 6px; }
   .lane-card .activity-text { font-size: 12px; margin-top: 4px; }
   .lane-card.done-item { opacity: 0.55; }
 
   .footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
-  .footer { margin-top: 40px; padding: 12px 0; border-top:1px solid #E5E7EB; font-size: 11px; color: var(--gray); display: flex; justify-content: space-between; }
+  .footer { margin-top: 40px; padding: 12px 0; border-top:1px solid #E5E7EB; font-size: 11px; color: var(--text-secondary); display: flex; justify-content: space-between; }
 
   @media print { body { background: white; } .container { max-width: none; } .tab-bar { display: none; } .tab-panel { display: block !important; } }
 </style>
@@ -110,17 +110,17 @@
 <div class="progress-strip">
   <span class="label" id="progress-label">Week 2 of 20</span>
   <div class="progress-track">
-    <div class="progress-fill" id="progress-fill" style="width:10%;background:linear-gradient(90deg,var(--on-track),var(--at-risk))"></div>
+    <div class="progress-fill" id="progress-fill" style="width:10%;background:linear-gradient(90deg,var(--status-ontrack),var(--status-atrisk))"></div>
   </div>
   <span class="week-info" id="progress-info">Mar 9–13 · Phase 1: Foundation</span>
 </div>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:var(--train)"></div> Training</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--coach)"></div> Coaching</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--jira)"></div> Jira & Metrics</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--ocm)"></div> OCM & Comms</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--mile)"></div> Milestones</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lane-training)"></div> Training</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lane-coaching)"></div> Coaching</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lane-jira)"></div> Jira & Metrics</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lane-ocm)"></div> OCM & Comms</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lane-milestones)"></div> Milestones</div>
   <div class="legend-item" style="margin-left:16px"><span class="status-badge done">Done</span></div>
   <div class="legend-item"><span class="status-badge active">This Week</span></div>
 </div>

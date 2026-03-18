@@ -7,23 +7,23 @@
 <style>
 .accent-bar{height:4px;background:#00205B;width:100%}
 :root {
-  --navy: #00205B;
-  --dark-blue: #1D4F91;
-  --med-blue: #1D4F91;
-  --light-blue: #D6EAF8;
-  --orange: #EF6C00;
-  --light-orange: #FFF3E0;
-  --light-green: #E8F5E9;
-  --light-gray: #F5F5F5;
+  --subaru-blue: #00205B;
+  --subaru-blue: #1D4F91;
+  --star-cluster: #1D4F91;
+  --bright-blue: #D6EAF8;
+  --lane-ocm: #EF6C00;
+  --tint-ocm: #FFF3E0;
+  --status-ontrack-bg: #E8F5E9;
+  --stat-bg: #F5F5F5;
   --white: #FFFFFF;
-  --text: #1A1A1A;
-  --muted: #666666;
+  --text-primary: #1A1A1A;
+  --text-muted: #666666;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: Helvetica,Arial,sans-serif;
-  background: var(--light-gray);
-  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--stat-bg);
+  color: var(--text-primary);
   -webkit-text-size-adjust: 100%;
 }
 .top-bar {
@@ -66,8 +66,8 @@ body {
   white-space: nowrap;
 }
 .team-btn.active {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: var(--lane-ocm);
+  border-color: var(--lane-ocm);
   color: white;
   font-weight: 700;
 }
@@ -112,7 +112,7 @@ body {
   position: absolute;
   top: -4px;
   right: -4px;
-  background: var(--orange);
+  background: var(--lane-ocm);
   color: white;
   border-radius: 50%;
   width: 16px;
@@ -125,7 +125,7 @@ body {
 }
 .category-section { margin: 0; }
 .cat-header {
-  background: var(--orange);
+  background: var(--lane-ocm);
   color: white;
   padding: 12px 16px;
   font-size: 14px;
@@ -142,7 +142,7 @@ body {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  border-left: 4px solid var(--med-blue);
+  border-left: 4px solid var(--star-cluster);
 }
 .question-card.answered { border-left-color: #4CAF50; }
 .q-header {
@@ -152,7 +152,7 @@ body {
   align-items: flex-start;
 }
 .q-num {
-  background: var(--dark-blue);
+  background: var(--subaru-blue);
   color: white;
   width: 28px;
   height: 28px;
@@ -164,11 +164,11 @@ body {
   font-weight: 700;
   flex-shrink: 0;
 }
-.q-text { font-size: 15px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+.q-text { font-size: 15px; font-weight: 600; color: var(--subaru-blue); line-height: 1.3; }
 .q-why {
   padding: 4px 14px 8px 52px;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--text-muted);
   font-style: italic;
   line-height: 1.4;
 }
@@ -190,15 +190,15 @@ body {
 }
 .opt-btn:active { transform: scale(0.97); }
 .opt-btn.selected {
-  background: var(--light-blue);
-  border-color: var(--med-blue);
+  background: var(--bright-blue);
+  border-color: var(--star-cluster);
   font-weight: 600;
-  color: var(--dark-blue);
+  color: var(--subaru-blue);
 }
 .notes-section { padding: 8px 14px 14px; }
 .notes-prompt {
   font-size: 12px;
-  color: var(--orange);
+  color: var(--lane-ocm);
   font-weight: 600;
   margin-bottom: 4px;
 }
@@ -213,7 +213,7 @@ body {
   resize: vertical;
   -webkit-appearance: none;
 }
-.notes-area:focus { outline: none; border-color: var(--med-blue); box-shadow: 0 0 0 2px rgba(36,158,216,0.2); }
+.notes-area:focus { outline: none; border-color: var(--star-cluster); box-shadow: 0 0 0 2px rgba(36,158,216,0.2); }
 .observations-section {
   margin: 8px;
   background: var(--white);
@@ -230,7 +230,7 @@ body {
   text-transform: uppercase;
 }
 .obs-item { padding: 12px 16px; border-bottom: 1px solid #EEE; }
-.obs-label { font-size: 13px; font-weight: 600; color: var(--dark-blue); margin-bottom: 4px; }
+.obs-label { font-size: 13px; font-weight: 600; color: var(--subaru-blue); margin-bottom: 4px; }
 .obs-area {
   width: 100%;
   min-height: 50px;
@@ -257,8 +257,8 @@ body {
   cursor: pointer;
   transition: all 0.2s;
 }
-.btn-export { background: var(--navy); color: white; }
-.btn-clear { background: #EEE; color: var(--text); }
+.btn-export { background: var(--subaru-blue); color: white; }
+.btn-clear { background: #EEE; color: var(--text-primary); }
 .btn-export:active, .btn-clear:active { transform: scale(0.97); }
 @media (max-width: 600px) {
   .opt-btn { width: 100%; text-align: left; }
