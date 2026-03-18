@@ -6,66 +6,14 @@
 <link rel="stylesheet" href="../../deliverables/mars-ui/mars-ui.css">
 <title>Subaru M.A.R.S. — Week 2 Status</title>
 <style>
-  :root {
-    /* === BRAND: Subaru (Client Accent) === */
-    --subaru-blue: #00205B;
-    --star-cluster: #1D4F91;
-    --bright-blue: #00AEEF;
-    /* === SERVICE LANES === */
-    --lane-training: #1976D2;
-    --lane-coaching: #7B1FA2;
-    --lane-jira: #00897B;
-    --lane-ocm: #EF6C00;
-    --lane-admin: #546E7A;
-    --lane-milestones: #C62828;
-    --lane-customer: #1565C0;
-    --lane-delivery: #E65100;
-    /* === LANE TINTS === */
-    --tint-training: #E8F1FB;
-    --tint-coaching: #F3E5F9;
-    --tint-jira: #E0F2F1;
-    --tint-ocm: #FFF3E0;
-    --tint-admin: #ECEFF1;
-    --tint-milestones: #FFEBEE;
-    /* === LANE TEXT === */
-    --text-training: #0D47A1;
-    --text-coaching: #4A148C;
-    --text-jira: #004D40;
-    --text-ocm: #BF360C;
-    --text-admin: #37474F;
-    --text-milestones: #B71C1C;
-    /* === STATUS === */
-    --status-ontrack: #2E7D32;
-    --status-atrisk: #FFB300;
-    --status-blocked: #C62828;
-    --status-ontrack-bg: #E8F5E9;
-    --status-atrisk-bg: #FFF8E1;
-    --status-blocked-bg: #FFEBEE;
-    /* === SURFACE & CHROME === */
-    --white: #FFFFFF;
-    --stat-bg: #F9FAFB;
-    --border-soft: #E5E7EB;
-    --text-primary: #1F2937;
-    --text-secondary: #6B7280;
-    --text-muted: #9CA3AF;
-    /* === INTERNAL ACCENT === */
-    --amber: #E67E22;
-    --amber-light: #FEF3C7;
-    /* === CALLOUT === */
-    --yellow-callout: #FFFDE7;
-    --yellow-border: #FBC02D;
-    /* === TURNBERRY PARTNER === */
-    --tb-navy: #032D3E;
-    --tb-accent: #349ED8;
-    --tb-teal: #06597A;
-  }
-.accent-bar{height:4px;background:#00205B;width:100%}
+  /* CSS variables imported from mars-ui.css */
+.accent-bar{height:4px;background:var(--subaru-blue);width:100%}
   /* ── Reset & Base ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    background: #f4f5f7;
-    color: #1a1a2e;
+    background: var(--surface-dim);
+    color: var(--text-primary);
     line-height: 1.5;
   }
 
@@ -74,25 +22,25 @@
     width: 960px;
     height: 540px; /* 16:9 */
     margin: 0 auto;
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 0;
     overflow: hidden;
     position: relative;
-    color: #1a1a1a;
-    border: 1px solid #e5e7eb;
+    color: var(--text-primary);
+    border: 1px solid var(--border-soft);
   }
 
   /* ── Row 1: Highlight Reel Banner — 2/9 of 540 = 120px ── */
   .highlight-banner {
     height: 120px;
-    background: linear-gradient(135deg, #00205B 0%, #1D4F91 100%);
+    background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 100%);
     display: flex;
     align-items: center;
     padding: 0 32px;
     position: relative;
     overflow: hidden;
-    border-bottom: 1px solid #e5e7eb;
-    color: #ffffff;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--surface);
   }
   .highlight-banner::after {
     content: '';
@@ -160,9 +108,9 @@
     overflow: hidden;
     cursor: pointer;
     transition: background-color 0.15s;
-    background: #ffffff;
+    background: var(--surface);
   }
-  .block:hover { background-color: #f9fafb; }
+  .block:hover { background-color: var(--surface-dim); }
   .block .block-tag {
     font-size: 9px;
     letter-spacing: 2px;
@@ -178,7 +126,7 @@
   }
   .block p, .block li {
     font-size: 12px;
-    color: #444444;
+    color: var(--text-primary);
     line-height: 1.55;
   }
   .block ul {
@@ -201,17 +149,17 @@
   /* Training block */
   .block-training {
     flex: 1;
-    background: #ffffff;
-    border-right: 1px solid #e5e7eb;
+    background: var(--surface);
+    border-right: 1px solid var(--border-soft);
   }
-  .block-training ul li::before { background: #1976D2; }
+  .block-training ul li::before { background: var(--lane-training); }
 
   /* Coaching block */
   .block-coaching {
     flex: 1;
-    background: #ffffff;
+    background: var(--surface);
   }
-  .block-coaching ul li::before { background: #1565C0; }
+  .block-coaching ul li::before { background: var(--lane-customer); }
 
   .status-chip {
     display: inline-block;
@@ -222,9 +170,9 @@
     margin-left: 6px;
     vertical-align: middle;
   }
-  .chip-complete { background: rgba(46,125,50,0.15); color: #2E7D32; }
-  .chip-active { background: rgba(25,118,210,0.15); color: #1976D2; }
-  .chip-upcoming { background: rgba(255,179,0,0.15); color: #FFB300; }
+  .chip-complete { background: rgba(46,125,50,0.15); color: var(--status-ontrack); }
+  .chip-active { background: rgba(25,118,210,0.15); color: var(--lane-training); }
+  .chip-upcoming { background: rgba(255,179,0,0.15); color: var(--status-atrisk); }
 
   /* ── Row 3: JIRA | OCM | Logistics — 3/9 of 540 = 180px ── */
   .row-three {
@@ -233,39 +181,39 @@
   }
   .block-jira {
     flex: 3;
-    background: #ffffff;
-    border-right: 1px solid #e5e7eb;
+    background: var(--surface);
+    border-right: 1px solid var(--border-soft);
   }
-  .block-jira ul li::before { background: #00897B; }
+  .block-jira ul li::before { background: var(--lane-jira); }
 
   .block-ocm {
     flex: 3;
-    background: #ffffff;
-    border-right: 1px solid #e5e7eb;
+    background: var(--surface);
+    border-right: 1px solid var(--border-soft);
   }
-  .block-ocm ul li::before { background: #EF6C00; }
+  .block-ocm ul li::before { background: var(--lane-ocm); }
 
   .block-logistics {
     flex: 2;
-    background: #ffffff;
+    background: var(--surface);
   }
-  .block-logistics ul li::before { background: #E65100; }
+  .block-logistics ul li::before { background: var(--lane-delivery); }
 
   /* ── Row 4: Teams Bar — 1/9 of 540 = 60px ── */
   .teams-bar {
     height: 60px;
-    background: #f9fafb;
+    background: var(--surface-dim);
     display: flex;
     align-items: center;
     padding: 0 20px;
     gap: 8px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--border-soft);
   }
   .teams-bar-label {
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #888888;
+    color: var(--text-muted);
     margin-right: 8px;
     white-space: nowrap;
   }
@@ -273,12 +221,12 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
     border-radius: 16px;
     padding: 6px 12px;
     font-size: 11px;
-    color: #1a1a1a;
+    color: var(--text-primary);
     white-space: nowrap;
   }
   .team-dot {
@@ -286,34 +234,34 @@
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .dot-onboarding { background: #1976D2; box-shadow: 0 0 6px rgba(25,118,210,0.3); }
-  .dot-active { background: #2E7D32; box-shadow: 0 0 6px rgba(46,125,50,0.3); }
-  .dot-pending { background: #FFB300; box-shadow: 0 0 6px rgba(255,179,0,0.3); }
+  .dot-onboarding { background: var(--lane-training); box-shadow: 0 0 6px rgba(25,118,210,0.3); }
+  .dot-active { background: var(--status-ontrack); box-shadow: 0 0 6px rgba(46,125,50,0.3); }
+  .dot-pending { background: var(--status-atrisk); box-shadow: 0 0 6px rgba(255,179,0,0.3); }
 
   .team-pill .cohort-badge {
     font-size: 8px;
     font-weight: 700;
-    background: #f0f0f0;
+    background: var(--surface-dim);
     border-radius: 3px;
     padding: 1px 4px;
-    color: #666666;
+    color: var(--text-secondary);
   }
 
   /* ── Detail Blocks Below ── */
   .detail-section {
     width: 960px;
     margin: 0 auto;
-    background: #fff;
+    background: var(--surface);
   }
   .detail-block {
     padding: 28px 32px;
-    border-bottom: 1px solid #e8eaed;
+    border-bottom: 1px solid var(--border-soft);
   }
   .detail-block:last-child { border-bottom: none; }
   .detail-block h3 {
     font-size: 16px;
     font-weight: 700;
-    color: #0054a4;
+    color: var(--subaru-blue);
     margin-bottom: 4px;
     display: flex;
     align-items: center;
@@ -324,18 +272,18 @@
   }
   .detail-block .detail-subtitle {
     font-size: 12px;
-    color: #888;
+    color: var(--text-muted);
     margin-bottom: 14px;
   }
   .detail-block h4 {
     font-size: 13px;
     font-weight: 700;
-    color: #333;
+    color: var(--text-primary);
     margin: 14px 0 6px;
   }
   .detail-block p {
     font-size: 13px;
-    color: #444;
+    color: var(--text-secondary);
     line-height: 1.65;
     margin-bottom: 8px;
   }
@@ -345,36 +293,36 @@
   }
   .detail-block li {
     font-size: 13px;
-    color: #444;
+    color: var(--text-secondary);
     line-height: 1.65;
     margin-bottom: 3px;
   }
   .callout {
-    background: #f0f7ff;
-    border-left: 3px solid #0054a4;
+    background: rgba(0,32,91,0.08);
+    border-left: 3px solid var(--subaru-blue);
     padding: 10px 14px;
     margin: 12px 0;
     border-radius: 0 6px 6px 0;
     font-size: 13px;
-    color: #1a3a5c;
+    color: var(--text-primary);
   }
   .callout-warn {
-    background: #fff8e1;
-    border-left-color: #f9a825;
-    color: #5d4037;
+    background: rgba(255,179,0,0.08);
+    border-left-color: var(--status-atrisk);
+    color: var(--text-primary);
   }
 
   /* ── Footer ── */
-  .footer-bar{height:3px;background:#00205B;margin-top:24px}
+  .footer-bar{height:3px;background:var(--subaru-blue);margin-top:24px}
 .footer {
     width: 960px;
     margin: 0 auto;
     padding: 16px 32px;
-    background: #f9fafb;
+    background: var(--surface-dim);
     font-size: 11px;
-    color: #888888;
+    color: var(--text-muted);
     text-align: center;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--border-soft);
   }
 
   /* ── Anchor links ── */

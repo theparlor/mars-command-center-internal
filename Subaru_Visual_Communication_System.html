@@ -6,39 +6,7 @@
 <link rel="stylesheet" href="mars-ui/mars-ui.css">
 <title>Visual Communication System v3.0 — Subaru M.A.R.S. Transformation</title>
 <style>
-  :root {
-    /* PRIMARY PALETTE: Turnberry Layout Foundations */
-    --canvas-white: #FFFFFF;
-    --canvas-stat: #F9FAFB;
-    --border-soft: #E5E7EB;
-    --border-light: #E9ECEF;
-    --text-primary: #1F2937;
-    --text-secondary: #6B7280;
-    --text-muted: #9CA3AF;
-
-    /* ACCENT LAYER: Subaru Brand (Client) */
-    --accent-primary: #00205B;      /* Subaru Blue — PMS 281C */
-    --accent-secondary: #1D4F91;    /* Star Cluster Blue — PMS 7686C */
-    --accent-light: #D1D5DB;
-
-    /* FUNCTIONAL COLORS (Service Lane / Status) */
-    --lane-training: #1976D2;
-    --lane-customer: #1565C0;
-    --lane-delivery: #E65100;
-    --lane-frameworks: #7B1FA2;
-    --lane-coaching: #7B1FA2;
-    --lane-jira: #00897B;
-    --lane-ocm: #EF6C00;
-    --lane-milestones: #C62828;
-    --lane-admin: #546E7A;
-    --status-ontrack: #2E7D32;
-    --status-atrisk: #FFB300;
-    --status-blocked: #C62828;
-    --role-exec: #00205B;
-    --role-leader: #1D4F91;
-    --role-fte: #2E7D32;
-    --role-contractor: #F57C00;
-  }
+  /* CSS variables imported from mars-ui.css */
 
   * {
     margin: 0;
@@ -51,13 +19,13 @@
     font-size: 14px;
     line-height: 1.6;
     color: var(--text-primary);
-    background: var(--canvas-white);
+    background: var(--surface);
   }
 
   /* ========== HEADER PATTERN ========== */
   header {
     position: relative;
-    background: var(--canvas-white);
+    background: var(--surface);
     border-bottom: 1px solid var(--border-soft);
     padding: 2rem;
   }
@@ -69,13 +37,13 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: var(--accent-primary);
+    background: var(--subaru-blue);
   }
 
   header h1 {
     font-size: 28px;
     font-weight: bold;
-    color: var(--accent-primary);
+    color: var(--subaru-blue);
     margin-bottom: 0.5rem;
   }
 
@@ -106,10 +74,10 @@
   section h2 {
     font-size: 20px;
     font-weight: bold;
-    color: var(--accent-primary);
+    color: var(--subaru-blue);
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--accent-primary);
+    border-bottom: 2px solid var(--subaru-blue);
   }
 
   section h3 {
@@ -132,20 +100,20 @@
   }
 
   code {
-    background: var(--canvas-stat);
+    background: var(--surface-dim);
     padding: 2px 6px;
     border-radius: 3px;
     font-family: 'Courier New', monospace;
     font-size: 12px;
-    color: var(--accent-primary);
+    color: var(--subaru-blue);
   }
 
   /* ========== FOOTER PATTERN ========== */
   footer {
     margin-top: 4rem;
-    background: var(--canvas-stat);
+    background: var(--surface-dim);
     border-top: 3px solid transparent;
-    border-image: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-primary) 100%) 1;
+    border-image: linear-gradient(90deg, var(--subaru-blue) 0%, var(--star-cluster) 50%, var(--subaru-blue) 100%) 1;
     padding: 2rem;
     text-align: center;
     font-size: 12px;
@@ -154,9 +122,9 @@
 
   /* ========== CARD PATTERN ========== */
   .card {
-    background: var(--canvas-white);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
-    border-left: 4px solid var(--accent-primary);
+    border-left: 4px solid var(--subaru-blue);
     border-radius: 8px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
@@ -200,7 +168,7 @@
     border: 1px solid var(--border-soft);
     border-radius: 8px;
     overflow: hidden;
-    background: var(--canvas-white);
+    background: var(--surface);
   }
 
   .swatch-color {
@@ -229,7 +197,7 @@
   .type-sample {
     margin-bottom: 2rem;
     padding: 1rem;
-    background: var(--canvas-stat);
+    background: var(--surface-dim);
     border-radius: 6px;
   }
 
@@ -242,12 +210,12 @@
     margin-bottom: 0.5rem;
   }
 
-  .type-title { font-size: 24px; font-weight: bold; color: var(--accent-primary); }
+  .type-title { font-size: 24px; font-weight: bold; color: var(--subaru-blue); }
   .type-heading { font-size: 20px; font-weight: bold; color: var(--text-primary); }
   .type-subhead { font-size: 16px; font-weight: 600; color: var(--text-primary); }
   .type-body { font-size: 14px; color: var(--text-secondary); }
   .type-caption { font-size: 12px; color: var(--text-muted); }
-  .type-stat { font-size: 32px; font-weight: bold; color: var(--accent-primary); }
+  .type-stat { font-size: 32px; font-weight: bold; color: var(--subaru-blue); }
   .type-stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 0.25rem; }
 
   /* ========== BADGE & BUTTON PATTERNS ========== */
@@ -262,7 +230,7 @@
   }
 
   .badge-ontrack { background: rgba(46, 125, 50, 0.15); color: var(--status-ontrack); }
-  .badge-atrisk { background: rgba(255, 179, 0, 0.15); color: #F57F17; }
+  .badge-atrisk { background: rgba(255, 179, 0, 0.15); color: var(--status-atrisk); }
   .badge-blocked { background: rgba(198, 40, 40, 0.15); color: var(--status-blocked); }
 
   .btn-filter {
@@ -271,7 +239,7 @@
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
     border: 1px solid var(--border-soft);
-    background: var(--canvas-white);
+    background: var(--surface);
     color: var(--text-primary);
     border-radius: 20px;
     font-size: 12px;
@@ -280,19 +248,19 @@
   }
 
   .btn-filter:hover {
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
+    border-color: var(--subaru-blue);
+    color: var(--subaru-blue);
   }
 
   .btn-filter.active {
-    background: var(--accent-primary);
-    color: var(--canvas-white);
-    border-color: var(--accent-primary);
+    background: var(--subaru-blue);
+    color: var(--surface);
+    border-color: var(--subaru-blue);
   }
 
   /* ========== STAT BOX ========== */
   .stat-box {
-    background: var(--canvas-stat);
+    background: var(--surface-dim);
     border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.5rem;
@@ -303,7 +271,7 @@
   .stat-number {
     font-size: 36px;
     font-weight: bold;
-    color: var(--accent-primary);
+    color: var(--subaru-blue);
   }
 
   .stat-label {
@@ -315,14 +283,14 @@
   /* ========== DESIGN PRINCIPLE BOX ========== */
   .principle-box {
     background: linear-gradient(135deg, rgba(0, 32, 91, 0.02) 0%, rgba(29, 79, 145, 0.02) 100%);
-    border-left: 4px solid var(--accent-primary);
+    border-left: 4px solid var(--subaru-blue);
     padding: 1.5rem;
     border-radius: 6px;
     margin-bottom: 1.5rem;
   }
 
   .principle-box h4 {
-    color: var(--accent-primary);
+    color: var(--subaru-blue);
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 0.5rem;

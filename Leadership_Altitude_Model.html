@@ -9,28 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <style>
-  :root {
-    --exec: #1a1a2e;
-    --exec-light: #2d2d4a;
-    --strategic: #16213e;
-    --strategic-light: #1f3054;
-    --product: #0f3460;
-    --product-light: #164a80;
-    --operational: #1a5276;
-    --operational-light: #2471a3;
-    --team: #1e8449;
-    --team-light: #27ae60;
-    --enterprise: #e74c3c;
-    --enablement: #3498db;
-    --both: #9b59b6;
-    --stat-bg: #0d1117;
-    --surface: #161b22;
-    --surface2: #21262d;
-    --border-soft: #30363d;
-    --text-primary: #e6edf3;
-    --text-muted: #8b949e;
-    --accent: #58a6ff;
-  }
+  /* CSS variables imported from mars-ui.css */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--stat-bg); color: var(--text-primary); }
 
@@ -70,8 +49,8 @@
 
   .os-headers { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 2px; margin-bottom: 8px; }
   .os-header { text-align: center; padding: 8px; font-size: 13px; font-weight: 600; border-radius: 8px; }
-  .os-header.enterprise-h { background: rgba(231,76,60,0.15); color: #e74c3c; }
-  .os-header.enablement-h { background: rgba(52,152,219,0.15); color: #3498db; }
+  .os-header.enterprise-h { background: rgba(198,40,40,0.15); color: var(--status-blocked); }
+  .os-header.enablement-h { background: rgba(25,118,210,0.15); color: var(--lane-training); }
 
   /* DETAIL PANEL */
   .detail-panel { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 24px; margin-top: 16px; }
@@ -159,7 +138,7 @@ const ALTITUDES = [
     level: 'L5',
     name: 'Executive / Sponsor',
     subtitle: 'Portfolio direction & investment',
-    color: '#e74c3c',
+    color: '#C62828',
     bgColor: 'rgba(231,76,60,0.12)',
     timeHorizon: '12-36 months',
     keyQuestion: 'Are we investing in the right transformation bets?',
@@ -187,7 +166,7 @@ const ALTITUDES = [
     level: 'L4',
     name: 'Strategic',
     subtitle: 'Architecture & cross-cutting concerns',
-    color: '#9b59b6',
+    color: '#7B1FA2',
     bgColor: 'rgba(155,89,182,0.12)',
     timeHorizon: '6-18 months',
     keyQuestion: 'Are our systems and structures enabling the outcomes we need?',
@@ -215,7 +194,7 @@ const ALTITUDES = [
     level: 'L3',
     name: 'Product',
     subtitle: 'Outcomes, trios & delivery',
-    color: '#3498db',
+    color: '#1976D2',
     bgColor: 'rgba(52,152,219,0.12)',
     timeHorizon: '3-12 months',
     keyQuestion: 'Are our products delivering the outcomes that matter?',
@@ -243,7 +222,7 @@ const ALTITUDES = [
     level: 'L2',
     name: 'Operational',
     subtitle: 'People, process & platforms',
-    color: '#f39c12',
+    color: '#EF6C00',
     bgColor: 'rgba(243,156,18,0.12)',
     timeHorizon: '1-6 months',
     keyQuestion: 'Is our execution rhythm healthy and sustainable?',
@@ -271,7 +250,7 @@ const ALTITUDES = [
     level: 'L1',
     name: 'Team / Practitioner',
     subtitle: 'Skills, craft & daily work',
-    color: '#2ecc71',
+    color: '#2E7D32',
     bgColor: 'rgba(46,204,113,0.12)',
     timeHorizon: '1-12 weeks',
     keyQuestion: 'Am I growing and delivering at my best?',
@@ -297,11 +276,11 @@ const ALTITUDES = [
 ];
 
 const COMM_TYPES = [
-  { id: 'direction', label: 'Direction', color: '#e74c3c', desc: 'Setting course and intent' },
-  { id: 'decision', label: 'Decision', color: '#9b59b6', desc: 'Making and communicating choices' },
-  { id: 'status', label: 'Status', color: '#3498db', desc: 'Reporting progress and health' },
+  { id: 'direction', label: 'Direction', color: '#C62828', desc: 'Setting course and intent' },
+  { id: 'decision', label: 'Decision', color: '#7B1FA2', desc: 'Making and communicating choices' },
+  { id: 'status', label: 'Status', color: '#1976D2', desc: 'Reporting progress and health' },
   { id: 'ask', label: 'Ask', color: '#f39c12', desc: 'Requesting input, approval, or resources' },
-  { id: 'escalation', label: 'Escalation', color: '#e67e22', desc: 'Raising blockers that need higher authority' },
+  { id: 'escalation', label: 'Escalation', color: '#EF6C00', desc: 'Raising blockers that need higher authority' },
   { id: 'learn', label: 'Learn', color: '#2ecc71', desc: 'Sharing insights and adaptations' }
 ];
 
@@ -342,8 +321,8 @@ const ACCOUNTABILITY_TYPES = [
   { id: 'own', label: 'Owns', color: '#58a6ff' },
   { id: 'decide', label: 'Decides', color: '#ee82ee' },
   { id: 'communicate', label: 'Communicates', color: '#2ecc71' },
-  { id: 'measure', label: 'Measures', color: '#f1c40f' },
-  { id: 'learn', label: 'Learns From', color: '#e67e22' }
+  { id: 'measure', label: 'Measures', color: '#EF6C00' },
+  { id: 'learn', label: 'Learns From', color: '#EF6C00' }
 ];
 
 // === SUBARU SCENARIOS ===
@@ -352,9 +331,9 @@ const SUBARU_SCENARIOS = [
     title: 'Bi-weekly Status Report to Greg',
     desc: 'Engagement progress update for VP sponsor',
     atoms: [
-      { dim: 'Altitude', value: 'Executive', color: '#e74c3c' },
-      { dim: 'OS', value: 'Both', color: '#9b59b6' },
-      { dim: 'Type', value: 'Status', color: '#3498db' },
+      { dim: 'Altitude', value: 'Executive', color: '#C62828' },
+      { dim: 'OS', value: 'Both', color: '#7B1FA2' },
+      { dim: 'Type', value: 'Status', color: '#1976D2' },
       { dim: 'Channel', value: 'Status Report', color: '#f39c12' },
       { dim: 'Cadence', value: 'Bi-weekly', color: '#2ecc71' },
       { dim: 'Domain', value: 'All', color: '#8b949e' },
@@ -366,8 +345,8 @@ const SUBARU_SCENARIOS = [
     desc: 'Internal team sync on execution and coordination',
     atoms: [
       { dim: 'Altitude', value: 'Operational', color: '#f39c12' },
-      { dim: 'OS', value: 'Enablement', color: '#3498db' },
-      { dim: 'Type', value: 'Status + Ask', color: '#3498db' },
+      { dim: 'OS', value: 'Enablement', color: '#1976D2' },
+      { dim: 'Type', value: 'Status + Ask', color: '#1976D2' },
       { dim: 'Channel', value: 'Leadership Sync', color: '#f39c12' },
       { dim: 'Cadence', value: 'Weekly', color: '#2ecc71' },
       { dim: 'Domain', value: 'All', color: '#8b949e' },
@@ -378,8 +357,8 @@ const SUBARU_SCENARIOS = [
     title: 'Training Readout for Gino',
     desc: 'Post-training synthesis for Director-level stakeholder',
     atoms: [
-      { dim: 'Altitude', value: 'Product', color: '#3498db' },
-      { dim: 'OS', value: 'Enablement', color: '#3498db' },
+      { dim: 'Altitude', value: 'Product', color: '#1976D2' },
+      { dim: 'OS', value: 'Enablement', color: '#1976D2' },
       { dim: 'Type', value: 'Learn', color: '#2ecc71' },
       { dim: 'Channel', value: 'Presentation', color: '#f39c12' },
       { dim: 'Cadence', value: 'Per-module', color: '#2ecc71' },
@@ -391,9 +370,9 @@ const SUBARU_SCENARIOS = [
     title: 'Expansion Recommendation for Laura',
     desc: 'CIO-level case for broadening transformation scope',
     atoms: [
-      { dim: 'Altitude', value: 'Executive', color: '#e74c3c' },
-      { dim: 'OS', value: 'Enterprise', color: '#e74c3c' },
-      { dim: 'Type', value: 'Direction + Ask', color: '#e74c3c' },
+      { dim: 'Altitude', value: 'Executive', color: '#C62828' },
+      { dim: 'OS', value: 'Enterprise', color: '#C62828' },
+      { dim: 'Type', value: 'Direction + Ask', color: '#C62828' },
       { dim: 'Channel', value: 'Presentation', color: '#f39c12' },
       { dim: 'Cadence', value: 'Milestone', color: '#2ecc71' },
       { dim: 'Domain', value: 'Expansion', color: '#8b949e' },
@@ -404,8 +383,8 @@ const SUBARU_SCENARIOS = [
     title: 'Coaching Observation → Brien/Jason Slack Thread',
     desc: 'Real-time signal from embedded coaching session',
     atoms: [
-      { dim: 'Altitude', value: 'Strategic', color: '#9b59b6' },
-      { dim: 'OS', value: 'Enablement', color: '#3498db' },
+      { dim: 'Altitude', value: 'Strategic', color: '#7B1FA2' },
+      { dim: 'OS', value: 'Enablement', color: '#1976D2' },
       { dim: 'Type', value: 'Learn', color: '#2ecc71' },
       { dim: 'Channel', value: 'Slack', color: '#f39c12' },
       { dim: 'Cadence', value: 'Ad-hoc', color: '#2ecc71' },
@@ -417,8 +396,8 @@ const SUBARU_SCENARIOS = [
     title: 'JIRA Assessment Findings',
     desc: 'Current state findings from tooling assessment',
     atoms: [
-      { dim: 'Altitude', value: 'Product', color: '#3498db' },
-      { dim: 'OS', value: 'Both', color: '#9b59b6' },
+      { dim: 'Altitude', value: 'Product', color: '#1976D2' },
+      { dim: 'OS', value: 'Both', color: '#7B1FA2' },
       { dim: 'Type', value: 'Status + Decision', color: '#3498db' },
       { dim: 'Channel', value: 'Document', color: '#f39c12' },
       { dim: 'Cadence', value: 'Milestone', color: '#2ecc71' },
@@ -549,7 +528,7 @@ function AltitudeStackView({ selectedAltitude, setSelectedAltitude, selectedAccT
           </h2>
           <div className="detail-grid">
             <div className="detail-section">
-              <h3 style={{ color: '#e74c3c' }}>Enterprise OS Accountabilities</h3>
+              <h3 style={{ color: '#C62828' }}>Enterprise OS Accountabilities</h3>
               {ACCOUNTABILITY_TYPES.map(t => (
                 <div key={t.id} style={{ marginBottom: '12px' }}>
                   <div style={{ fontSize: '12px', color: t.color, fontWeight: 600, marginBottom: '4px' }}>{t.label}</div>
@@ -707,7 +686,7 @@ function AtomBuilderView({ atomAltitude, setAtomAltitude, atomOS, setAtomOS, ato
             <label>Operating System</label>
             <div className="pill-group">
               <button className={`pill ${atomOS === 'enterprise' ? 'selected' : ''}`}
-                style={atomOS === 'enterprise' ? { background: '#e74c3c', borderColor: '#e74c3c' } : {}}
+                style={atomOS === 'enterprise' ? { background: '#C62828', borderColor: '#C62828' } : {}}
                 onClick={() => setAtomOS(atomOS === 'enterprise' ? null : 'enterprise')}>Enterprise</button>
               <button className={`pill ${atomOS === 'enablement' ? 'selected' : ''}`}
                 style={atomOS === 'enablement' ? { background: '#3498db', borderColor: '#3498db' } : {}}
@@ -762,7 +741,7 @@ function AtomBuilderView({ atomAltitude, setAtomAltitude, atomOS, setAtomOS, ato
               <div className="atom-card" style={{ borderLeftColor: selectedAlt?.color || 'var(--accent)' }}>
                 <div className="meta-row">
                   <span className="meta-badge" style={{ background: selectedAlt?.bgColor, color: selectedAlt?.color }}>{selectedAlt?.name}</span>
-                  <span className="meta-badge" style={{ background: atomOS === 'enterprise' ? 'rgba(231,76,60,0.15)' : atomOS === 'enablement' ? 'rgba(52,152,219,0.15)' : 'rgba(155,89,182,0.15)', color: atomOS === 'enterprise' ? '#e74c3c' : atomOS === 'enablement' ? '#3498db' : '#9b59b6' }}>
+                  <span className="meta-badge" style={{ background: atomOS === 'enterprise' ? 'rgba(198,40,40,0.15)' : atomOS === 'enablement' ? 'rgba(25,118,210,0.15)' : 'rgba(123,31,162,0.15)', color: atomOS === 'enterprise' ? '#C62828' : atomOS === 'enablement' ? '#1976D2' : '#7B1FA2' }}>
                     {atomOS === 'enterprise' ? 'Enterprise OS' : atomOS === 'enablement' ? 'Enablement OS' : 'Both OS'}
                   </span>
                   <span className="meta-badge" style={{ background: `${COMM_TYPES.find(t => t.id === atomType)?.color}22`, color: COMM_TYPES.find(t => t.id === atomType)?.color }}>
@@ -808,7 +787,7 @@ function AtomBuilderView({ atomAltitude, setAtomAltitude, atomOS, setAtomOS, ato
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   {(atomOS === 'enterprise' || atomOS === 'both') && (
                     <div>
-                      <div style={{ fontSize: '11px', color: '#e74c3c', marginBottom: '4px' }}>ENTERPRISE OS</div>
+                      <div style={{ fontSize: '11px', color: '#C62828', marginBottom: '4px' }}>ENTERPRISE OS</div>
                       {selectedAlt?.enterprise.owns.map((o, i) => (
                         <span key={i} className="accountability-tag own">{o}</span>
                       ))}

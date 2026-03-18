@@ -31,7 +31,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   content: ''; position: absolute; right: 100px; bottom: -80px;
   width: 200px; height: 200px; background: rgba(255,255,255,0.03); border-radius: 50%;
 }
-.hero-content { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-content { max-width: 1300px; position: relative; z-index: 1; }
 .hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
 .hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.8); margin-bottom: 24px; }
 .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -59,7 +59,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 .quick-nav a:hover { background: var(--subaru-blue); color: white; border-color: var(--subaru-blue); }
 
 /* ── MAIN LAYOUT ── */
-.main { max-width: 1300px; margin: 0 auto; padding: 32px 48px 64px; }
+.main { max-width: 1300px; padding: 32px 48px 64px; /* left-aligned, not centered */ }
 
 /* ── SECTION ── */
 .section { margin-bottom: 40px; }
@@ -140,7 +140,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 
 /* ── FOOTER ── */
 .page-footer {
-  max-width: 1300px; margin: 0 auto; padding: 24px 48px 40px;
+  max-width: 1300px; padding: 24px 48px 40px;
   border-top: 1px solid var(--border-soft); display: flex;
   justify-content: space-between; align-items: center;
   font-size: 11px; color: var(--text-secondary);
