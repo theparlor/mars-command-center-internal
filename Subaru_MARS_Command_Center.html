@@ -207,13 +207,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 <!-- ════════ QUICK NAV ════════ -->
 <div class="quick-nav">
   <span class="quick-nav-label">Jump to</span>
-  <a href="#schedule">Schedule & Timeline</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#curriculum">Training</a>
+  <a href="#coaching">Coaching</a>
+  <a href="#jira">Jira & Metrics</a>
+  <a href="#ocm">OCM & Comms</a>
   <a href="#organization">Organization</a>
-  <a href="#curriculum">Curriculum & Training</a>
-  <a href="#status">Status & Reporting</a>
-  <a href="#frameworks">Frameworks & Models</a>
-  <a href="#brand">Brand & Design</a>
-  <a href="#tools">Observation Tools</a>
+  <a href="#status">Status</a>
+  <a href="#frameworks">Frameworks</a>
+  <a href="#brand">Brand</a>
 </div>
 
 <!-- ════════ MAIN CONTENT ════════ -->
@@ -419,10 +421,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   </div>
 </div>
 
-<!-- ─── SECTION: CURRICULUM & TRAINING ─── -->
+<!-- ─── SOW LANE: CURRICULUM & TRAINING ─── -->
 <div class="section" id="curriculum">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--tint-jira); color: var(--lane-jira);">📚</div>
+    <div class="section-icon" style="background: var(--tint-training); color: var(--lane-training);">📚</div>
     <div><h2>Curriculum & Training</h2></div>
     <div class="section-desc">14 courses across 4 categories · Full Agile Academy with course materials</div>
   </div>
@@ -430,7 +432,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   <div class="card-grid wide">
     <a class="card-featured" href="curriculum/Subaru_MARS_Course_Catalog.html">
       <div class="card-left">
-        <div style="height:4px;background:var(--curriculum-accent);border-radius:2px;margin-bottom:16px;width:60px"></div>
+        <div style="height:4px;background:var(--lane-training);border-radius:2px;margin-bottom:16px;width:60px"></div>
         <div class="card-title" style="font-size:18px;">Course Catalog</div>
         <div class="card-desc">Interactive catalog of all 14 courses. Filter by category, search by keyword, see objectives and agenda for each course.</div>
         <div style="margin-top:12px;"><span class="card-format">HTML</span> <span class="card-action" style="margin-left:8px;">Open Catalog →</span></div>
@@ -444,12 +446,40 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
         <div style="margin-top:12px;font-size:11px;color:var(--text-secondary);">Each course links to its full material in the Agile Academy</div>
       </div>
     </a>
+  </div>
+</div>
 
+<!-- ─── SOW LANE: COACHING INSIGHTS ─── -->
+<div class="section" id="coaching">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--tint-coaching); color: var(--lane-coaching);">🎯</div>
+    <div><h2>Coaching Insights</h2></div>
+    <div class="section-desc">Team assessment tools, observation frameworks, and leadership coaching models</div>
+  </div>
+
+  <div class="card-grid">
     <a class="card" href="Subaru_MARS_Interview_Guide.html">
-      <div class="card-accent" style="background: var(--curriculum-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-coaching);"></div>
       <div class="card-body">
-        <div class="card-title">MARS Interview Guide</div>
-        <div class="card-desc">Structured interview framework for team assessments — discovery questions, observation prompts, and maturity signals.</div>
+        <div class="card-title">Team Behavior Assessment</div>
+        <div class="card-desc">Interactive per-team assessment — 11 categories, 49 questions, notes, and observations. Tracks maturity signals across 6 teams.</div>
+        <div class="card-peek">
+          <div class="peek-label">ASSESSMENT AREAS</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-coaching)"></span> Intake · Cadence · Estimation · Quality · Tooling</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-coaching)"></span> Backlog · Dependencies · Deployment · Communication · Roles · Culture</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Assessment →</span>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_Roadmap_Session_Observation_Guide.html">
+      <div class="card-accent" style="background: var(--lane-coaching);"></div>
+      <div class="card-body">
+        <div class="card-title">Session Observation Guide</div>
+        <div class="card-desc">Structured observation framework for roadmap planning sessions — facilitation quality, decision-making, stakeholder engagement signals.</div>
       </div>
       <div class="card-footer">
         <span class="card-format">HTML</span>
@@ -457,49 +487,58 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
       </div>
     </a>
 
-    <a class="card" href="Subaru_Roadmap_Session_Observation_Guide.html">
-      <div class="card-accent" style="background: var(--curriculum-accent);"></div>
+    <a class="card" href="Leadership_Altitude_Model.html">
+      <div class="card-accent" style="background: var(--lane-coaching);"></div>
       <div class="card-body">
-        <div class="card-title">Roadmap Session Observation Guide</div>
-        <div class="card-desc">Structured observation framework for roadmap planning sessions — what to watch, what to capture, scoring rubric.</div>
+        <div class="card-title">Leadership Altitude Model</div>
+        <div class="card-desc">Interactive 5-level altitude model mapping leadership communications to Enterprise and Enablement operating systems.</div>
+        <div class="card-peek">
+          <div class="peek-label">ALTITUDE LEVELS</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#1a1a2e"></span> Executive · Strategic · Product · Operational · Team</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#e74c3c"></span> Enterprise OS ↔ Enablement OS mapping</div>
+        </div>
       </div>
       <div class="card-footer">
-        <span class="card-format">HTML</span>
-        <span class="card-action">Open Guide →</span>
+        <span class="card-format">HTML (React)</span>
+        <span class="card-action">Open Model →</span>
       </div>
     </a>
   </div>
 </div>
 
-<!-- ─── SECTION: STATUS & REPORTING ─── -->
-<div class="section" id="status">
+<!-- ─── SOW LANE: JIRA & METRICS ─── -->
+<div class="section" id="jira">
   <div class="section-header">
-    <div class="section-icon" style="background: var(--tint-ocm); color: var(--lane-ocm);">📊</div>
-    <div><h2>Status & Reporting</h2></div>
-    <div class="section-desc">Weekly dashboards and stakeholder updates</div>
+    <div class="section-icon" style="background: var(--tint-jira); color: var(--lane-jira);">⚙️</div>
+    <div><h2>Jira & Metrics</h2></div>
+    <div class="section-desc">Jira configuration, workflow standards, and team metrics · Coming soon</div>
   </div>
 
   <div class="card-grid">
-    <a class="card" href="../status_updates/Subaru_MARS_Weekly_Status.html">
-      <div class="card-accent" style="background: var(--status-accent);"></div>
+    <div class="card" style="opacity:0.5;cursor:default;">
+      <div class="card-accent" style="background: var(--lane-jira);"></div>
       <div class="card-body">
-        <div class="card-title">Weekly Status Dashboard</div>
-        <div class="card-desc">16:9 dashboard card — highlight reel, lane status, health indicators, next-week look-ahead. Designed for screen share.</div>
-        <div class="card-peek">
-          <div class="peek-label">INCLUDES</div>
-          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-training)"></span> Lane-by-lane progress</div>
-          <div class="peek-item"><span class="peek-dot" style="background:#2E7D32"></span> Health indicators (On Track / At Risk / Blocked)</div>
-          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-ocm)"></span> Wins, risks, and next-week plan</div>
-        </div>
+        <div class="card-title">Jira Configuration & Metrics</div>
+        <div class="card-desc">Board setup, workflow standards, velocity tracking, and cycle time dashboards will be added as the Jira workstream activates in Phase 1.</div>
       </div>
       <div class="card-footer">
-        <span class="card-format">HTML</span>
-        <span class="card-action">Open Dashboard →</span>
+        <span class="card-format" style="background:var(--tint-jira);color:var(--text-jira);border-color:var(--lane-jira);">COMING SOON</span>
       </div>
-    </a>
+    </div>
+  </div>
+</div>
 
+<!-- ─── SOW LANE: OCM & COMMS ─── -->
+<div class="section" id="ocm">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--tint-ocm); color: var(--lane-ocm);">📣</div>
+    <div><h2>OCM & Comms</h2></div>
+    <div class="section-desc">Organizational change management, communications strategy, and stakeholder engagement</div>
+  </div>
+
+  <div class="card-grid">
     <a class="card" href="Subaru_Visual_Communication_System.html">
-      <div class="card-accent" style="background: var(--status-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-ocm);"></div>
       <div class="card-body">
         <div class="card-title">Visual Communication System</div>
         <div class="card-desc">Standards for visual communication across all engagement artifacts — iconography, color coding, status indicators.</div>
@@ -511,7 +550,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     </a>
 
     <a class="card" href="schedule/Subaru_MARS_Schedule_Email.html">
-      <div class="card-accent" style="background: var(--lane-admin);"></div>
+      <div class="card-accent" style="background: var(--lane-ocm);"></div>
       <div class="card-body">
         <div class="card-title">Schedule Email (Paste-Ready)</div>
         <div class="card-desc">Pre-formatted schedule summary for email distribution. Copy-paste into Outlook.</div>
@@ -524,34 +563,46 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   </div>
 </div>
 
-<!-- ─── SECTION: FRAMEWORKS & MODELS ─── -->
+<!-- ─── CROSS-CUTTING: STATUS & REPORTING ─── -->
+<div class="section" id="status">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--status-ontrack-bg); color: var(--status-ontrack);">📊</div>
+    <div><h2>Status & Reporting</h2></div>
+    <div class="section-desc">Weekly dashboards and stakeholder updates</div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card" href="../status_updates/Subaru_MARS_Weekly_Status.html">
+      <div class="card-accent" style="background: var(--status-ontrack);"></div>
+      <div class="card-body">
+        <div class="card-title">Weekly Status Dashboard</div>
+        <div class="card-desc">16:9 dashboard card — highlight reel, lane status, health indicators, next-week look-ahead. Designed for screen share.</div>
+        <div class="card-peek">
+          <div class="peek-label">INCLUDES</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-training)"></span> Lane-by-lane progress</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--status-ontrack)"></span> Health indicators (On Track / At Risk / Blocked)</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--lane-ocm)"></span> Wins, risks, and next-week plan</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Dashboard →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── CROSS-CUTTING: FRAMEWORKS & MODELS ─── -->
 <div class="section" id="frameworks">
   <div class="section-header">
     <div class="section-icon" style="background: var(--tint-milestones); color: var(--lane-milestones);">🏗️</div>
     <div><h2>Frameworks & Models</h2></div>
-    <div class="section-desc">Transformation operating system, leadership models, and engagement architecture</div>
+    <div class="section-desc">Engagement architecture and reference models</div>
   </div>
 
   <div class="card-grid">
-    <a class="card" href="Leadership_Altitude_Model.html">
-      <div class="card-accent" style="background: var(--frameworks-accent);"></div>
-      <div class="card-body">
-        <div class="card-title">Leadership Altitude Model</div>
-        <div class="card-desc">Interactive 5-level altitude model mapping leadership communications to Enterprise and Enablement operating systems. Dark theme, React-based.</div>
-        <div class="card-peek">
-          <div class="peek-label">ALTITUDE LEVELS</div>
-          <div class="peek-item"><span class="peek-dot" style="background:#1a1a2e"></span> Executive · Strategic · Product · Operational · Team</div>
-          <div class="peek-item"><span class="peek-dot" style="background:#e74c3c"></span> Enterprise OS ↔ Enablement OS mapping</div>
-        </div>
-      </div>
-      <div class="card-footer">
-        <span class="card-format">HTML (React)</span>
-        <span class="card-action">Open Model →</span>
-      </div>
-    </a>
-
     <a class="card" href="SOW_Overview_Diagram.html">
-      <div class="card-accent" style="background: var(--frameworks-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-milestones);"></div>
       <div class="card-body">
         <div class="card-title">SOW Overview Diagram</div>
         <div class="card-desc">Visual map of the Statement of Work — scope boundaries, deliverables, and phase alignment.</div>
@@ -563,7 +614,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     </a>
 
     <a class="card" href="Subaru_RnR_Workbook.docx" style="pointer-events:auto;">
-      <div class="card-accent" style="background: var(--frameworks-accent);"></div>
+      <div class="card-accent" style="background: var(--lane-milestones);"></div>
       <div class="card-body">
         <div class="card-title">Roles & Responsibilities Workbook</div>
         <div class="card-desc">Comprehensive R&R definitions for all scrum roles — Product Owner, Scrum Master, Dev Team, stakeholders.</div>
@@ -623,52 +674,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   </div>
 </div>
 
-<!-- ─── SECTION: OBSERVATION TOOLS ─── -->
-<div class="section" id="tools">
-  <div class="section-header">
-    <div class="section-icon" style="background: #E8EAF6; color: #3F51B5;">🔍</div>
-    <div><h2>Observation & Assessment Tools</h2></div>
-    <div class="section-desc">Structured guides for team observation, interviews, and readiness assessment</div>
-  </div>
-
-  <div class="card-grid">
-    <a class="card" href="Subaru_MARS_Interview_Guide.html">
-      <div class="card-accent" style="background: #3F51B5;"></div>
-      <div class="card-body">
-        <div class="card-title">MARS Interview Guide</div>
-        <div class="card-desc">Discovery conversation framework — structured questions for understanding team maturity, pain points, and readiness.</div>
-      </div>
-      <div class="card-footer">
-        <span class="card-format">HTML</span>
-        <span class="card-action">Open →</span>
-      </div>
-    </a>
-
-    <a class="card" href="Subaru_Roadmap_Session_Observation_Guide.html">
-      <div class="card-accent" style="background: #3F51B5;"></div>
-      <div class="card-body">
-        <div class="card-title">Roadmap Session Observation Guide</div>
-        <div class="card-desc">What to watch for during roadmap planning — facilitation quality, decision-making, stakeholder engagement signals.</div>
-      </div>
-      <div class="card-footer">
-        <span class="card-format">HTML</span>
-        <span class="card-action">Open →</span>
-      </div>
-    </a>
-
-    <a class="card" href="Subaru_Training_Recap.pptx" style="pointer-events:auto;">
-      <div class="card-accent" style="background: #3F51B5;"></div>
-      <div class="card-body">
-        <div class="card-title">Training Recap Deck</div>
-        <div class="card-desc">Week 1 training readout — attendance, feedback scores, coaching observations, and improvement actions.</div>
-      </div>
-      <div class="card-footer">
-        <span class="card-format">PPTX</span>
-        <span class="card-action">Download →</span>
-      </div>
-    </a>
-  </div>
-</div>
+<!-- Observation Tools section removed — items moved to Coaching Insights -->
 
 </div><!-- end .main -->
 

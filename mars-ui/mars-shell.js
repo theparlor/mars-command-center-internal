@@ -15,7 +15,9 @@
   'use strict';
 
   // ── Site map (defines navigation structure) ──────────────────────
-  // Paths are relative to the deliverables/ root
+  // Primary sections align to SOW engagement lanes (Gantt swim lanes).
+  // Cross-cutting sections (Status, Frameworks, Brand) support the lanes.
+  // Paths are relative to the deliverables/ root.
   const SITE_MAP = [
     {
       section: 'Home',
@@ -23,9 +25,11 @@
         { label: 'Command Center', icon: '🏠', href: 'Subaru_MARS_Command_Center.html' }
       ]
     },
+    // ─── SOW LANE: Schedule & Timeline ───
     {
       section: 'Schedule & Timeline',
       icon: '📅',
+      anchor: 'schedule',
       items: [
         { label: 'Engagement Schedule', icon: '📋', href: 'schedule/Subaru_MARS_Reconciled_Schedule.html', primary: true },
         { label: 'Interactive Gantt', icon: '📊', href: 'schedule/Subaru_MARS_Gantt_Views.html' },
@@ -36,42 +40,77 @@
         { label: 'Schedule Email', icon: '✉️', href: 'schedule/Subaru_MARS_Schedule_Email.html' },
       ]
     },
+    // ─── SOW LANE: Curriculum & Training ───
+    {
+      section: 'Curriculum & Training',
+      icon: '📚',
+      anchor: 'curriculum',
+      items: [
+        { label: 'Course Catalog', icon: '📖', href: 'curriculum/Subaru_MARS_Course_Catalog.html', primary: true },
+      ]
+    },
+    // ─── SOW LANE: Coaching Insights ───
+    {
+      section: 'Coaching Insights',
+      icon: '🎯',
+      anchor: 'coaching',
+      items: [
+        { label: 'Team Assessment Guide', icon: '🎤', href: 'Subaru_MARS_Interview_Guide.html', primary: true },
+        { label: 'Session Observation Guide', icon: '🔎', href: 'Subaru_Roadmap_Session_Observation_Guide.html' },
+        { label: 'Leadership Altitude Model', icon: '🏔️', href: 'Leadership_Altitude_Model.html' },
+      ]
+    },
+    // ─── SOW LANE: Jira & Metrics ───
+    {
+      section: 'Jira & Metrics',
+      icon: '⚙️',
+      anchor: 'jira',
+      items: [
+        // Placeholder — Jira config and metrics artifacts will land here
+      ]
+    },
+    // ─── SOW LANE: OCM & Comms ───
+    {
+      section: 'OCM & Comms',
+      icon: '📣',
+      anchor: 'ocm',
+      items: [
+        { label: 'Communication System', icon: '📡', href: 'Subaru_Visual_Communication_System.html' },
+      ]
+    },
+    // ─── CROSS-CUTTING: Organization ───
     {
       section: 'Organization',
       icon: '👥',
+      anchor: 'organization',
       items: [
         { label: 'Org Chart', icon: '🏢', href: 'org/Subaru_MARS_Org_Chart.html', primary: true },
         { label: 'Team Explorer', icon: '🔍', href: 'org/Subaru_MARS_Team_Explorer.html' },
       ]
     },
-    {
-      section: 'Curriculum & Training',
-      icon: '📚',
-      items: [
-        { label: 'Course Catalog', icon: '📖', href: 'curriculum/Subaru_MARS_Course_Catalog.html', primary: true },
-        { label: 'Interview Guide', icon: '🎤', href: 'Subaru_MARS_Interview_Guide.html' },
-        { label: 'Observation Guide', icon: '🔎', href: 'Subaru_Roadmap_Session_Observation_Guide.html' },
-      ]
-    },
+    // ─── CROSS-CUTTING: Status & Reporting ───
     {
       section: 'Status & Reporting',
       icon: '📊',
+      anchor: 'status',
       items: [
         { label: 'Weekly Dashboard', icon: '📈', href: '../status_updates/Subaru_MARS_Weekly_Status.html', primary: true },
-        { label: 'Communication System', icon: '📡', href: 'Subaru_Visual_Communication_System.html' },
       ]
     },
+    // ─── CROSS-CUTTING: Frameworks & Models ───
     {
       section: 'Frameworks & Models',
       icon: '🏗️',
+      anchor: 'frameworks',
       items: [
-        { label: 'Leadership Altitude Model', icon: '🏔️', href: 'Leadership_Altitude_Model.html' },
         { label: 'SOW Overview', icon: '📜', href: 'SOW_Overview_Diagram.html' },
       ]
     },
+    // ─── CROSS-CUTTING: Brand & Design ───
     {
       section: 'Brand & Design',
       icon: '🎨',
+      anchor: 'brand',
       items: [
         { label: 'Design System', icon: '🎯', href: '../design/Design_System.html' },
         { label: 'Co-Branding Strategy', icon: '🤝', href: '../design/brand/Co_Branding_Strategy.html' },
@@ -117,11 +156,15 @@
     for (const group of SITE_MAP) {
       for (const item of group.items) {
         if (isCurrentPage(item.href)) {
-          return { section: group.section, page: item.label };
+          return {
+            section: group.section,
+            anchor: group.anchor || '',
+            page: item.label
+          };
         }
       }
     }
-    return { section: '', page: document.title };
+    return { section: '', anchor: '', page: document.title.replace('Subaru M.A.R.S. — ', '') };
   }
 
   // ── Build navigation drawer HTML ──
@@ -136,7 +179,16 @@
     for (const group of SITE_MAP) {
       const hasActive = group.items.some(i => isCurrentPage(i.href));
 
-      if (group.items.length === 1) {
+      if (group.items.length === 0) {
+        // Empty section — show as disabled placeholder
+        html += `<div class="mars-nav-section">
+          <div class="mars-nav-item" style="opacity:0.45;cursor:default;">
+            <span class="nav-icon">${group.icon || '📁'}</span>
+            <span class="nav-label">${group.section}</span>
+            <span class="nav-badge" style="background:transparent;color:var(--text-muted);font-style:italic;font-weight:400;font-size:9px;">coming soon</span>
+          </div>
+        </div>`;
+      } else if (group.items.length === 1) {
         // Single item — render as standalone nav item
         const item = group.items[0];
         const active = isCurrentPage(item.href) ? ' active' : '';
@@ -191,8 +243,14 @@
       <div class="mars-topbar">
         <div class="mars-topbar-leading">
           <button class="mars-hamburger" id="mars-hamburger-btn" aria-label="Open navigation">☰</button>
+          ${current.section ? `
+            <a href="${resolveHref('Subaru_MARS_Command_Center.html')}${current.anchor ? '#' + current.anchor : ''}"
+               style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;font-weight:500;white-space:nowrap;"
+               onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"
+            >${current.section}</a>
+            <span style="color:rgba(255,255,255,0.35);font-size:14px;margin:0 2px;">›</span>
+          ` : ''}
           <span class="mars-topbar-title">${current.page}</span>
-          <span class="mars-topbar-subtitle">${current.section}</span>
         </div>
         <div class="mars-topbar-actions">
           <a href="${resolveHref('Subaru_MARS_Command_Center.html')}"
