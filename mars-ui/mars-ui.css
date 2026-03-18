@@ -204,24 +204,29 @@ body {
 }
 .mars-nav.open { transform: translateX(0); }
 
-/* Pinned sidebar (v0.3 — persistent on ≥1280px) */
+/* Pinned sidebar (v0.4 — persistent on ≥1280px, below topbar) */
 .mars-nav.pinned {
   transform: translateX(0);
+  top: var(--topbar-height);
   box-shadow: var(--elevation-1);
-  z-index: 900; /* Below topbar when pinned */
+  z-index: 900;
+}
+.mars-nav.pinned .mars-nav-header {
+  margin-top: 0; /* No need for topbar offset when pinned — already starts below */
 }
 
 .mars-nav-header {
-  padding: 20px 16px 16px;
+  padding: 12px 16px 10px;
   border-bottom: 1px solid var(--outline-variant);
   flex-shrink: 0;
+  margin-top: var(--topbar-height); /* Push below the fixed topbar */
 }
 .mars-nav-header h2 {
-  font-size: 16px; font-weight: 700; color: var(--subaru-blue);
-  margin-bottom: 2px;
+  font-size: 13px; font-weight: 700; color: var(--subaru-blue);
+  margin-bottom: 1px; letter-spacing: 0.5px;
 }
 .mars-nav-header .nav-subtitle {
-  font-size: 11px; color: var(--text-muted);
+  font-size: 10px; color: var(--text-muted);
 }
 
 /* Nav sections */

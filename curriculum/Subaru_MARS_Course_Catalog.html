@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../mars-ui/mars-ui.css">
+<link rel="stylesheet" href="../mars-ui/mars-ui.css?v=0.4.1">
 <title>Subaru M.A.R.S. — Course Catalog</title>
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -97,7 +97,7 @@ body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue
 .footer strong{color:var(--subaru-blue)}
 
 @media(max-width:700px){
-  .hero{grid-template-columns:repeat(2,1fr)}
+  .hero{flex-direction:column;gap:12px;padding:12px 20px}
   .course-grid{grid-template-columns:1fr}
   .header{padding:20px}
   .container{padding:16px}

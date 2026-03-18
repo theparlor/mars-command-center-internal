@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../mars-ui/mars-ui.css">
-<title>Subaru M.A.R.S. — Interactive Gantt</title>
+<link rel="stylesheet" href="../mars-ui/mars-ui.css?v=0.4.1">
+<title>Subaru M.A.R.S. — Gantt Chart</title>
 <style>
 .accent-bar{height:4px;background:var(--subaru-blue);width:100%}
 
@@ -42,7 +42,7 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
-  .overview-grid { overflow-x: auto; margin-bottom: 32px; }
+  .overview-grid { overflow-x: visible; margin-bottom: 32px; width: 100%; }
   .overview-table { border-collapse: collapse; width: 100%; min-width: 1200px; }
   .overview-table th { background: var(--subaru-blue); color: white; font-size: 10px; padding: 4px 2px; text-align: center; min-width: 48px; }
   .overview-table th.lane-header { text-align: left; padding-left: 8px; min-width: 110px; }
