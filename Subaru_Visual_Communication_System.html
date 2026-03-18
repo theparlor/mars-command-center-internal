@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Communication System v3.0 — Subaru M.A.R.S. Transformation</title>
+<style>
+  :root {
+    /* PRIMARY PALETTE: Turnberry Layout Foundations */
+    --canvas-white: #FFFFFF;
+    --canvas-stat: #F9FAFB;
+    --border-soft: #E5E7EB;
+    --border-light: #E9ECEF;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+
+    /* ACCENT LAYER: Subaru Brand (Client) */
+    --accent-primary: #00205B;      /* Subaru Blue — PMS 281C */
+    --accent-secondary: #1D4F91;    /* Star Cluster Blue — PMS 7686C */
+    --accent-light: #D1D5DB;
+
+    /* FUNCTIONAL COLORS (Service Lane / Status) */
+    --lane-training: #1976D2;
+    --lane-customer: #1565C0;
+    --lane-delivery: #E65100;
+    --lane-frameworks: #7B1FA2;
+    --lane-coaching: #7B1FA2;
+    --lane-jira: #00897B;
+    --lane-ocm: #EF6C00;
+    --lane-milestones: #C62828;
+    --lane-admin: #546E7A;
+    --status-ontrack: #2E7D32;
+    --status-atrisk: #FFB300;
+    --status-blocked: #C62828;
+    --role-exec: #00205B;
+    --role-leader: #1D4F91;
+    --role-fte: #2E7D32;
+    --role-contractor: #F57C00;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--canvas-white);
+  }
+
+  /* ========== HEADER PATTERN ========== */
+  header {
+    position: relative;
+    background: var(--canvas-white);
+    border-bottom: 1px solid var(--border-soft);
+    padding: 2rem;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-primary);
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .header-credit {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: -2rem;
+  }
+
+  /* ========== MAIN CONTENT ========== */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  section {
+    margin-bottom: 3rem;
+  }
+
+  section h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--accent-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--accent-primary);
+  }
+
+  section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p, li {
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-size: 13px;
+  }
+
+  ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  code {
+    background: var(--canvas-stat);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--accent-primary);
+  }
+
+  /* ========== FOOTER PATTERN ========== */
+  footer {
+    margin-top: 4rem;
+    background: var(--canvas-stat);
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-primary) 100%) 1;
+    padding: 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ========== CARD PATTERN ========== */
+  .card {
+    background: var(--canvas-white);
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .card.customer { border-left-color: var(--lane-customer); }
+  .card.delivery { border-left-color: var(--lane-delivery); }
+  .card.frameworks { border-left-color: var(--lane-frameworks); }
+  .card.training { border-left-color: var(--lane-training); }
+  .card.jira { border-left-color: var(--lane-jira); }
+  .card.ocm { border-left-color: var(--lane-ocm); }
+
+  .card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+
+  /* ========== COLOR SWATCHES ========== */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .swatch {
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--canvas-white);
+  }
+
+  .swatch-color {
+    height: 60px;
+    width: 100%;
+  }
+
+  .swatch-info {
+    padding: 0.75rem;
+  }
+
+  .swatch-name {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .swatch-code {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ========== TYPOGRAPHY SCALE ========== */
+  .type-sample {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--canvas-stat);
+    border-radius: 6px;
+  }
+
+  .type-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .type-title { font-size: 24px; font-weight: bold; color: var(--accent-primary); }
+  .type-heading { font-size: 20px; font-weight: bold; color: var(--text-primary); }
+  .type-subhead { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+  .type-body { font-size: 14px; color: var(--text-secondary); }
+  .type-caption { font-size: 12px; color: var(--text-muted); }
+  .type-stat { font-size: 32px; font-weight: bold; color: var(--accent-primary); }
+  .type-stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 0.25rem; }
+
+  /* ========== BADGE & BUTTON PATTERNS ========== */
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .badge-ontrack { background: rgba(46, 125, 50, 0.15); color: var(--status-ontrack); }
+  .badge-atrisk { background: rgba(255, 179, 0, 0.15); color: #F57F17; }
+  .badge-blocked { background: rgba(198, 40, 40, 0.15); color: var(--status-blocked); }
+
+  .btn-filter {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-soft);
+    background: var(--canvas-white);
+    color: var(--text-primary);
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-filter:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+
+  .btn-filter.active {
+    background: var(--accent-primary);
+    color: var(--canvas-white);
+    border-color: var(--accent-primary);
+  }
+
+  /* ========== STAT BOX ========== */
+  .stat-box {
+    background: var(--canvas-stat);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--accent-primary);
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+  }
+
+  /* ========== DESIGN PRINCIPLE BOX ========== */
+  .principle-box {
+    background: linear-gradient(135deg, rgba(0, 32, 91, 0.02) 0%, rgba(29, 79, 145, 0.02) 100%);
+    border-left: 4px solid var(--accent-primary);
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .principle-box h4 {
+    color: var(--accent-primary);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .principle-box p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    header, main, footer {
+      padding: 1.5rem;
+    }
+    header h1 {
+      font-size: 24px;
+    }
+    section h2 {
+      font-size: 18px;
+    }
+    .swatch-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Visual Communication System v3.0</h1>
+  <p>Subaru of America — M.A.R.S. Agile Transformation</p>
+  <p style="font-size: 13px;">20-week engagement (Feb 23 – Jul 17, 2026) | 156 staff across 6 workstreams</p>
+  <div class="header-credit">Prepared by Turnberry Solutions</div>
+</header>
+
+<main>
+
+<!-- ============================================================
+     DESIGN PHILOSOPHY
+     ============================================================ -->
+<section>
+  <h2>Design Philosophy: Consultant-Authored, Client-Branded</h2>
+
+  <div class="principle-box">
+    <h4>The Core Concept</h4>
+    <p>This system applies Turnberry Solutions' professional layout, typography, and information architecture (the "chassis") with Subaru's identity layered as accents and highlights—not dominant chrome. Like a McKinsey engagement deck: our rigor and structure, your brand and context.</p>
+  </div>
+
+  <h3>What This Means</h3>
+  <ul>
+    <li><strong>Turnberry is the foundation:</strong> White canvas, sans-serif typography, clean card patterns, professional structure</li>
+    <li><strong>Subaru is the accent:</strong> Blue accent bar at the top, navy headings, accent borders on cards, logo reference where appropriate</li>
+    <li><strong>Not both competing:</strong> Eliminates visual confusion from dual branding; instead, Subaru reinforces professionalism</li>
+    <li><strong>Consistent across formats:</strong> HTML, PPTX, PDF, XLSX, email, and Miro all apply the same layering principle</li>
+  </ul>
+
+  <h3>This Document Practices What It Preaches</h3>
+  <p>Notice the 4px navy accent bar at the top, the navy headings, the subtle accent borders on cards. That's the v3.0 system in action. All patterns below are live examples.</p>
+</section>
+
+<!-- ============================================================
+     TYPOGRAPHY SYSTEM
+     ============================================================ -->
+<section>
+  <h2>Typography System</h2>
+
+  <h3>Font Family</h3>
+  <ul>
+    <li><strong>Primary:</strong> Helvetica Neue Lt Std (purchased from Fonts.com — Subaru's official secondary font per SOA Brand Identity Manual 2020)</li>
+    <li><strong>Fallback/Alternative:</strong> Helvetica, Arial, sans-serif (explicitly approved in SOA Brand Identity Manual 2020 as cost-effective alternatives)</li>
+    <li><strong>System stack:</strong> <code>-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif</code></li>
+  </ul>
+
+  <h3>Type Scale</h3>
+  <div class="type-sample">
+    <div class="type-label">Title (24px bold)</div>
+    <div class="type-title">Quarterly Roadmap & Governance</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Heading (20px bold)</div>
+    <div class="type-heading">Key Deliverables by Workstream</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Subheading (16px, 600 weight)</div>
+    <div class="type-subhead">Training & Change Management</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Body (14px regular)</div>
+    <div class="type-body">Across all engagements, consistent typography reinforces professionalism and improves scannability. Use body text for narrative explanations, context, and supporting detail.</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Caption (12px, muted gray)</div>
+    <div class="type-caption">Source: Engagement Milestones Dashboard, updated weekly</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Stat (32px bold, accent color)</div>
+    <div class="type-stat">6</div>
+    <div class="type-stat-label">Workstreams Active</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COLOR ARCHITECTURE
+     ============================================================ -->
+<section>
+  <h2>Color Architecture: Three Domains</h2>
+
+  <h3>Domain 1: Brand Identity (Subaru Accents)</h3>
+  <p>These colors reinforce Subaru identity without dominating the layout.</p>
+
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background: #00205B;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Subaru Blue</div>
+        <div class="swatch-code">#00205B (PMS 281C)</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #1D4F91;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Star Cluster Blue</div>
+        <div class="swatch-code">#1D4F91 (PMS 7686C)</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #6B7280;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cool Gray</div>
+        <div class="swatch-code">#6B7280</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #9CA3AF;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cool Gray (secondary)</div>
+        <div class="swatch-code">#9CA3AF</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #D1D5DB;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cool Gray (light)</div>
+        <div class="swatch-code">#D1D5DB</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #FFFFFF; border: 1px solid #E5E7EB;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">White (Canvas)</div>
+        <div class="swatch-code">#FFFFFF</div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Usage</h4>
+  <ul>
+    <li><strong>Subaru Blue (#00205B):</strong> Header accent bar (4px), primary headings, active filter states, logo mark</li>
+    <li><strong>Star Cluster Blue (#1D4F91):</strong> Secondary accent, gradient bars, secondary headings</li>
+    <li><strong>Cool Grays:</strong> Supporting text, borders, divider lines, footer</li>
+  </ul>
+
+  <h3>Domain 2: Functional Colors (Service Lane &amp; Status)</h3>
+  <p>These colors indicate engagement context, status, and role—independent of brand palettes.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+    <div>
+      <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Service Lane</h4>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background: #1976D2;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Training</div>
+            <div class="swatch-code">#1976D2</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #1565C0;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Customer</div>
+            <div class="swatch-code">#1565C0</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #E65100;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Delivery</div>
+            <div class="swatch-code">#E65100</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #7B1FA2;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Frameworks</div>
+            <div class="swatch-code">#7B1FA2</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #00897B;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Jira/Metrics</div>
+            <div class="swatch-code">#00897B</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #EF6C00;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">OCM</div>
+            <div class="swatch-code">#EF6C00</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #C62828;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Milestones</div>
+            <div class="swatch-code">#C62828</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #546E7A;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Admin</div>
+            <div class="swatch-code">#546E7A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Status &amp; Role</h4>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background: #2E7D32;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">On Track</div>
+            <div class="swatch-code">#2E7D32</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #FFB300;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">At Risk</div>
+            <div class="swatch-code">#FFB300</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #C62828;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Blocked</div>
+            <div class="swatch-code">#C62828</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #00205B;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Exec Role</div>
+            <div class="swatch-code">#00205B</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #1D4F91;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Leader Role</div>
+            <div class="swatch-code">#1D4F91</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #2E7D32;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">FTE Role</div>
+            <div class="swatch-code">#2E7D32</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #F57C00;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Contractor</div>
+            <div class="swatch-code">#F57C00</div>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background: #546E7A;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Turnberry</div>
+            <div class="swatch-code">#546E7A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Domain 3: Surface &amp; Chrome (Layout)</h3>
+  <p>These are not brand colors—they define white space, subtle divisions, and containment.</p>
+
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background: #FFFFFF; border: 1px solid #E5E7EB;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Canvas (White)</div>
+        <div class="swatch-code">#FFFFFF</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #F9FAFB;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Stat Area</div>
+        <div class="swatch-code">#F9FAFB</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: #E5E7EB;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Card Border</div>
+        <div class="swatch-code">#E5E7EB</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background: rgba(0,0,0,0.04); border: 1px solid #E5E7EB;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Subtle Shadow</div>
+        <div class="swatch-code">rgba(0,0,0,.04)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPONENT PATTERNS
+     ============================================================ -->
+<section>
+  <h2>Component Patterns in Action</h2>
+
+  <h3>Header Pattern</h3>
+  <div class="principle-box">
+    <h4>What You're Seeing Now</h4>
+    <p>Notice the 4px navy Subaru Blue bar at the very top of this page. Below: white background, bottom border in soft gray, title in Subaru Blue, subtitle in muted gray. Upper right: "Prepared by Turnberry Solutions." This is the header pattern.</p>
+  </div>
+
+  <h3>Card Patterns (Service Lane Examples)</h3>
+
+  <div class="card training">
+    <h4>Training Workstream</h4>
+    <p>Curriculum development, knowledge transfer sessions, and enablement across 156 staff. Status: On Track.</p>
+  </div>
+
+  <div class="card customer">
+    <h4>Customer Success Integration</h4>
+    <p>Aligning M.A.R.S. tooling with customer journey. Includes data governance and reporting layer.</p>
+  </div>
+
+  <div class="card delivery">
+    <h4>Delivery & Execution</h4>
+    <p>Weekly sprints, backlog grooming, and integration with Subaru's existing roadmap. Color accent matches service lane.</p>
+  </div>
+
+  <div class="card jira">
+    <h4>Metrics & Jira Governance</h4>
+    <p>Velocity tracking, burndown visibility, and cross-team dependency management via Jira integration.</p>
+  </div>
+
+  <h3>Status Badges</h3>
+  <p>
+    <span class="badge badge-ontrack">On Track</span>
+    <span class="badge badge-atrisk">At Risk</span>
+    <span class="badge badge-blocked">Blocked</span>
+  </p>
+  <p style="font-size: 12px; color: var(--text-muted); margin-top: 0.5rem;">Semi-transparent background, bold text in status color. Pill-shaped for quick scanning.</p>
+
+  <h3>Filter Controls</h3>
+  <p>
+    <button class="btn-filter active">All Workstreams</button>
+    <button class="btn-filter">Training</button>
+    <button class="btn-filter">Delivery</button>
+    <button class="btn-filter">Frameworks</button>
+  </p>
+  <p style="font-size: 12px; color: var(--text-muted); margin-top: 0.5rem;">White pill-shaped buttons with soft border. Active state: navy background, white text.</p>
+
+  <h3>Stat Boxes</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+    <div class="stat-box">
+      <div class="stat-number">20</div>
+      <div class="stat-label">Weeks Engagement</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">156</div>
+      <div class="stat-label">Staff Across Teams</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Workstreams</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">53</div>
+      <div class="stat-label">FTE Allocation</div>
+    </div>
+  </div>
+
+  <h3>Footer Pattern</h3>
+  <p style="font-size: 12px; color: var(--text-muted); margin-top: 2rem;">The footer at the bottom of this page demonstrates the gradient accent bar (3px, navy to star cluster to navy) with light gray background and muted gray text.</p>
+</section>
+
+<!-- ============================================================
+     FORMAT-SPECIFIC GUIDANCE
+     ============================================================ -->
+<section>
+  <h2>Format-Specific Guidance</h2>
+
+  <h3>HTML (Web Deliverables)</h3>
+  <ul>
+    <li><strong>Self-contained:</strong> All styles inline within <code>&lt;style&gt;</code> tag; no external CSS files</li>
+    <li><strong>Interactive:</strong> Support filters, tabs, expandable sections; JavaScript for interactivity</li>
+    <li><strong>Full design implementation:</strong> Color swatches, live type scales, component demonstrations (as you see in this document)</li>
+    <li><strong>Responsive:</strong> Mobile-first media queries; readable on tablet and phone</li>
+  </ul>
+
+  <h3>PPTX (PowerPoint)</h3>
+  <ul>
+    <li><strong>Slide layout:</strong> White background with Subaru Blue title text</li>
+    <li><strong>Accent bar:</strong> 4px navy bar at top of each slide, or navy accent border on title placeholders</li>
+    <li><strong>Typography:</strong> Helvetica Neue or Arial; title 24–28pt, body 12–14pt</li>
+    <li><strong>Callouts:</strong> Use service lane colors for emphasis blocks and accent shapes</li>
+    <li><strong>Footer:</strong> Client name (Subaru), date, slide number in 10pt gray text</li>
+  </ul>
+
+  <h3>PDF (Formal Reports)</h3>
+  <ul>
+    <li><strong>Report layout:</strong> Clean reportlab output with white canvas and navy headings</li>
+    <li><strong>Accent bar:</strong> 4px Subaru Blue bar at top of first page, then navy h2 headings throughout</li>
+    <li><strong>Typography:</strong> Helvetica; heading 20pt bold, body 11pt regular</li>
+    <li><strong>Graphics:</strong> Full-color charts and diagrams; accent colors from functional palette</li>
+    <li><strong>Footer:</strong> Gradient footer bar matching header pattern on final page</li>
+  </ul>
+
+  <h3>XLSX (Dashboards &amp; Workbooks)</h3>
+  <ul>
+    <li><strong>Header row:</strong> Navy background (#00205B) with white text; 12pt Helvetica</li>
+    <li><strong>Column headers:</strong> Navy text, light gray background for clarity</li>
+    <li><strong>Data rows:</strong> Alternating white and very light gray (#F9FAFB) for readability</li>
+    <li><strong>Status cells:</strong> Service lane colors for lane identification, status badges (e.g., green for On Track)</li>
+    <li><strong>Pivot tables:</strong> Maintain navy headings and service lane color accents</li>
+  </ul>
+
+  <h3>Email (Campaign &amp; Notification)</h3>
+  <ul>
+    <li><strong>Layout:</strong> Table-based HTML; navy border-top accent (3–4px) on outer container</li>
+    <li><strong>Header:</strong> White background, navy text for subject/greeting</li>
+    <li><strong>Call-to-action:</strong> Navy button (Subaru Blue) with white text</li>
+    <li><strong>Footer:</strong> Gray text in 11pt; include company name and link to main dashboard</li>
+    <li><strong>Service lane accent:</strong> Colored left border (4px) on content cards if embedding workstream context</li>
+  </ul>
+
+  <h3>Miro (Whiteboard &amp; Planning)</h3>
+  <ul>
+    <li><strong>Sticky notes:</strong> Use best-available colors matching functional palette; navy for Exec, blue for Team Lead, orange for Contractor, etc.</li>
+    <li><strong>Shapes:</strong> Rectangles for cards (white fill, navy 2px border), circles for milestones in service lane color</li>
+    <li><strong>Text:</strong> Helvetica/Arial; 12pt for stickies, 14pt for titles</li>
+    <li><strong>Connectors:</strong> Navy lines (2–3px) for critical path; gray for supporting flows</li>
+    <li><strong>Accent blocks:</strong> Navy rectangles as section headers, gradient bars for timeline divisions</li>
+  </ul>
+
+  <h3>Internal Documents</h3>
+  <p style="margin-bottom: 1rem;">When authoring internal Turnberry documents (not client-facing), swap the accent color:</p>
+  <ul>
+    <li><strong>Accent color:</strong> Amber (#E67E22) instead of Subaru Blue</li>
+    <li><strong>Headings:</strong> Amber text or accent bars</li>
+    <li><strong>Footer:</strong> Amber gradient bar</li>
+    <li><strong>Rationale:</strong> Allows team to quickly distinguish internal workspaces from client deliverables</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     ENGAGEMENT OVERVIEW
+     ============================================================ -->
+<section>
+  <h2>Engagement Context at a Glance</h2>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="stat-box">
+      <div class="stat-number">20</div>
+      <div class="stat-label">Weeks (Feb 23 – Jul 17, 2026)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">156</div>
+      <div class="stat-label">Total Staff</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">53</div>
+      <div class="stat-label">FTE</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">96</div>
+      <div class="stat-label">Contractor</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Workstreams</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Vendor/Turnberry</div>
+    </div>
+  </div>
+
+  <p><strong>Client:</strong> Subaru of America — M.A.R.S. Division<br>
+  <strong>Consultant:</strong> Turnberry Solutions<br>
+  <strong>Engagement Type:</strong> Agile Transformation, Organizational Change Management, and Metrics & Governance<br>
+  <strong>System Version:</strong> 3.0 — Consultant-Authored, Client-Branded Design Approach</p>
+</section>
+
+<!-- ============================================================
+     DESIGN SYSTEM PRINCIPLES (SUMMARY)
+     ============================================================ -->
+<section>
+  <h2>Key Principles for Consistent Application</h2>
+
+  <div class="principle-box">
+    <h4>1. Hierarchy: Professional First, Brand Accent Second</h4>
+    <p>Turnberry's clean layout, clear typography, and card-based structure establish trust and readability. Subaru's blue accents reinforce brand identity without overwhelming the message.</p>
+  </div>
+
+  <div class="principle-box">
+    <h4>2. Functional Colors Are Context, Not Brand</h4>
+    <p>Training, Customer, Delivery, Frameworks, etc., are independent of both Subaru and Turnberry colors. They communicate engagement role and status.</p>
+  </div>
+
+  <div class="principle-box">
+    <h4>3. Consistency Across All Formats</h4>
+    <p>The same color palette, accent pattern (4px bar, gradient footer), and typography scale apply to PPTX, PDF, XLSX, email, and Miro. No custom layouts per format.</p>
+  </div>
+
+  <div class="principle-box">
+    <h4>4. Accessibility &amp; Clarity</h4>
+    <p>Sufficient contrast between text and background. Functional colors chosen for Miro compatibility and color-blind readability. Service lane colors do not rely on red–green distinction alone.</p>
+  </div>
+
+  <div class="principle-box">
+    <h4>5. Internal vs. Client Deliverables</h4>
+    <p>Use Subaru Blue (#00205B) accents for client-facing work. Use amber (#E67E22) accents for internal Turnberry documents. This distinction enables quick visual scanning.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>Visual Communication System v3.0</strong> | Subaru of America M.A.R.S. Transformation</p>
+  <p style="margin-top: 0.5rem;">Prepared by Turnberry Solutions | 20-week Agile & Transformation Engagement</p>
+  <p style="margin-top: 0.5rem; font-size: 11px;">This document is the design reference for all client-facing deliverables. For questions or updates, contact the engagement lead.</p>
+</footer>
+
+</body>
+</html>

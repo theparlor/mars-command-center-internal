@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-Branded HTML Example — Subaru M.A.R.S. Agile Transformation</title>
+<style>
+  :root {
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --bright-blue: #00AEEF;
+    --lane-training: #1976D2;
+    --lane-coaching: #7B1FA2;
+    --lane-jira: #00897B;
+    --lane-ocm: #EF6C00;
+    --lane-milestones: #C62828;
+    --status-ontrack: #2E7D32;
+    --status-atrisk: #FFB300;
+    --status-blocked: #C62828;
+    --status-ontrack-bg: #E8F5E9;
+    --status-atrisk-bg: #FFF8E1;
+    --status-blocked-bg: #FFEBEE;
+    --white: #FFFFFF;
+    --stat-bg: #F9FAFB;
+    --border-soft: #E5E7EB;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --subaru-dark-gray: #414042;
+    --subaru-medium-gray: #808184;
+    --subaru-light-gray: #BBBBBB;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 14px; line-height: 1.6; color: var(--text-primary); background: var(--white); }
+
+  /* === CO-BRANDED HEADER === */
+  .top-bar { height: 4px; background: var(--subaru-blue); }
+  header { background: var(--white); border-bottom: 1px solid var(--border-soft); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .header-left { display: flex; align-items: center; gap: 1.25rem; }
+  .logo-placeholder { width: 180px; height: 52px; background: linear-gradient(135deg, var(--subaru-blue), var(--star-cluster)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; letter-spacing: 1px; }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--subaru-blue); line-height: 1.2; }
+  .header-text .sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .header-right { font-size: 11px; color: var(--text-muted); text-align: right; line-height: 1.5; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  section { margin-bottom: 2.5rem; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--subaru-blue); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--subaru-blue); }
+  h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 1.25rem 0 0.75rem; }
+  p { font-size: 13px; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  /* === STAT CARDS === */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1rem 0 1.5rem; }
+  @media (max-width: 768px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+  .stat-card { background: var(--white); border: 1px solid var(--border-soft); border-radius: 8px; padding: 1.25rem; position: relative; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .stat-card .top-band { position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+  .stat-card .number { font-size: 32px; font-weight: 700; margin-top: 8px; }
+  .stat-card .label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* === LANE CARDS === */
+  .lane-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .lane-card { background: var(--white); border: 1px solid var(--border-soft); border-left: 4px solid; border-radius: 8px; padding: 1rem 1.25rem; }
+  .lane-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .lane-card p { font-size: 12px; margin-bottom: 0; }
+  .lane-card.training { border-left-color: var(--lane-training); }
+  .lane-card.training h4 { color: var(--lane-training); }
+  .lane-card.coaching { border-left-color: var(--lane-coaching); }
+  .lane-card.coaching h4 { color: var(--lane-coaching); }
+  .lane-card.jira { border-left-color: var(--lane-jira); }
+  .lane-card.jira h4 { color: var(--lane-jira); }
+  .lane-card.ocm { border-left-color: var(--lane-ocm); }
+  .lane-card.ocm h4 { color: var(--lane-ocm); }
+
+  /* === TABLE === */
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 0.5rem 0 1.5rem; }
+  th { background: var(--subaru-blue); color: var(--white); padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  tr:nth-child(even) { background: var(--stat-bg); }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+  .badge-ontrack { background: var(--status-ontrack-bg); color: var(--status-ontrack); }
+  .badge-atrisk { background: var(--status-atrisk-bg); color: #F57F17; }
+
+  .callout { padding: 1rem 1.25rem; border-radius: 6px; margin: 1rem 0; font-size: 12.5px; background: #FFFDE7; border-left: 3px solid #FBC02D; }
+
+  /* === CO-BRANDED FOOTER === */
+  .footer-bar { height: 3px; background: linear-gradient(90deg, var(--subaru-blue) 0%, var(--star-cluster) 50%, var(--subaru-blue) 100%); margin-top: 2rem; }
+  footer { padding: 1.25rem 2rem; background: var(--stat-bg); display: flex; align-items: center; justify-content: space-between; }
+  .footer-left { font-size: 11px; color: var(--text-muted); }
+  .footer-center { text-align: center; }
+  .footer-center .badge-logo { width: 48px; height: 48px; background: linear-gradient(135deg, var(--subaru-blue), var(--star-cluster)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 8px; margin: 0 auto 4px; }
+  .footer-center .footer-text { font-size: 10px; color: var(--text-muted); }
+  .footer-right { font-size: 10px; color: var(--text-muted); text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- === CO-BRANDED HEADER: Subaru logo left, Turnberry text right === -->
+<div class="top-bar"></div>
+<header>
+  <div class="header-left">
+    <div class="logo-placeholder">★ SUBARU</div>
+    <div class="header-text">
+      <h1>Week 3 Status Overview</h1>
+      <div class="sub">M.A.R.S. Agile Transformation · Phase 1: Foundation</div>
+    </div>
+  </div>
+  <div class="header-right">
+    Prepared by Turnberry Solutions<br>
+    March 14, 2026 · Week 3 of 20
+  </div>
+</header>
+
+<main>
+
+<!-- === ENGAGEMENT STATS === -->
+<section>
+  <h2>Engagement Pulse</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="top-band" style="background:var(--lane-training)"></div>
+      <div class="label">Training Sessions</div>
+      <div class="number" style="color:var(--lane-training)">2</div>
+      <div class="label">Completed (Agile Mindset, Scrum)</div>
+    </div>
+    <div class="stat-card">
+      <div class="top-band" style="background:var(--lane-coaching)"></div>
+      <div class="label">Coaching Sessions</div>
+      <div class="number" style="color:var(--lane-coaching)">6</div>
+      <div class="label">Across 2 cohorts</div>
+    </div>
+    <div class="stat-card">
+      <div class="top-band" style="background:var(--lane-jira)"></div>
+      <div class="label">Jira Boards</div>
+      <div class="number" style="color:var(--lane-jira)">2</div>
+      <div class="label">Active team boards configured</div>
+    </div>
+    <div class="stat-card">
+      <div class="top-band" style="background:var(--status-ontrack)"></div>
+      <div class="label">Overall Status</div>
+      <div class="number" style="color:var(--status-ontrack)">On Track</div>
+      <div class="label">All lanes green</div>
+    </div>
+  </div>
+</section>
+
+<!-- === WORKSTREAM OVERVIEW === -->
+<section>
+  <h2>Workstream Updates</h2>
+  <div class="lane-grid">
+    <div class="lane-card training">
+      <h4>Training</h4>
+      <p>Week 1 sessions (Agile Mindset, Scrum) completed with strong engagement. Next training: <strong>Estimation (Story Pointing & Capacity)</strong> in Week 5. Preparing materials and facilitator guide.</p>
+    </div>
+    <div class="lane-card coaching">
+      <h4>Coaching & Frameworks</h4>
+      <p>Cohort A (Dean/Louise): Natalie, Marc, Kadeem — first team-level coaching session held. Cohort B (Brien/Jason): Gino's team, Kevin, Vladimir, Sam — sprint planning coaching underway.</p>
+    </div>
+    <div class="lane-card jira">
+      <h4>Jira & Metrics</h4>
+      <p>Board configuration for both cohorts complete. Baseline velocity metrics being captured. Sprint 1 data will inform capacity planning discussions in Week 5.</p>
+    </div>
+    <div class="lane-card ocm">
+      <h4>OCM & Communications</h4>
+      <p>Change champion network identified. First stakeholder communication sent. Louise coordinating OCM touchpoints with Cohort A coaching cadence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- === UPCOMING SCHEDULE === -->
+<section>
+  <h2>Training Schedule</h2>
+  <table>
+    <tr><th>Week</th><th>Date Range</th><th>Training Topic</th><th>Status</th></tr>
+    <tr><td>Wk 1</td><td>Feb 23 – Feb 27</td><td>Agile Mindset, Scrum Fundamentals</td><td><span class="badge badge-ontrack">DONE</span></td></tr>
+    <tr><td>Wk 5</td><td>Mar 23 – Mar 27</td><td>Estimation (Story Pointing & Capacity)</td><td><span class="badge badge-atrisk">UPCOMING</span></td></tr>
+    <tr><td>Wk 7</td><td>Apr 6 – Apr 10</td><td>User Story Writing, User Stories & Backlog Fundamentals</td><td>Planned</td></tr>
+    <tr><td>Wk 9</td><td>Apr 20 – Apr 24</td><td>Planning for Adaptability, Story Splitting</td><td>Planned</td></tr>
+    <tr><td>Wk 11</td><td>May 4 – May 8</td><td>Flow / WIP, Product Mindset</td><td>Planned</td></tr>
+    <tr><td>Wk 13</td><td>May 18 – May 22</td><td>Navigating Change</td><td>Planned</td></tr>
+  </table>
+</section>
+
+<!-- === DECISIONS & ASKS === -->
+<section>
+  <h2>Decisions & Asks</h2>
+  <div class="callout">
+    <strong>Key Decisions Needed:</strong><br>
+    1. Confirm Estimation session date with Subaru team leads (target: Week 5)<br>
+    2. Review proposed Jira workflow customizations before Sprint 2 start<br>
+    3. Approve OCM communication cadence for Phase 2
+  </div>
+</section>
+
+</main>
+
+<!-- === CO-BRANDED FOOTER: Subaru badge center, Turnberry text === -->
+<div class="footer-bar"></div>
+<footer>
+  <div class="footer-left">
+    Turnberry Solutions · Subaru M.A.R.S. Agile Transformation<br>
+    CONFIDENTIAL — For Subaru Internal Use
+  </div>
+  <div class="footer-center">
+    <div class="badge-logo">★</div>
+    <div class="footer-text">Subaru of America, Inc.</div>
+  </div>
+  <div class="footer-right">
+    Engagement Design System v6.0<br>
+    Co-Branded Template · March 2026
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engagement Design System — Codified Visual Language</title>
+<style>
+  :root {
+    /* === BRAND: Subaru (Client Accent) === */
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --bright-blue: #00AEEF;       /* PMS 299C — data viz accent (OQ-3 DECIDED) */
+    /* === SERVICE LANES === */
+    --lane-training: #1976D2;
+    --lane-coaching: #7B1FA2;
+    --lane-jira: #00897B;
+    --lane-ocm: #EF6C00;
+    --lane-admin: #546E7A;
+    --lane-milestones: #C62828;
+    --lane-customer: #1565C0;
+    --lane-delivery: #E65100;
+    /* === LANE TINTS (10–12% toward white) === */
+    --tint-training: #E8F1FB;
+    --tint-coaching: #F3E5F9;
+    --tint-jira: #E0F2F1;
+    --tint-ocm: #FFF3E0;
+    --tint-admin: #ECEFF1;
+    /* === STATUS === */
+    --status-ontrack: #2E7D32;
+    --status-atrisk: #FFB300;
+    --status-blocked: #C62828;
+    --status-ontrack-bg: #E8F5E9;
+    --status-atrisk-bg: #FFF8E1;
+    --status-blocked-bg: #FFEBEE;
+    /* === SURFACE & CHROME === */
+    --white: #FFFFFF;
+    --stat-bg: #F9FAFB;
+    --border-soft: #E5E7EB;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    /* === INTERNAL ACCENT (Turnberry docs) === */
+    --amber: #E67E22;
+    --amber-light: #FEF3C7;
+    /* === CALLOUT === */
+    --yellow-callout: #FFFDE7;
+    --yellow-border: #FBC02D;
+    /* === TURNBERRY PARTNER (for non-engagement contexts) === */
+    --tb-navy: #032D3E;
+    --tb-accent: #349ED8;
+    --tb-teal: #06597A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 14px; line-height: 1.6; color: var(--text-primary); background: var(--white); }
+
+  .top-bar { height: 4px; background: var(--subaru-blue); }
+  header { background: var(--white); border-bottom: 1px solid var(--border-soft); padding: 2rem 2rem 1.5rem; }
+  header h1 { font-size: 26px; font-weight: 700; color: var(--subaru-blue); margin-bottom: 4px; }
+  header .sub { font-size: 13px; color: var(--text-secondary); }
+  header .meta { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  section { margin-bottom: 3rem; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--subaru-blue); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--subaru-blue); }
+  h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.75rem; }
+  h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 1rem 0 0.5rem; }
+  p, li { font-size: 13px; color: var(--text-secondary); margin-bottom: 0.5rem; }
+  ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  code { background: var(--stat-bg); padding: 2px 6px; border-radius: 3px; font-family: 'SF Mono', 'Courier New', monospace; font-size: 12px; color: var(--subaru-blue); }
+
+  .principle { background: linear-gradient(135deg, rgba(0,32,91,0.02), rgba(29,79,145,0.02)); border-left: 4px solid var(--subaru-blue); padding: 1rem 1.25rem; border-radius: 0 6px 6px 0; margin-bottom: 1rem; }
+  .principle h4 { color: var(--subaru-blue); margin: 0 0 0.4rem; }
+  .principle p { margin: 0; }
+
+  .callout { padding: 1rem 1.25rem; border-radius: 6px; margin: 1rem 0; font-size: 12.5px; }
+  .callout.amber { background: var(--amber-light); border-left: 3px solid var(--amber); }
+  .callout.yellow { background: var(--yellow-callout); border-left: 3px solid var(--yellow-border); }
+
+  .grid { display: grid; gap: 1rem; margin-bottom: 1.5rem; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-5 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  @media (max-width: 768px) { .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; } }
+
+  .swatch { border: 1px solid var(--border-soft); border-radius: 8px; overflow: hidden; background: var(--white); }
+  .swatch-color { height: 48px; width: 100%; }
+  .swatch-info { padding: 0.6rem 0.75rem; }
+  .swatch-name { font-weight: 600; font-size: 11px; color: var(--text-primary); }
+  .swatch-hex { font-family: 'SF Mono', monospace; font-size: 10px; color: var(--text-muted); }
+  .swatch-use { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 0.5rem 0 1.5rem; }
+  th { background: var(--subaru-blue); color: var(--white); padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  tr:nth-child(even) { background: var(--stat-bg); }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+  .badge-ontrack { background: var(--status-ontrack-bg); color: var(--status-ontrack); }
+  .badge-atrisk { background: var(--status-atrisk-bg); color: #F57F17; }
+  .badge-blocked { background: var(--status-blocked-bg); color: var(--status-blocked); }
+  .badge-lane { padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+
+  .card-demo { background: var(--white); border: 1px solid var(--border-soft); border-radius: 8px; padding: 1.25rem 1.25rem 1rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04); position: relative; overflow: hidden; }
+  .card-demo .top-band { position: absolute; top: 0; left: 0; right: 0; height: 5px; }
+  .card-demo h4 { font-size: 14px; margin-top: 8px; }
+
+  .icon-circle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: white; font-weight: 700; font-size: 14px; }
+
+  .footer-bar { height: 3px; background: linear-gradient(90deg, var(--subaru-blue) 0%, var(--star-cluster) 50%, var(--subaru-blue) 100%); margin-top: 2rem; }
+  footer { padding: 1.5rem 2rem; text-align: center; font-size: 11px; color: var(--text-muted); background: var(--stat-bg); }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+
+<header>
+  <h1>Engagement Design System</h1>
+  <div class="sub">Codified Visual Language · Colors, Fonts, Patterns & Intention</div>
+  <div class="meta">Version 6.0 · Turnberry Solutions · Subaru M.A.R.S. Agile Transformation · Updated March 14, 2026</div>
+</header>
+
+<main>
+
+<!-- ================================================================
+     1. DESIGN PHILOSOPHY
+     ================================================================ -->
+<section>
+  <h2>1. Design Philosophy</h2>
+
+  <div class="principle">
+    <h4>Consultant-Authored, Client-Branded</h4>
+    <p>Turnberry's professional layout, typography, and information architecture form the <strong>chassis</strong>. Subaru's identity layers on as <strong>accents and highlights</strong> — not dominant chrome. Think McKinsey deck: our rigor and structure, your brand and context. This separation is intentional and applies to every format: HTML, PPTX, PDF, XLSX, email, and Miro.</p>
+  </div>
+
+  <div class="principle">
+    <h4>Functional Colors Are Context, Not Brand</h4>
+    <p>Service lane colors (Training, Coaching, Jira, OCM, Admin, Milestones) communicate <em>what kind of work</em> is being shown. They're independent of both Subaru blue and Turnberry teal. They never compete with brand — they carry meaning.</p>
+  </div>
+
+  <div class="principle">
+    <h4>Internal vs. Client — One Glance</h4>
+    <p>Client-facing work uses <strong>Subaru Blue (#00205B)</strong> accent bars, headings, and gradient footers. Internal-only documents swap to <strong>Amber (#E67E22)</strong>. This makes every document instantly scannable: is this for the client or for our team?</p>
+  </div>
+
+  <div class="principle">
+    <h4>Rich, Not Minimalist</h4>
+    <p>Our PPTX and dashboard design vocabulary is deliberately rich — navy hero bands, colored top-band cards, icon circles, tinted row backgrounds, pill-shaped status badges, yellow callout boxes, and card shadows. This isn't decoration; it's information density through visual encoding. Every shape, color, and shadow carries meaning.</p>
+  </div>
+</section>
+
+<!-- ================================================================
+     2. COLOR ARCHITECTURE
+     ================================================================ -->
+<section>
+  <h2>2. Color Architecture</h2>
+
+  <p>Colors are organized into <strong>four domains</strong>. Each domain has a specific job. Never mix purposes across domains.</p>
+
+  <!-- 2A: Brand Accent (Subaru) -->
+  <h3>Domain A — Brand Accent (Subaru)</h3>
+  <p>Reinforces client identity without dominating layout. Used for accent bars, headings, and active states.</p>
+  <div class="grid grid-4">
+    <div class="swatch"><div class="swatch-color" style="background:#00205B"></div><div class="swatch-info"><div class="swatch-name">Subaru Blue</div><div class="swatch-hex">#00205B · PMS 281C</div><div class="swatch-use">4px top bar, headings, active filters</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1D4F91"></div><div class="swatch-info"><div class="swatch-name">Star Cluster Blue</div><div class="swatch-hex">#1D4F91 · PMS 7686C</div><div class="swatch-use">Gradient bars, secondary accent, STARTING badge</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#00AEEF"></div><div class="swatch-info"><div class="swatch-name">Bright Blue</div><div class="swatch-hex">#00AEEF · PMS 299C</div><div class="swatch-use">Data viz highlights, chart accents, interactive hovers</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#6B7280"></div><div class="swatch-info"><div class="swatch-name">Cool Gray</div><div class="swatch-hex">#6B7280</div><div class="swatch-use">Secondary text, subtitles</div></div></div>
+  </div>
+
+  <h4>Subaru Official Brand Grays (from PPTX template)</h4>
+  <p>These grays come directly from the Subaru PPTX template brand page. They complement the blues for body text and fills in client-co-branded materials.</p>
+  <div class="grid grid-3">
+    <div class="swatch"><div class="swatch-color" style="background:#414042"></div><div class="swatch-info"><div class="swatch-name">Dark Gray</div><div class="swatch-hex">#414042</div><div class="swatch-use">Body text alternative on brand slides</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#808184"></div><div class="swatch-info"><div class="swatch-name">Medium Gray</div><div class="swatch-hex">#808184</div><div class="swatch-use">Secondary text, borders</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#BBBBBB"></div><div class="swatch-info"><div class="swatch-name">Light Gray</div><div class="swatch-hex">#BBBBBB</div><div class="swatch-use">Tertiary text, disabled states</div></div></div>
+  </div>
+
+  <div class="callout yellow">
+    <strong>Two gray systems:</strong> The Subaru brand grays (#414042, #808184, #BBBBBB) are for brand-level fills — text and fills that explicitly reference the Subaru palette. The Design System grays (#6B7280, #9CA3AF, #E5E7EB, #F9FAFB) remain the standard for layout chrome — borders, alternating rows, and structural backgrounds.
+  </div>
+
+  <!-- 2B: Service Lanes -->
+  <h3>Domain B — Service Lanes</h3>
+  <p>Each lane gets a primary color and a tint (10-12% toward white). The tint is used for alternating row backgrounds and card fills. The primary is used for top bands, left accents, and icon circles.</p>
+  <div class="grid grid-4">
+    <div class="swatch"><div class="swatch-color" style="background:#1976D2"></div><div class="swatch-info"><div class="swatch-name">Training</div><div class="swatch-hex">#1976D2</div><div class="swatch-use">Tint: #E8F1FB</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#7B1FA2"></div><div class="swatch-info"><div class="swatch-name">Coaching / Frameworks</div><div class="swatch-hex">#7B1FA2</div><div class="swatch-use">Tint: #F3E5F9</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#00897B"></div><div class="swatch-info"><div class="swatch-name">Jira / Metrics</div><div class="swatch-hex">#00897B</div><div class="swatch-use">Tint: #E0F2F1</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#EF6C00"></div><div class="swatch-info"><div class="swatch-name">OCM</div><div class="swatch-hex">#EF6C00</div><div class="swatch-use">Tint: #FFF3E0</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#546E7A"></div><div class="swatch-info"><div class="swatch-name">Admin / Logistics</div><div class="swatch-hex">#546E7A</div><div class="swatch-use">Tint: #ECEFF1</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C62828"></div><div class="swatch-info"><div class="swatch-name">Milestones</div><div class="swatch-hex">#C62828</div><div class="swatch-use">Key milestone markers, CANCELLED badge</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1565C0"></div><div class="swatch-info"><div class="swatch-name">Customer</div><div class="swatch-hex">#1565C0</div><div class="swatch-use">Customer-facing workstream</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#E65100"></div><div class="swatch-info"><div class="swatch-name">Delivery</div><div class="swatch-hex">#E65100</div><div class="swatch-use">Delivery & execution workstream</div></div></div>
+  </div>
+
+  <div class="callout yellow">
+    <strong>Tint formula:</strong> <code>tintColor(hex, 0.12)</code> — blend each RGB channel 88% toward 255. This produces a pastel background that carries just enough hue to identify the lane without competing with text.
+  </div>
+
+  <!-- 2C: Status -->
+  <h3>Domain C — Status Indicators</h3>
+  <p>Three-state status system. Each has a text color and a semi-transparent background for pill badges.</p>
+  <div class="grid grid-3">
+    <div class="swatch"><div class="swatch-color" style="background:#2E7D32"></div><div class="swatch-info"><div class="swatch-name">On Track / Done</div><div class="swatch-hex">#2E7D32 · bg: #E8F5E9</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FFB300"></div><div class="swatch-info"><div class="swatch-name">At Risk / Starting</div><div class="swatch-hex">#FFB300 · bg: #FFF8E1</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C62828"></div><div class="swatch-info"><div class="swatch-name">Blocked / Cancelled</div><div class="swatch-hex">#C62828 · bg: #FFEBEE</div></div></div>
+  </div>
+
+  <!-- 2D: Surface & Chrome -->
+  <h3>Domain D — Surface & Chrome</h3>
+  <p>Layout infrastructure. Not brand, not function — pure structure.</p>
+  <div class="grid grid-5">
+    <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #E5E7EB"></div><div class="swatch-info"><div class="swatch-name">Canvas White</div><div class="swatch-hex">#FFFFFF</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F9FAFB"></div><div class="swatch-info"><div class="swatch-name">Stat Background</div><div class="swatch-hex">#F9FAFB</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#E5E7EB"></div><div class="swatch-info"><div class="swatch-name">Border Soft</div><div class="swatch-hex">#E5E7EB</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FFFDE7"></div><div class="swatch-info"><div class="swatch-name">Yellow Callout</div><div class="swatch-hex">#FFFDE7 · border: #FBC02D</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FEF3C7"></div><div class="swatch-info"><div class="swatch-name">Amber Callout (internal)</div><div class="swatch-hex">#FEF3C7 · border: #E67E22</div></div></div>
+  </div>
+
+  <!-- 2E: Turnberry Partner -->
+  <h3>Domain E — Turnberry Partner Brand (Non-Engagement Contexts)</h3>
+  <p>Used when building Turnberry-level templates, proposals, or non-engagement materials. These tokens are defined in <code>engagement-style.yaml</code> and should NOT appear in Subaru client deliverables.</p>
+  <div class="grid grid-3">
+    <div class="swatch"><div class="swatch-color" style="background:#032D3E"></div><div class="swatch-info"><div class="swatch-name">TB Primary Navy</div><div class="swatch-hex">#032D3E</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#349ED8"></div><div class="swatch-info"><div class="swatch-name">TB Accent Blue</div><div class="swatch-hex">#349ED8</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#06597A"></div><div class="swatch-info"><div class="swatch-name">TB Deep Teal</div><div class="swatch-hex">#06597A</div></div></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     3. TYPOGRAPHY
+     ================================================================ -->
+<section>
+  <h2>3. Typography</h2>
+
+  <h3>Font Stack</h3>
+  <table>
+    <tr><th>Context</th><th>Family</th><th>Notes</th></tr>
+    <tr><td>HTML / Slides</td><td><code>-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif</code></td><td>System stack — renders native, no font loading</td></tr>
+    <tr><td>PPTX headings</td><td><code>Calibri Light</code></td><td><strong>DECIDED (OQ-2):</strong> Switched from Arial. Matches Subaru template. All build scripts must use Calibri Light for titles and headings.</td></tr>
+    <tr><td>PPTX body text</td><td><code>Calibri</code></td><td><strong>DECIDED (OQ-2):</strong> Switched from Arial. All body text, bullets, captions, and stat labels use Calibri.</td></tr>
+    <tr><td>Turnberry formal (PDF)</td><td>Bebas Neue (headings), Lato Light (body)</td><td>Registered in engagement-style.yaml. Used for formal reports and proposals.</td></tr>
+    <tr><td>Monospace (code snippets)</td><td><code>SF Mono, Courier New, monospace</code></td><td>For inline code, hex values, technical references</td></tr>
+  </table>
+
+  <h3>Type Scale (PPTX)</h3>
+  <table>
+    <tr><th>Element</th><th>Size</th><th>Weight</th><th>Color</th></tr>
+    <tr><td>Slide title (hero band)</td><td>32pt</td><td>Bold</td><td>White on navy band</td></tr>
+    <tr><td>Phase subtitle</td><td>16pt</td><td>Regular, 20% transparency</td><td>White on navy band</td></tr>
+    <tr><td>Tagline</td><td>11pt</td><td>Regular, 40% transparency</td><td>White on navy band</td></tr>
+    <tr><td>Section heading</td><td>26pt</td><td>Bold</td><td>Subaru Blue on white/stat bg</td></tr>
+    <tr><td>Card heading</td><td>14pt</td><td>Bold</td><td>Text Primary</td></tr>
+    <tr><td>Stat number</td><td>36pt</td><td>Bold</td><td>Lane color or Subaru Blue</td></tr>
+    <tr><td>Stat label</td><td>11pt</td><td>Regular</td><td>Text Secondary</td></tr>
+    <tr><td>Body / bullets</td><td>11pt</td><td>Regular</td><td>Text Primary</td></tr>
+    <tr><td>Caption / footer</td><td>9pt</td><td>Regular</td><td>Text Muted</td></tr>
+  </table>
+
+  <h3>Type Scale (HTML)</h3>
+  <table>
+    <tr><th>Element</th><th>Size</th><th>Weight</th><th>Color</th></tr>
+    <tr><td>Page title (h1)</td><td>24–28px</td><td>Bold</td><td>Subaru Blue</td></tr>
+    <tr><td>Section heading (h2)</td><td>20px</td><td>Bold + 2px bottom border</td><td>Subaru Blue</td></tr>
+    <tr><td>Subsection (h3)</td><td>16px</td><td>600 weight</td><td>Text Primary</td></tr>
+    <tr><td>Body text</td><td>13–14px</td><td>Regular</td><td>Text Secondary</td></tr>
+    <tr><td>Caption / source</td><td>12px</td><td>Regular</td><td>Text Muted</td></tr>
+    <tr><td>Stat number</td><td>32–36px</td><td>Bold</td><td>Subaru Blue or lane color</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     4. COMPONENT PATTERNS (PPTX)
+     ================================================================ -->
+<section>
+  <h2>4. PPTX Component Patterns</h2>
+
+  <p>These are the building blocks used across all PptxGenJS build scripts. Each pattern has a specific purpose and a specific construction method.</p>
+
+  <h3>4a. Navy Hero Band</h3>
+  <p>Every Slide 1 opens with a full-width navy rectangle from y=0.08 to y=1.58 (height 1.5"). The 0.08" accent bar sits above it. Title text sits inside in white. This creates the "authority" anchor for the deck.</p>
+  <table>
+    <tr><th>Element</th><th>Position</th><th>Properties</th></tr>
+    <tr><td>Accent bar</td><td>x:0, y:0, w:10, h:0.08</td><td>fill: subaruBlue</td></tr>
+    <tr><td>Hero band</td><td>x:0, y:0.08, w:10, h:1.5</td><td>fill: subaruBlue</td></tr>
+    <tr><td>Subaru logo (white)</td><td>x:0.5, y:0.25</td><td>subaru-logo-black-long.png, w:1.8" — upper-left dominant position</td></tr>
+    <tr><td>Title text</td><td>x:2.6, y:0.2</td><td>32pt, Calibri Light, bold, white</td></tr>
+    <tr><td>Phase subtitle</td><td>x:2.6, y:0.85</td><td>16pt, Calibri, white, 20% transparent</td></tr>
+    <tr><td>Tagline</td><td>x:2.6, y:1.2</td><td>11pt, Calibri, white, 40% transparent</td></tr>
+    <tr><td>Turnberry logo</td><td>x:7.8, y:5.15</td><td>Turnberry_Solutions.png, w:1.2", 85% opacity — lower-right attribution</td></tr>
+    <tr><td>Date badge</td><td>x:7.8, y:0.5, w:1.8, h:0.7</td><td>Rounded rectangle, white 15% transparent, 11pt white bold center</td></tr>
+  </table>
+
+  <h3>4b. Stat Card</h3>
+  <p>A white card with soft border, subtle shadow, colored top band (5px), and an icon circle. Used for key metrics on hero slides.</p>
+  <table>
+    <tr><th>Element</th><th>Properties</th></tr>
+    <tr><td>Card background</td><td>w:2.7, h:1.6, fill: white, border: borderSoft 1px, shadow: { blur:8, offset:2, angle:135, opacity:0.08 }</td></tr>
+    <tr><td>Colored top band</td><td>Same x/y/w, h:0.12, fill: lane color</td></tr>
+    <tr><td>Icon circle</td><td>OVAL, w:0.55, h:0.55, fill: lane color, image centered inside (0.35×0.35)</td></tr>
+    <tr><td>Stat number</td><td>36pt, bold, lane color</td></tr>
+    <tr><td>Stat label</td><td>11pt, textSecondary</td></tr>
+  </table>
+
+  <h3>4c. Yellow Callout Box</h3>
+  <p>Used for "Decisions & Asks" and key attention items. Lightbulb icon optional.</p>
+  <table>
+    <tr><th>Element</th><th>Properties</th></tr>
+    <tr><td>Background</td><td>fill: yellowCallout (#FFFDE7), border: yellowBorder (#FBC02D) 1.5px, shadow: { blur:4, offset:1, opacity:0.06 }</td></tr>
+    <tr><td>Title</td><td>14pt, Calibri, bold, textPrimary</td></tr>
+    <tr><td>Bullets</td><td>11pt, Calibri, textPrimary, <code>bullet: true, breakLine: true</code></td></tr>
+  </table>
+
+  <h3>4d. Lane Detail Slide (3-Column Layout)</h3>
+  <p>Used on week-by-week lane breakdowns. Three columns: past week (grayed), current week (lane color), next week (lighter).</p>
+  <table>
+    <tr><th>Column</th><th>Width</th><th>Accent</th><th>Background</th></tr>
+    <tr><td>Past week (-1)</td><td>~2.7"</td><td>Left accent bar in lane color at 40% opacity</td><td>Alternating tinted rows</td></tr>
+    <tr><td>Current week</td><td>~3.5"</td><td>Full lane color left accent bar</td><td>Alternating tinted rows, bolder</td></tr>
+    <tr><td>Next week (+1)</td><td>~2.7"</td><td>Left accent bar in lane color at 30% opacity</td><td>Lighter alternating tint</td></tr>
+  </table>
+
+  <h3>4e. Dashboard Zone Layout (Two-Week Look Ahead)</h3>
+  <p>Single-pane-of-glass architecture with five zones stacked vertically:</p>
+  <table>
+    <tr><th>Zone</th><th>Height</th><th>Content</th></tr>
+    <tr><td>Navy Decisions Band</td><td>1.0"</td><td>Key decisions, asks, blockers — white text on subaruBlue</td></tr>
+    <tr><td>Training | Coaching</td><td>2.2"</td><td>50/50 split, lane color top bands, icon circles</td></tr>
+    <tr><td>Jira | OCM | Logistics</td><td>1.5"</td><td>3-column split, lane color top bands</td></tr>
+    <tr><td>Team Bar</td><td>0.675"</td><td>Subaru team leads — Natalie, Marc, Kadeem, Gino, Kevin</td></tr>
+    <tr><td>Footer</td><td>—</td><td>Date, attribution, confidentiality</td></tr>
+  </table>
+
+  <div class="callout amber">
+    <strong>Critical:</strong> The Team Bar shows <strong>Subaru teams</strong> (Natalie Miller, Marc Rullo, Kadeem Williams, Gino Guarnere, Kevin McCracken) — NOT Turnberry consultants. This bar tells client leadership which of <em>their</em> people are active in the current cycle.
+  </div>
+
+  <h3>4f. Status Badges (Pill-shaped)</h3>
+  <p>Rounded rectangle (rectRadius: 0.15), tinted background, bold colored text, 10px uppercase. Used in lane overviews and summary slides.</p>
+  <div style="display:flex;gap:8px;margin:8px 0 16px;">
+    <span class="badge badge-ontrack">DONE</span>
+    <span class="badge badge-atrisk">STARTING</span>
+    <span class="badge badge-blocked">CANCELLED</span>
+  </div>
+
+  <h3>4g. Shadow Factory</h3>
+  <p>All card shadows use the same factory function to avoid PptxGenJS object-reuse bugs:</p>
+  <p><code>mkShadow = () => ({ type: "outer", color: "000000", blur: 6, offset: 2, angle: 135, opacity: 0.07 })</code></p>
+  <p>Must create a fresh object each time — PptxGenJS mutates shadow options internally.</p>
+
+  <h3>4h. Icon Pipeline</h3>
+  <table>
+    <tr><th>Step</th><th>Technology</th><th>Detail</th></tr>
+    <tr><td>1. Source</td><td>react-icons (Fa* or Md*)</td><td>Import icon component</td></tr>
+    <tr><td>2. Render SVG</td><td>ReactDOMServer.renderToStaticMarkup</td><td>Get SVG string at 256px</td></tr>
+    <tr><td>3. Rasterize</td><td>sharp (SVG → PNG buffer)</td><td>Convert to bitmap</td></tr>
+    <tr><td>4. Embed</td><td>base64 data URI</td><td><code>"image/png;base64," + buffer.toString("base64")</code></td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     5. HTML COMPONENT PATTERNS
+     ================================================================ -->
+<section>
+  <h2>5. HTML Component Patterns</h2>
+
+  <h3>5a. Header Pattern</h3>
+  <p>4px accent bar at the very top (::before pseudo-element or div). White background below. Title in Subaru Blue, subtitle in muted gray. "Prepared by Turnberry Solutions" right-aligned. Bottom border in soft gray.</p>
+
+  <h3>5b. Card Pattern</h3>
+  <p>White background, 1px soft border, 4px left border in lane color, 8px border-radius, subtle box-shadow (0 1px 3px rgba(0,0,0,0.04)). Hover elevates shadow (0 4px 12px rgba(0,0,0,0.08)).</p>
+
+  <h3>5c. Section Heading</h3>
+  <p>Subaru Blue, 20px bold, with 2px bottom border in Subaru Blue. Consistent across all HTML deliverables.</p>
+
+  <h3>5d. Table Pattern</h3>
+  <p>Navy header row (Subaru Blue bg, white text, 11px uppercase). Alternating row fills (white + #F9FAFB). 1px bottom border per row in border-soft.</p>
+
+  <h3>5e. Footer Pattern</h3>
+  <p>3px gradient bar (Subaru Blue → Star Cluster → Subaru Blue). Light gray background (#F9FAFB). Centered muted text. Internal docs use amber gradient instead.</p>
+
+  <h3>5f. Internal Document Swap</h3>
+  <table>
+    <tr><th>Element</th><th>Client-Facing</th><th>Internal-Only</th></tr>
+    <tr><td>Top bar</td><td>#00205B (Subaru Blue)</td><td>#E67E22 (Amber)</td></tr>
+    <tr><td>Headings</td><td>Subaru Blue</td><td>Navy (#1B3A5C) or Amber</td></tr>
+    <tr><td>Footer gradient</td><td>Subaru Blue → Star Cluster</td><td>Amber gradient</td></tr>
+    <tr><td>Warning banner</td><td>—</td><td>Yellow background with "INTERNAL USE ONLY" in bold</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     6. XLSX PATTERNS
+     ================================================================ -->
+<section>
+  <h2>6. XLSX Patterns</h2>
+  <table>
+    <tr><th>Element</th><th>Style</th></tr>
+    <tr><td>Header row</td><td>Background: #00205B (Subaru Blue), white text, 12pt bold</td></tr>
+    <tr><td>Alternating rows</td><td>White + #F9FAFB</td></tr>
+    <tr><td>Status cells</td><td>Green/amber/red fills matching status domain</td></tr>
+    <tr><td>Lane identifier cells</td><td>Lane color background with white text</td></tr>
+    <tr><td>Freeze panes</td><td>Row 1 frozen</td></tr>
+    <tr><td>Column widths</td><td>Auto-fit with 2-char padding</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     7. EMAIL PATTERNS
+     ================================================================ -->
+<section>
+  <h2>7. Email Patterns</h2>
+  <p>Table-based HTML. Navy border-top accent (4px) on outer container. White background, navy headings. Service lane left-border cards for workstream sections. Footer in 10pt gray with engagement attribution.</p>
+  <p>Uses the <code>Subaru_MARS_Schedule_Email.html</code> pattern: accent-bar div at top, header-bar div with h1 and subtitle, bulleted content organized by phase, styled hr dividers.</p>
+</section>
+
+<!-- ================================================================
+     8. LOGO USAGE GUIDE
+     ================================================================ -->
+<section>
+  <h2>8. Logo Usage Guide</h2>
+
+  <p>Four Subaru logo variants are stored in <code>styles/</code>. All are RGBA PNGs with transparent backgrounds, suitable for layering on any fill. The correct variant depends on background color and available space.</p>
+
+  <h3>Logo Inventory</h3>
+  <table>
+    <tr><th>File</th><th>Dimensions</th><th>Ratio</th><th>Use On</th><th>Description</th></tr>
+    <tr><td><code>subaru-logo-black-long.png</code></td><td>1077 × 316</td><td>3.41:1</td><td>Dark backgrounds</td><td>White text + color badge. For navy hero bands, dark cards.</td></tr>
+    <tr><td><code>subaru-white-long.png</code></td><td>1127 × 306</td><td>3.68:1</td><td>Light backgrounds</td><td>Dark gray text + color badge. For white slides, headers.</td></tr>
+    <tr><td><code>subaru-logo-dark-vertical.png</code></td><td>466 × 277</td><td>1.68:1</td><td>Light backgrounds</td><td>Badge-only mark (no wordmark). Compact spaces.</td></tr>
+    <tr><td><code>subaru-logo-white-vertical.png</code></td><td>641 × 452</td><td>1.42:1</td><td>Any background</td><td>Full vertical lockup — badge above, SUBARU text below.</td></tr>
+  </table>
+
+  <h3>Placement Rules</h3>
+  <table>
+    <tr><th>Context</th><th>Logo Variant</th><th>Position</th><th>Size</th></tr>
+    <tr><td>PPTX title slide (navy hero band)</td><td>subaru-logo-black-long.png</td><td>Right-aligned within hero, vertically centered</td><td>~1.8" wide</td></tr>
+    <tr><td>PPTX interior slides (footer)</td><td>subaru-white-long.png</td><td>Footer area, right-aligned</td><td>~1.2" wide</td></tr>
+    <tr><td>HTML header bar</td><td>subaru-white-long.png</td><td>Left of title, vertically centered</td><td>180px wide</td></tr>
+    <tr><td>HTML footer</td><td>subaru-logo-dark-vertical.png</td><td>Centered or right-aligned</td><td>60px height</td></tr>
+    <tr><td>Email header</td><td>subaru-white-long.png</td><td>Inline or left-aligned</td><td>200px wide</td></tr>
+    <tr><td>Favicon / small icon</td><td>subaru-logo-dark-vertical.png</td><td>Centered</td><td>32–64px</td></tr>
+  </table>
+
+  <div class="callout yellow">
+    <strong>Minimum sizes:</strong> Horizontal logos: 240px wide (print) or 180px (screen). Vertical logos: 150px tall. Below these thresholds the badge detail becomes illegible.
+  </div>
+
+  <h3>Co-Branding Convention</h3>
+  <p>For the full co-branding specification — including slide-by-slide placement, height budget analysis, visual weight ratios, and anti-patterns — see <strong>Section 10b: Co-Branding Strategy</strong>. The summary: Subaru logo occupies the dominant upper-left position on title slides. Turnberry appears as a smaller logo on the title slide only, with text-only attribution on all interior slides. This follows the "Consultant-Authored, Client-Branded" principle from Section 1.</p>
+</section>
+
+<!-- ================================================================
+     9. SUBARU PPTX TEMPLATE REFERENCE
+     ================================================================ -->
+<section>
+  <h2>9. Subaru PPTX Template Reference</h2>
+
+  <p>Source: <code>styles/Primary Subaru Slide Deck - Make a Copy.pptx</code> — the official Subaru of America slide template.</p>
+
+  <h3>Key Specifications</h3>
+  <table>
+    <tr><th>Property</th><th>Value</th><th>Notes</th></tr>
+    <tr><td><strong>Aspect ratio</strong></td><td>4:3 (13.33" × 7.50")</td><td><span class="badge badge-ontrack">DECIDED</span> OQ-1: Use only when embedding into Subaru-owned decks. Our default remains 16:9.</td></tr>
+    <tr><td><strong>Heading font</strong></td><td>Calibri Light</td><td><span class="badge badge-ontrack">DECIDED</span> OQ-2: Now adopted across all build scripts.</td></tr>
+    <tr><td><strong>Body font</strong></td><td>Calibri</td><td><span class="badge badge-ontrack">DECIDED</span> OQ-2: Now adopted across all build scripts.</td></tr>
+    <tr><td><strong>Color theme</strong></td><td>Microsoft Office default</td><td>Brand colors are custom fills, NOT theme colors.</td></tr>
+    <tr><td><strong>Footer</strong></td><td>Date | "Subaru of America, Inc." | Slide #</td><td>All at y=7.20", auto-populated from template.</td></tr>
+    <tr><td><strong>Layouts</strong></td><td>11 layouts</td><td>Title, Body, Two-Column, Section Divider, etc.</td></tr>
+  </table>
+
+  <h3>Available Layouts</h3>
+  <table>
+    <tr><th>#</th><th>Layout Name</th><th>Use For</th></tr>
+    <tr><td>0</td><td>Title Slide</td><td>Deck openers, major section starts</td></tr>
+    <tr><td>1</td><td>Presenter Name/Title</td><td>Speaker introductions</td></tr>
+    <tr><td>2</td><td>Title/Body Copy</td><td>Standard content slides</td></tr>
+    <tr><td>3</td><td>Two Column Content</td><td>Side-by-side comparisons</td></tr>
+    <tr><td>4</td><td>Two Column with Headers</td><td>Headed comparisons</td></tr>
+    <tr><td>5</td><td>Blank</td><td>Custom layouts, images, diagrams</td></tr>
+    <tr><td>6</td><td>Title Only</td><td>Custom content below title</td></tr>
+    <tr><td>7</td><td>Section Divider</td><td>Phase/section transitions</td></tr>
+    <tr><td>8</td><td>Content with Caption</td><td>Image + description</td></tr>
+    <tr><td>9</td><td>Picture with Caption</td><td>Photo-forward slides</td></tr>
+    <tr><td>10</td><td>SOA Color Palette / Brand Logos</td><td>Reference only — brand specs</td></tr>
+  </table>
+
+  <div class="callout amber">
+    <strong>DECIDED POLICY (OQ-1):</strong> Use PptxGenJS with 16:9 for all Turnberry-authored engagement deliverables. Use the official Subaru template (python-pptx, 4:3) <em>only</em> when content will be embedded into a Subaru-owned deck for redistribution. Never mix aspect ratios within a single deck.
+  </div>
+</section>
+
+<!-- ================================================================
+     10. DECIDED DESIGN QUESTIONS (Adopted Mar 14, 2026)
+     ================================================================ -->
+<section>
+  <h2>10. Design Decisions (Adopted)</h2>
+
+  <p>All five open questions from the Subaru template analysis were decided on March 14, 2026. These are now <strong>binding design policy</strong> for all engagement outputs.</p>
+
+  <table>
+    <tr><th>ID</th><th>Topic</th><th>Decision</th><th>Migration</th></tr>
+    <tr><td><span class="badge badge-ontrack">DECIDED</span><br><strong>OQ-1</strong></td><td>4:3 vs 16:9 aspect ratio</td><td>16:9 is the default for all Turnberry-authored decks. Use 4:3 <em>only</em> when embedding into Subaru-owned decks. Never mix aspect ratios within one deck.</td><td>No change to existing build scripts. Add 4:3 variants only if/when Subaru redistribution is confirmed.</td></tr>
+    <tr><td><span class="badge badge-ontrack">DECIDED</span><br><strong>OQ-2</strong></td><td>Calibri vs Arial fonts</td><td>All PPTX output uses <code>Calibri Light</code> (headings) and <code>Calibri</code> (body). Arial is retired for slide output.</td><td>Replace all <code>fontFace: 'Arial'</code> with <code>'Calibri'</code> (body) or <code>'Calibri Light'</code> (headings) in all <code>build_*.js</code> files.</td></tr>
+    <tr><td><span class="badge badge-ontrack">DECIDED</span><br><strong>OQ-3</strong></td><td>Bright Blue (#00AEEF)</td><td>Approved as data viz accent. Use for sparklines, chart highlight lines, interactive hover states, and data-point callouts.</td><td>Add <code>--bright-blue: #00AEEF</code> to CSS custom properties. Add <code>brightBlue: '00AEEF'</code> to PptxGenJS color constants.</td></tr>
+    <tr><td><span class="badge badge-ontrack">DECIDED</span><br><strong>OQ-4</strong></td><td>Logo placement</td><td>Co-branded: Subaru logo in title hero band (upper-left, white variant) + interior footer (lower-right, dark variant). Turnberry logo on title slide only (lower-right corner). Interior slides use text-only Turnberry attribution.</td><td>Update all <code>build_*.js</code> title slide functions. Add Subaru footer logo to interior slide template. See Section 10b for full spec.</td></tr>
+    <tr><td><span class="badge badge-ontrack">DECIDED</span><br><strong>OQ-5</strong></td><td>Gray systems</td><td>Two parallel systems: Subaru grays (#414042, #808184, #BBBBBB) for brand fills. Design System grays (#6B7280, #9CA3AF, #E5E7EB, #F9FAFB) for structural chrome. Never substitute.</td><td>No code changes. Document the boundary in build script comments.</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     10b. CO-BRANDING STRATEGY — Turnberry × Subaru
+     ================================================================ -->
+<section>
+  <h2>10b. Co-Branding Strategy</h2>
+
+  <div class="principle">
+    <h4>Why Co-Brand At All?</h4>
+    <p>Every logo on a slide costs content real estate. The decision to consume that space must be intentional and earn its keep. Co-branding serves two audiences simultaneously: <strong>Subaru sees their brand dominant</strong> on materials about their transformation — signaling ownership, not something being done <em>to</em> them. <strong>Turnberry's presence</strong> — subtle but unmistakable — establishes IP attribution. When these decks travel through Subaru's organization (and they will), Turnberry's name travels with them. This is how consulting firms build referenceability.</p>
+  </div>
+
+  <div class="principle">
+    <h4>The Height Budget Insight</h4>
+    <p>On a 16:9 slide (10" × 5.63"), every 0.1" of vertical space = 1.8% of the canvas. The critical realization: <strong>logos consume width within existing structural bands, not additional height</strong>. The hero band (1.58") and footer (0.50") already exist in every build script. We're filling space that was previously underutilized, not adding new vertical elements. <strong>Net height cost: 0.00".</strong></p>
+  </div>
+
+  <h3>Slide-by-Slide Placement</h3>
+  <table>
+    <tr><th>Slide Type</th><th>Subaru Logo</th><th>Turnberry</th><th>Visual Weight</th></tr>
+    <tr>
+      <td><strong>Title Slide</strong><br><em>"The Handshake"</em></td>
+      <td>White horizontal (<code>subaru-logo-black-long.png</code>)<br>Upper-left in hero band · x:0.5, y:0.25 · w:1.8"<br>Dominant read position (F-pattern eye tracking)</td>
+      <td>Logo image, lower-right · x:7.8, y:5.15 · w:1.2" · 85% opacity<br>Attribution position — "authored by" without competing</td>
+      <td>Subaru 60% / Turnberry 20% / Content 20%</td>
+    </tr>
+    <tr>
+      <td><strong>Interior Slides</strong><br><em>"Content is King"</em></td>
+      <td>Dark horizontal (<code>subaru-white-long.png</code>)<br>Footer right · x:8.0, y:5.20 · w:1.0"<br>Small, unobtrusive, brand continuity</td>
+      <td><strong>Text only</strong> — "Prepared by Turnberry Solutions"<br>Footer left · x:0.5, y:5.30 · Calibri 8pt · #9CA3AF<br>Avoids "dueling logos" in footer</td>
+      <td>Content 85% / Navigation 10% / Branding 5%</td>
+    </tr>
+    <tr>
+      <td><strong>Section Divider</strong><br><em>"The Crest"</em></td>
+      <td>Vertical badge (<code>subaru-logo-dark-vertical.png</code>)<br>Centered above section title · h:0.8"<br>Compact "crest" presiding over phase transition</td>
+      <td><strong>Text only</strong> — "Turnberry Solutions" · bottom center, small</td>
+      <td>Subaru 40% / Content 50% / Turnberry 10%</td>
+    </tr>
+    <tr>
+      <td><strong>Closing Slide</strong><br><em>"The Credits"</em></td>
+      <td>Dark horizontal · center-left · w:2.5"<br>Still larger — it's their program</td>
+      <td>Logo image · center-right · w:2.0"<br>Full size, full opacity — the "credits" moment<br>Thin vertical divider (#E5E7EB) between logos</td>
+      <td>Subaru 45% / Turnberry 35% / Chrome 20%</td>
+    </tr>
+  </table>
+
+  <h3>Anti-Patterns</h3>
+  <div class="callout amber">
+    <strong>What NOT to do:</strong>
+    <br>• <strong>Dueling logos:</strong> Two logo images side-by-side in every footer. Creates visual competition in space that should be quiet.
+    <br>• <strong>Logo soup:</strong> More than two logos on any single slide. Third parties get text attribution.
+    <br>• <strong>Equal sizing:</strong> Both logos the same size signals ambiguity about whose program this is. Subaru should always be larger.
+    <br>• <strong>Logo as decoration:</strong> Logos on slides that don't need them. Data slides earn their full real estate for content.
+    <br>• <strong>Footer logo wars:</strong> Both logos as images in the footer. One image (Subaru) + one text (Turnberry) = clean.
+  </div>
+
+  <h3>Format-Specific Co-Branding</h3>
+  <table>
+    <tr><th>Format</th><th>Subaru Placement</th><th>Turnberry Placement</th></tr>
+    <tr><td>PPTX</td><td>Hero band (title), footer (interior)</td><td>Logo (title only), text (interior footers)</td></tr>
+    <tr><td>HTML</td><td>Horizontal logo left-aligned in header bar</td><td>"Prepared by Turnberry Solutions" right-aligned header text</td></tr>
+    <tr><td>PDF</td><td>Horizontal logo in header band (left)</td><td>Text right-aligned: "Turnberry Solutions"</td></tr>
+    <tr><td>Email</td><td>Horizontal logo above accent bar</td><td>Text attribution in footer only — no logo</td></tr>
+    <tr><td>XLSX</td><td>No logo (spreadsheets)</td><td>Attribution in header row text or sheet footer</td></tr>
+    <tr><td>Miro</td><td>Badge as frame header icon</td><td>Text in frame description</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     11. PPTXGENJS GOTCHAS
+     ================================================================ -->
+<section>
+  <h2>11. PptxGenJS Technical Rules</h2>
+
+  <p>Hard-won lessons from building 6 production PPTX scripts. These are non-negotiable.</p>
+
+  <table>
+    <tr><th>Rule</th><th>Why</th></tr>
+    <tr><td><strong>No "#" prefix</strong> on hex colors</td><td>PptxGenJS expects <code>"00205B"</code> not <code>"#00205B"</code></td></tr>
+    <tr><td><strong>Never reuse</strong> shadow/option objects</td><td>PptxGenJS mutates them internally. Use <code>mkShadow()</code> factory.</td></tr>
+    <tr><td><code>pres.shapes.RECTANGLE</code> not <code>pres.ShapeType.rect</code></td><td>Wrong API surface. Use the <code>pres.shapes.*</code> constants.</td></tr>
+    <tr><td><code>bullet: true</code> not unicode bullets</td><td>PptxGenJS handles bullet rendering; unicode chars cause alignment issues.</td></tr>
+    <tr><td><code>breakLine: true</code> for multi-line text arrays</td><td>Each item in the text array needs this to get its own line.</td></tr>
+    <tr><td>Fresh <code>mkShadow()</code> per shape</td><td>Calling <code>mkShadow()</code> returns a new object each time. Never assign to a variable and reuse.</td></tr>
+    <tr><td>Icon pipeline: react-icons → ReactDOMServer → sharp → base64</td><td>Only reliable way to get crisp vector-origin icons into PPTX.</td></tr>
+    <tr><td><code>pres.layout = "LAYOUT_16x9"</code></td><td>Default for Turnberry-authored decks (OQ-1 DECIDED). Canvas is 10" × 5.63". Use 4:3 only for Subaru redistribution.</td></tr>
+    <tr><td><code>fontFace: 'Calibri'</code> (body), <code>'Calibri Light'</code> (headings)</td><td>OQ-2 DECIDED. Arial is retired. All build scripts must use Calibri family.</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     9. BUILD SCRIPT INDEX
+     ================================================================ -->
+<section>
+  <h2>12. Build Script Index</h2>
+
+  <table>
+    <tr><th>Script</th><th>Output</th><th>Role</th></tr>
+    <tr><td><code>build_week2_status.js</code></td><td>Week2_Status.pptx</td><td><strong>Gold standard.</strong> Hero band, stat cards, lane overview, lane details, callout box. Copy this pattern for all future status decks.</td></tr>
+    <tr><td><code>build_two_week_dashboard.js</code></td><td>Two_Week_Look_Ahead.pptx</td><td>Single-pane dashboard. 5-zone layout. Team bar with Subaru leads.</td></tr>
+    <tr><td><code>build_course_catalog.js</code></td><td>Course_Catalog.pptx</td><td>14 courses, 4 categories. Kanban Essentials = CANCELLED.</td></tr>
+    <tr><td><code>build_training_readout.js</code></td><td>Training_Readout.pptx</td><td>Leader readout from Week 1 training.</td></tr>
+    <tr><td><code>build_gantt_views.js</code></td><td>Gantt_Views.pptx</td><td>8-slide Gantt with phase breakdowns.</td></tr>
+    <tr><td><code>build_two_week_look_ahead.js</code></td><td>Two_Week_Look_Ahead.html</td><td>HTML dashboard companion.</td></tr>
+  </table>
+</section>
+
+<!-- ================================================================
+     10. CANONICAL FACTS
+     ================================================================ -->
+<section>
+  <h2>13. Canonical Engagement Facts</h2>
+
+  <p>These facts have been corrected multiple times and are <strong>non-negotiable</strong> across all deliverables:</p>
+
+  <table>
+    <tr><th>Fact</th><th>Correct Value</th><th>Common Error</th></tr>
+    <tr><td><strong>Cohort A members</strong></td><td>Natalie Miller, Marc Rullo, Kadeem Williams</td><td>Listing Natalie as "separate" or "handled by Brien"</td></tr>
+    <tr><td><strong>Cohort A coach</strong></td><td>Dean (lead), Louise (OCM + coverage)</td><td>—</td></tr>
+    <tr><td><strong>Cohort B members</strong></td><td>Gino's team, Kevin McCracken, Vladimir Goldsteyhn, Sam Sharkay</td><td>—</td></tr>
+    <tr><td><strong>Cohort B coach</strong></td><td>Brien (lead), Jason (coverage, remote some weeks)</td><td>—</td></tr>
+    <tr><td><strong>Kanban Fundamentals</strong></td><td><strong>CANCELLED</strong></td><td>"Moved to optional" or "rescheduled"</td></tr>
+    <tr><td><strong>Roles & Responsibilities</strong></td><td><strong>ADDED</strong> — replaced Kanban</td><td>Not mentioned, or listed as existing</td></tr>
+    <tr><td><strong>Dashboard team bar</strong></td><td>Subaru teams: Natalie, Marc, Kadeem, Gino, Kevin</td><td>Showing Turnberry consultants instead</td></tr>
+    <tr><td><strong>Natalie Miller</strong></td><td>Middle manager above Kadeem & Marc. IN Cohort A with Dean.</td><td>"Handled separately by Brien" or "not in either cohort"</td></tr>
+    <tr><td><strong>Omar</strong></td><td>JIRA admin. Name removed from client-facing docs.</td><td>Named in client deliverables</td></tr>
+  </table>
+</section>
+
+</main>
+
+<div class="footer-bar"></div>
+<footer>
+  <p><strong>Engagement Design System v6.0</strong> · Codified Visual Language</p>
+  <p style="margin-top:4px;">Turnberry Solutions · Subaru M.A.R.S. Agile Transformation · March 14, 2026</p>
+  <p style="margin-top:4px;">This document is the single source of truth for all visual design decisions across HTML, PPTX, PDF, XLSX, email, and Miro.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Subaru M.A.R.S. Org Chart</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Helvetica,Arial,sans-serif; background: #f8f9fa; color: #1F2937; padding: 0; }
+  .page-header { background: linear-gradient(135deg, #00205B 0%, #1D4F91 100%); color: #ffffff; padding: 24px 20px 20px; margin-bottom: 20px; }
+  .page-header h1 { color: #ffffff; margin-bottom: 5px; font-size: 22px; }
+  .page-header .subtitle { color: rgba(255,255,255,0.8); margin-bottom: 0; font-size: 13px; }
+  .content-area { padding: 0 20px 20px; }
+  h1 { color: #00205B; margin-bottom: 5px; font-size: 22px; }
+  .subtitle { color: #53565A; margin-bottom: 15px; font-size: 13px; }
+  .stats { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stat { background: #EEF2F7; padding: 12px 18px; border-radius: 8px; text-align: center; min-width: 120px; }
+  .stat .num { font-size: 28px; font-weight: bold; color: #00205B; }
+  .stat .label { font-size: 11px; color: #53565A; margin-top: 2px; }
+  .controls { margin-bottom: 15px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .controls button { background: #EEF2F7; color: #1F2937; border: 1px solid #ccc; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+  .controls button:hover { background: #d0dff0; }
+  .controls label { color: #1F2937; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; margin-left: 16px; }
+  .node { margin: 4px 0 4px 18px; padding: 6px 10px; border-radius: 6px; font-size: 13px; }
+  .node-header { display: flex; align-items: center; gap: 6px; }
+  .node-title { font-size: 11px; color: #4A4A4A; margin-top: 1px; margin-left: 2px; }
+  .tag { font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: bold; }
+  .tag.consultant { background: #F57C00; color: #fff; }
+  .tag.fte { background: #2E7D32; color: #fff; }
+  .count { background: #1D4F91; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: bold; }
+  .toggle { background: none; border: none; color: #1D4F91; cursor: pointer; font-size: 11px; padding: 2px 4px; }
+  .toggle:hover { color: #00205B; }
+  .children { margin-top: 2px; }
+  .children.collapsed { display: none; }
+  .legend { display: flex; gap: 12px; margin-bottom: 15px; flex-wrap: wrap; }
+  .legend span { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #53565A; }
+  .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="page-header">
+  <h1 style="color:#fff">Subaru M.A.R.S. Org Chart</h1>
+  <div class="subtitle" style="color:rgba(255,255,255,0.8)">Agile Transformation Engagement · Prepared by Turnberry Solutions · Updated Mar 10, 2026</div>
+</div>
+
+<div class="content-area">
+<div class="stats">
+  <div class="stat"><div class="num">156</div><div class="label">Total Mapped</div></div>
+  <div class="stat"><div class="num">54</div><div class="label">FTE / Subaru</div></div>
+  <div class="stat"><div class="num">102</div><div class="label">Consultants</div></div>
+</div>
+
+<div class="legend">
+  <span><div class="swatch" style="background:#E8F5E9; border:1px solid #2E7D32;"></div> FTE (Subaru)</span>
+  <span><div class="swatch" style="background:#FFF3E0; border:1px solid #F57C00;"></div> Consultant/Contractor</span>
+  <span><div class="swatch" style="background:#FFF3E0; border:1px solid #F57C00;"></div> Contractor Group (collapsible)</span>
+</div>
+
+<div class="controls">
+  <button onclick="expandAll()">Expand All</button>
+  <button onclick="collapseAll()">Collapse All</button>
+  <button onclick="collapseBelow(3)">Show L1-L3</button>
+  <button onclick="collapseBelow(4)">Show L1-L4</button>
+  <label><input type="checkbox" id="showContractors" onchange="toggleContractorGroups()"> Show Contractors</label>
+</div>
+
+<div id="tree">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Hori, Yoichi</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">155</span>
+ <button class="toggle" onclick="toggle('children-1')">▼</button>
+  </div>
+  <div class="node-title">Chairman &amp; CEO</div>
+  <div class="children" id="children-1">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Walters, Jeff</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">154</span>
+ <button class="toggle" onclick="toggle('children-2')">▼</button>
+  </div>
+  <div class="node-title">President &amp; COO</div>
+  <div class="children" id="children-2">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Matey, Laura</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">153</span>
+ <button class="toggle" onclick="toggle('children-3')">▼</button>
+  </div>
+  <div class="node-title">VP - Information Technology</div>
+  <div class="children" id="children-3">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Giuffrida, Greg</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">152</span>
+ <button class="toggle" onclick="toggle('children-4')">▼</button>
+  </div>
+  <div class="node-title">IT Director - M.A.R.S.</div>
+  <div class="children" id="children-4">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Miller, Natalie</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">54</span>
+ <button class="toggle" onclick="toggle('children-5')">▼</button>
+  </div>
+  <div class="node-title">IT Manager Retailer Solutions</div>
+  <div class="children" id="children-5">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Rullo, Marc</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">25</span>
+ <button class="toggle" onclick="toggle('children-6')">▼</button>
+  </div>
+  <div class="node-title">IT Manager</div>
+  <div class="children" id="children-6">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Delgado, Angel</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Burt, Robert</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Shivhare, Swapnil</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Scola, Dominic</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Vahabzadeh, Joe</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Meyer, Joseph</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Gattumedhi, Shashi Kumar</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Java Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Placencia, Christian</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Chintam, Udaya Kumar</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">QA Tester</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (16)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">16</span>
+ <button class="toggle" onclick="toggle('children-16')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-16">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Kar, Sandip</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Java Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Shivanagaram, Ramesh</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Offshore Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Keesara, Vijay Kethan</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Offshore Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>P, Mahendar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Offshore Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Quinn, Colin</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Mohammed, Faizan</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Vertucio, Jason</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Gade, Michaeli</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Sengodan, Selvakumar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Offshore Consultant</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Nama, VedaVyas</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Offshore Tester</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Vaddi, Sravani</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Offshore Tester</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Shaik, Parveen</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Tester</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Angajala, Sai</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Tester</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Muvvala, Prasad</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Tester</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Anumala, Narendar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Vendor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Adnan, Muhammad</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Vendor</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Williams, Kadeem</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">16</span>
+ <button class="toggle" onclick="toggle('children-33')">▼</button>
+  </div>
+  <div class="node-title">IT Manager - TechShare</div>
+  <div class="children" id="children-33">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Bendu, Maria</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Gandi, Sunny</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Feld, Bryant</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (13)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">13</span>
+ <button class="toggle" onclick="toggle('children-37')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-37">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Mullapati, Venkateswara</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Jethwani, Smruti Mukesh</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Rao Jampani, Koteswara</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Hiremath, Akshata</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Bush, Carl</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Karuturi, Akash</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Deepali, Perugu</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Chavers, Luke</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Aiyappan Vasanthakumar, H.</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Temp Agency</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Nieva, Ignacio</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">UI/UX Designer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Madavedi, Gangothri</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Vendor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Vijayakumar, Sairam</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Vendor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Bollina, Lakshmi</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Vendor</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Fernandez Abeijón, Lucas</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Graphic Designer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (10)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">10</span>
+ <button class="toggle" onclick="toggle('children-52')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-52">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Ou, Yangci</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">DevOps Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Gowie, Matt</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">DevOps Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Mazzara, Miranda</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Graphic Designer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Smargiassi, Emanuel</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Graphic Designer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Argá, Laura</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Graphic Designer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Igusa, Kazuma</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">SBR</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Yasumasa, Imai</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">SBR Vendor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Blandford, Shane</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Software Consultant</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Reeder, Nate</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Software Consultant</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Salatino, Ezequiel</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">UI/UX Designer</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Guarnere, Gino</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">15</span>
+ <button class="toggle" onclick="toggle('children-63')">▼</button>
+  </div>
+  <div class="node-title">Information Technology Manager</div>
+  <div class="children" id="children-63">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Poole, Carolyn</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Sinha, Ruchi</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Vadla, Prathibha</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Thomas, Kevin</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Saxena, Abhay</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Whitmeyer, Rebecca</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Lambrechts, Beth Anne</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Peterson, Charlie</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Khanna, Raj</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (6)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">6</span>
+ <button class="toggle" onclick="toggle('children-73')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-73">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Gabbert, Dean</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Agile Lead Coach</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Lindmeyer, Jason</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Engagement Lead</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>McPherson, Denise</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Shea, Robert</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Consultant</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Datt, Anil</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Tate, Brien</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Transformation Advisor</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Mccracken, Kevin</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">73</span>
+ <button class="toggle" onclick="toggle('children-80')">▼</button>
+  </div>
+  <div class="node-title">Information Technology Manager</div>
+  <div class="children" id="children-80">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Malik, Bijender</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Lacorte, Tricia</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Sr. Business Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Madrigal Steller, Geovanni</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Test Engineering Senior Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Sanchez Espinoza, Bernardo</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Web Developer Senior Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Ambalathandi, Krishna</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">AEM Architect</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Saravanan, Kiruthik</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">AEM Backend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Budhalakoti, Mayank</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">AEM Frontend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Selvavinayagamoorthy, P.S.</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">AEM Frontend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Saviouk Azofeifa, Natasha</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Front End Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Manoharan, Thamizhini</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Front End Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Sugumar, Kishore Kumar</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">QA Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Lalu, Chris</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Software Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Solano Berrocal, Keren</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Test Engineering Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Moreira Bolanos, Jonathan</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Test Engineering Associate</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Chacon Hernandez, Juan</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Web Developer Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Salazar Sanchez, Jesus</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Web Developer Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Obando Espinoza, Javier</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Web Developer Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Cordero Hernandez, Carlos</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Web Developer Associate</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Rivera Avendano, Tatiana</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Web Developer Associate</div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Rao Nowpada, Kodanda</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">QA</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (53)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">53</span>
+ <button class="toggle" onclick="toggle('children-101')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-101">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Pellerin, Bethany</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Program Director</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Angadi, Shankar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Backend Lead Architect</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Parmar, Puneet</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Program Delivery Lead</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Bodde, Lou</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Senior Frontend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Joel, Suraj A</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Senior Product Manager</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Chakraborty, Gourav</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">AEM Backend Architect</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Upadhyay, Ashutosh</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">AEM Backend Architect</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Chhabra, Diksha</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">AEM Backend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Surampadi, Satya</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">AEM Backend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Ranjan, Ravi</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">AEM Backend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Goshal, Lopamudra</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">AEM Frontend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Quesada, Gunther</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">BE Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Aggarwal, Rishabh</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Backend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Peters, Matt</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Bounteous QA Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Lara, Andres</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Murugan, Prabu</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Sadh, Rohit-kumar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Ghosh, Rajib</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Solera, Roy</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Colburn, Danielle</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>McGrath, Ian</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Engineer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Auti, Tushar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Front End Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Walker, David</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Front End Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Santhosh, Kubera</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Frontend Developer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Kim, Henry</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Sultana, Naziya</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Gayas, Sulthan</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Analyst</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Kumar, Deepak</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Analyst - Automation</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Jaisankar, Balaji</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">QA Analyst - Manual</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Fallas Mora, Josue</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Test Engineering Associate</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Kissling, John</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Associate</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Holmes, Katia</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Account Director</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Mog, Colton</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Account Manager</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>McGinnis, Conor</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Author</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Mukku, Anusha</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Bounteous QA</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Hossain, Anowar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Bounteous QA</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Gruss, Carter</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">CL Tech Resource</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Chang, Kue</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">CL Tech Resource</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Marcin, Janik</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">CapGem Help Desk</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Sheehan, Kevin</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Capgemini (Digital POP)</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Konakanchi, Srinivasa</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Capgemini (Digital POP)</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Walter, Jacob</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Consultant</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Kumar, Pankaj</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Carter, Steven</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Agrawal, Anuja</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Budzynowski, Krystian</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Help Desk Cap Gem</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Rudy, Oskar</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Help Desk Cap Gem</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Kapula, Ravi</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">IT Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Sevy, Michale</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Producer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Hance, Emilie</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Producer</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Ballestero, Roy</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Project Manager</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Virdi, Soni</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Project Manager</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Gregier, Linda</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Project Manager</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Sokeye, Samuel</strong>
+ <span class="tag fte">FTE</span>
+ <span class="count">2</span>
+ <button class="toggle" onclick="toggle('children-155')">▼</button>
+  </div>
+  <div class="node-title">Lead Software Engineer</div>
+  <div class="children" id="children-155">
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Patel, Krupa</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Intern</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (1)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">1</span>
+ <button class="toggle" onclick="toggle('children-157')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-157">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Ahsan, Nayeem</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Temp Agency</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="node" style="border-left: 3px solid #2E7D32; background: #E8F5E9;">
+  <div class="node-header">
+    <strong>Cesarano, Dave</strong>
+ <span class="tag fte">FTE</span>
+  </div>
+  <div class="node-title">Principal</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Contractors (3)</strong>
+ <span class="tag consultant">📁</span>
+ <span class="count">3</span>
+ <button class="toggle" onclick="toggle('children-160')">►</button>
+  </div>
+  <div class="node-title">Toggle to expand/collapse</div>
+  <div class="children collapsed" id="children-160">
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Teeter, Louise</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Consultant / OCM</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Lambert, Jim</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">Contractor</div>
+</div>
+<div class="node" style="border-left: 3px solid #EF6C00; background: #FFF3E0;">
+  <div class="node-header">
+    <strong>Rashid, Muhammad O.</strong>
+ <span class="tag consultant">C</span>
+  </div>
+  <div class="node-title">JIRA Specialist</div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('collapsed');
+    // Update button arrow
+    const btn = document.querySelector('[onclick="toggle(\'' + id + '\')"]');
+    if (btn) btn.textContent = el.classList.contains('collapsed') ? '►' : '▼';
+  }
+}
+function expandAll() {
+  document.querySelectorAll('.children').forEach(e => {
+    e.classList.remove('collapsed');
+    const btn = e.previousElementSibling?.querySelector?.('.toggle') ||
+                e.parentElement?.querySelector?.('.toggle');
+  });
+  document.querySelectorAll('.toggle').forEach(b => b.textContent = '▼');
+}
+function collapseAll() {
+  document.querySelectorAll('.children').forEach(e => e.classList.add('collapsed'));
+  document.querySelectorAll('.toggle').forEach(b => b.textContent = '►');
+  // Keep Greg's direct reports visible
+  const first = document.querySelector('#tree > .node > .children');
+  if (first) {
+    first.classList.remove('collapsed');
+    const btn = first.parentElement.querySelector('.toggle');
+    if (btn) btn.textContent = '▼';
+  }
+}
+function collapseBelow(depth) {
+  function walk(el, d) {
+    el.querySelectorAll(':scope > .node > .children').forEach(c => {
+      if (d >= depth) {
+        c.classList.add('collapsed');
+        const btn = c.parentElement.querySelector('.toggle');
+        if (btn) btn.textContent = '►';
+      } else {
+        c.classList.remove('collapsed');
+        const btn = c.parentElement.querySelector('.toggle');
+        if (btn) btn.textContent = '▼';
+        walk(c, d+1);
+      }
+    });
+  }
+  const tree = document.getElementById('tree');
+  walk(tree, 1);
+}
+function toggleContractorGroups() {
+  const show = document.getElementById('showContractors').checked;
+  // Find all contractor group nodes (ones with 📁 tag)
+  document.querySelectorAll('.node').forEach(node => {
+    const header = node.querySelector('.node-header');
+    if (header && header.textContent.includes('Contractors (')) {
+      const childDiv = node.querySelector('.children');
+      if (childDiv) {
+        if (show) childDiv.classList.remove('collapsed');
+        else childDiv.classList.add('collapsed');
+        const btn = node.querySelector('.toggle');
+        if (btn) btn.textContent = show ? '▼' : '►';
+      }
+    }
+  });
+}
+// Start with L4+ collapsed for readability
+collapseBelow(4);
+</div>
+</script>
+</body>
+</html>

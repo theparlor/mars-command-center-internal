@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOA Agile Transformation — Scope of Work</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 40px; }
+
+  .page { max-width: 1400px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 48px; }
+  .header h1 { font-size: 32px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 16px; color: #6b7280; font-weight: 400; }
+  .header .partnership { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; padding: 8px 24px; background: #fff; border-radius: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-size: 14px; color: #4b5563; }
+  .header .partnership strong { color: #1a1a2e; }
+
+  .executive-summary {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border-left: 4px solid #1a1a2e;
+  }
+  .executive-summary h2 { font-size: 18px; margin-bottom: 12px; color: #1a1a2e; }
+  .executive-summary p { font-size: 15px; line-height: 1.7; color: #374151; }
+  .executive-summary .intent { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+  .executive-summary .intent-item {
+    flex: 1; min-width: 200px;
+    padding: 16px;
+    background: #f0f4ff;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .intent-item .icon { font-size: 28px; margin-bottom: 8px; }
+  .intent-item .label { font-size: 13px; font-weight: 600; color: #1e40af; }
+
+  .focus-areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+
+  .focus-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+  }
+  .focus-card .card-header {
+    padding: 24px;
+    color: #fff;
+    position: relative;
+  }
+  .focus-card .card-header .focus-num {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+  .focus-card .card-header h3 { font-size: 20px; font-weight: 700; }
+  .focus-card .card-header p { font-size: 13px; margin-top: 8px; opacity: 0.9; line-height: 1.5; }
+
+  .focus-1 .card-header { background: linear-gradient(135deg, #059669, #10b981); }
+  .focus-2 .card-header { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .focus-3 .card-header { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+
+  .card-body { padding: 24px; flex: 1; }
+  .card-body h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 12px; margin-top: 16px; }
+  .card-body h4:first-child { margin-top: 0; }
+
+  .deliverable-list { list-style: none; }
+  .deliverable-list li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .deliverable-list li:last-child { border-bottom: none; }
+  .deliverable-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+  .focus-1 .deliverable-list li::before { background: #10b981; }
+  .focus-2 .deliverable-list li::before { background: #3b82f6; }
+  .focus-3 .deliverable-list li::before { background: #8b5cf6; }
+
+  .sub-items { margin-left: 14px; margin-top: 4px; }
+  .sub-items li { font-size: 13px; color: #6b7280; border-bottom: none !important; padding: 3px 0; }
+  .sub-items li::before { width: 4px; height: 4px; opacity: 0.5; }
+
+  .outcomes-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .outcomes-section h2 { font-size: 18px; margin-bottom: 20px; }
+  .outcomes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .outcome-card {
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .outcome-card .metric-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .outcome-card .metric-desc { font-size: 13px; color: #6b7280; line-height: 1.5; }
+  .outcome-card:nth-child(1) { background: #ecfdf5; }
+  .outcome-card:nth-child(1) .metric-label { color: #059669; }
+  .outcome-card:nth-child(2) { background: #eff6ff; }
+  .outcome-card:nth-child(2) .metric-label { color: #2563eb; }
+  .outcome-card:nth-child(3) { background: #f5f3ff; }
+  .outcome-card:nth-child(3) .metric-label { color: #7c3aed; }
+  .outcome-card:nth-child(4) { background: #fff7ed; }
+  .outcome-card:nth-child(4) .metric-label { color: #ea580c; }
+
+  .teams-and-scope { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 40px; }
+
+  .teams-card, .oos-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .teams-card h2, .oos-card h2 { font-size: 18px; margin-bottom: 16px; }
+
+  .team-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .team-chip {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f0f4ff;
+    color: #1e40af;
+    border: 1px solid #dbeafe;
+  }
+
+  .approach-note {
+    margin-top: 16px;
+    padding: 16px;
+    background: #fefce8;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #713f12;
+    line-height: 1.6;
+    border: 1px solid #fef08a;
+  }
+
+  .oos-list { list-style: none; }
+  .oos-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    color: #6b7280;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .oos-list li:last-child { border-bottom: none; }
+  .oos-list li::before { content: '✕'; color: #ef4444; font-size: 12px; font-weight: 700; }
+
+  .timeline-bar {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .timeline-bar h2 { font-size: 18px; margin-bottom: 20px; }
+  .timeline-track { display: flex; gap: 0; position: relative; }
+  .timeline-segment {
+    flex: 1;
+    padding: 16px 12px;
+    text-align: center;
+    position: relative;
+    border-top: 4px solid;
+  }
+  .timeline-segment .week { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #9ca3af; }
+  .timeline-segment .event { font-size: 13px; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .seg-green { border-color: #10b981; }
+  .seg-green .event { color: #059669; }
+  .seg-blue { border-color: #3b82f6; }
+  .seg-blue .event { color: #2563eb; }
+  .seg-purple { border-color: #8b5cf6; }
+  .seg-purple .event { color: #7c3aed; }
+  .seg-orange { border-color: #f59e0b; }
+  .seg-orange .event { color: #d97706; }
+  .seg-red { border-color: #ef4444; }
+  .seg-red .event { color: #dc2626; }
+
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #9ca3af;
+  }
+
+  @media (max-width: 900px) {
+    .focus-areas { grid-template-columns: 1fr; }
+    .outcomes-grid { grid-template-columns: repeat(2, 1fr); }
+    .teams-and-scope { grid-template-columns: 1fr; }
+    .timeline-track { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Agile Transformation — Scope of Work</h1>
+    <div class="subtitle">20-Week Engagement &middot; M.A.R.S. Platforms &middot; One Cohort</div>
+    <div class="partnership">
+      <strong>Subaru of America</strong> &times; <strong>Turnberry Solutions</strong>
+    </div>
+  </div>
+
+  <div class="executive-summary">
+    <h2>Transformation Intent</h2>
+    <p>SOA and Turnberry are partnering to begin an Agile Transformation intended to improve overall speed of delivery, increase the efficiency of platform team delivery, and create transparency between teams and leaders. All delivery will be achieved through doing the actual work <strong>side-by-side</strong> with the platform teams and leaders.</p>
+    <div class="intent">
+      <div class="intent-item">
+        <div class="icon">&#9889;</div>
+        <div class="label">Speed of Delivery</div>
+      </div>
+      <div class="intent-item">
+        <div class="icon">&#9881;</div>
+        <div class="label">Team Efficiency</div>
+      </div>
+      <div class="intent-item">
+        <div class="icon">&#128269;</div>
+        <div class="label">Transparency</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="focus-areas">
+
+    <div class="focus-card focus-1">
+      <div class="card-header">
+        <div class="focus-num">Focus 1</div>
+        <h3>Training & Toolkit</h3>
+        <p>Custom Agile curriculum delivered to teams, launching new routines</p>
+      </div>
+      <div class="card-body">
+        <h4>In-Scope Services</h4>
+        <ul class="deliverable-list">
+          <li>Custom toolkit (SharePoint / Mural / LMS)</li>
+          <li>Agile & Scrum Training (up to 25 members, 2 weeks)</li>
+          <li>Communications & OCM</li>
+        </ul>
+        <h4>Training Modules</h4>
+        <ul class="deliverable-list">
+          <li>Agile Mindset & Continuous Improvement</li>
+          <li>Product Mindset & Product Discovery</li>
+          <li>Scrum and Kanban Fundamentals</li>
+          <li>Navigating Change</li>
+          <li>Achieving Flow (Batch Size & Self-Organization)</li>
+          <li>Writing Effective User Stories</li>
+          <li>Challenging Assumptions (Personas & Hypotheses)</li>
+          <li>Aligning on Value (Story Maps & MVP)</li>
+          <li>Customer Outcomes & Leading/Lagging Indicators</li>
+        </ul>
+        <h4>Key Deliverables</h4>
+        <ul class="deliverable-list">
+          <li>Training recordings, toolkit, and playbook</li>
+          <li>Team DoR, DoD, and delivery metrics standards</li>
+          <li>Strategic scorecards and roadmap templates</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="focus-card focus-2">
+      <div class="card-header">
+        <div class="focus-num">Focus 2</div>
+        <h3>Coaching</h3>
+        <p>Tailored coaching dovetailing with training, standardized and customized</p>
+      </div>
+      <div class="card-body">
+        <h4>In-Scope Services</h4>
+        <ul class="deliverable-list">
+          <li>Day-to-day team coaching (12-15 per coach)</li>
+          <li>Platform Leader coaching (weekly 1:1s)</li>
+          <li>Increment Planning facilitation (x2)</li>
+          <li>Communications & OCM</li>
+        </ul>
+        <h4>Key Deliverables</h4>
+        <ul class="deliverable-list">
+          <li>30-60-90-day coaching plans per team</li>
+          <li>Platform leader coaching sessions</li>
+          <li>OCM & Communications Plan</li>
+          <li>Bi-weekly status reporting</li>
+          <li>Increment Planning materials (prep, facilitation guide, exit)</li>
+        </ul>
+        <h4>Coaching Approach</h4>
+        <ul class="deliverable-list">
+          <li>Assess team maturity at start</li>
+          <li>Standardized foundation + customized mentoring</li>
+          <li>Side-by-side delivery with teams</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="focus-card focus-3">
+      <div class="card-header">
+        <div class="focus-num">Focus 3</div>
+        <h3>JIRA & Metrics</h3>
+        <p>Common JIRA config, industry-standard metrics, baseline outcomes</p>
+      </div>
+      <div class="card-body">
+        <h4>JIRA Configuration</h4>
+        <ul class="deliverable-list">
+          <li>Best practices: project setup, fields, workflow</li>
+          <li>JIRA Playbook with work classification</li>
+          <li>Issue hierarchy: Initiative &gt; Epic &gt; Story &gt; Task &gt; Bug</li>
+          <li>Fix Versions, Components, Labels standards</li>
+          <li>Team training on standardized usage</li>
+        </ul>
+        <h4>JIRA Reporting</h4>
+        <ul class="deliverable-list">
+          <li>Out-of-the-box reporting config & training</li>
+          <li>Dashboards: leader level and team level</li>
+          <li>JIRA Add-On recommendations</li>
+        </ul>
+        <h4>Team Scorecards</h4>
+        <ul class="deliverable-list">
+          <li>Velocity</li>
+          <li>Predictability</li>
+          <li>Cycle Time</li>
+          <li>Defect Leakage & Density</li>
+          <li>Team Health</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="outcomes-section">
+    <h2>Engagement Outcomes — Baseline & Improve</h2>
+    <div class="outcomes-grid">
+      <div class="outcome-card">
+        <div class="metric-label">Agile Maturity</div>
+        <div class="metric-desc">Team-level agile maturity assessment and growth tracking</div>
+      </div>
+      <div class="outcome-card">
+        <div class="metric-label">Team Pulse</div>
+        <div class="metric-desc">Happiness, empowerment, and outcomes focus</div>
+      </div>
+      <div class="outcome-card">
+        <div class="metric-label">Predictability & Velocity</div>
+        <div class="metric-desc">Consistent delivery cadence across all teams</div>
+      </div>
+      <div class="outcome-card">
+        <div class="metric-label">Leader Sentiment</div>
+        <div class="metric-desc">IT Director confidence in team agility and performance</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="teams-and-scope">
+    <div class="teams-card">
+      <h2>In-Scope Teams (One Cohort)</h2>
+      <div class="team-chips">
+        <div class="team-chip">Subaru.net</div>
+        <div class="team-chip">TechShare</div>
+        <div class="team-chip">Subaru.com</div>
+        <div class="team-chip">M.A.R.S.</div>
+        <div class="team-chip">QA</div>
+        <div class="team-chip">DevOps</div>
+      </div>
+      <div class="approach-note">
+        <strong>Approach:</strong> Training and coaching delivered as one cohort across 20 weeks. This allows the team to learn and adapt content to SOA in real-time while delivering side-by-side with the platform teams.
+      </div>
+    </div>
+    <div class="oos-card">
+      <h2>Out of Scope</h2>
+      <ul class="oos-list">
+        <li>Areas outside M.A.R.S. Platforms</li>
+        <li>Contractors</li>
+        <li>Engineering / DevOps Coaching</li>
+        <li>Custom JIRA integrations & reporting</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="timeline-bar">
+    <h2>20-Week Engagement Timeline</h2>
+    <div class="timeline-track">
+      <div class="timeline-segment seg-green">
+        <div class="week">Wk 0</div>
+        <div class="event">Prep & Alignment</div>
+      </div>
+      <div class="timeline-segment seg-blue">
+        <div class="week">Wk 1-2</div>
+        <div class="event">Kickoff & Discovery</div>
+      </div>
+      <div class="timeline-segment seg-green">
+        <div class="week">Wk 3-5</div>
+        <div class="event">Agile, Kanban, Scrum Training</div>
+      </div>
+      <div class="timeline-segment seg-purple">
+        <div class="week">Wk 4-5</div>
+        <div class="event">Current State Assessment</div>
+      </div>
+      <div class="timeline-segment seg-red">
+        <div class="week">Wk 6</div>
+        <div class="event">PI Planning #0</div>
+      </div>
+      <div class="timeline-segment seg-green">
+        <div class="week">Wk 7-9</div>
+        <div class="event">Flow, Stories, Product Mindset</div>
+      </div>
+      <div class="timeline-segment seg-red">
+        <div class="week">Wk 13</div>
+        <div class="event">PI Planning #1</div>
+      </div>
+      <div class="timeline-segment seg-orange">
+        <div class="week">Wk 14-19</div>
+        <div class="event">Coaching & Metrics</div>
+      </div>
+      <div class="timeline-segment seg-red">
+        <div class="week">Wk 20</div>
+        <div class="event">PI Planning #2 / Close</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    SOA Agile Transformation &middot; Subaru of America &times; Turnberry Solutions &middot; Feb – Jul 2026
+  </div>
+
+</div>
+</body>
+</html>

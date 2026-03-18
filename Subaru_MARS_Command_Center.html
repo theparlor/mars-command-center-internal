@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Command Center</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MARS COMMAND CENTER — Navigation Hub
+   Design: Consultant-Authored, Client-Branded
+   Subaru Blue chrome, white canvas, category-colored sections
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Subaru Brand */
+  --subaru-blue: #00205B;
+  --star-cluster: #1D4F91;
+  --bright-blue: #00AEEF;
+  --subaru-gray: #53565A;
+  /* Structural */
+  --text: #1F2937;
+  --text-secondary: #6B7280;
+  --bg: #F9FAFB;
+  --white: #FFFFFF;
+  --border: #E5E7EB;
+  --light-gray: #F3F4F6;
+  /* Lane Colors (from Gantt) */
+  --train: #1976D2; --train-bg: #E3F2FD; --train-text: #0D47A1;
+  --coach: #7B1FA2; --coach-bg: #F3E5F5; --coach-text: #4A148C;
+  --jira: #00897B;  --jira-bg: #E0F2F1;  --jira-text: #004D40;
+  --ocm: #EF6C00;   --ocm-bg: #FFF3E0;   --ocm-text: #BF360C;
+  --mile: #C62828;   --mile-bg: #FFEBEE;   --mile-text: #B71C1C;
+  --admin: #546E7A;  --admin-bg: #ECEFF1;  --admin-text: #37474F;
+  /* Section accent colors */
+  --schedule-accent: #1976D2;
+  --org-accent: #7B1FA2;
+  --curriculum-accent: #00897B;
+  --status-accent: #EF6C00;
+  --frameworks-accent: #C62828;
+  --brand-accent: #546E7A;
+  --tools-accent: #1D4F91;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Helvetica,Arial,sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+
+/* ── ACCENT BAR ── */
+.accent-bar { height: 4px; background: var(--subaru-blue); }
+
+/* ── HERO HEADER ── */
+.hero {
+  background: linear-gradient(135deg, var(--subaru-blue) 0%, var(--star-cluster) 60%, #2a6db5 100%);
+  color: white; padding: 48px 48px 40px; position: relative; overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; right: -60px; top: -60px;
+  width: 300px; height: 300px; background: rgba(255,255,255,0.04); border-radius: 50%;
+}
+.hero::before {
+  content: ''; position: absolute; right: 100px; bottom: -80px;
+  width: 200px; height: 200px; background: rgba(255,255,255,0.03); border-radius: 50%;
+}
+.hero-content { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
+.hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+.hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+.hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+.hero-stat {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; padding: 14px 20px; min-width: 130px; text-align: center;
+  backdrop-filter: blur(8px);
+}
+.hero-stat .num { font-size: 28px; font-weight: 800; }
+.hero-stat .label { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; font-weight: 600; letter-spacing: 0.3px; }
+
+/* ── QUICK NAV ── */
+.quick-nav {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 12px 48px; display: flex; gap: 6px; align-items: center;
+  flex-wrap: wrap; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.quick-nav-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; margin-right: 8px; }
+.quick-nav a {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  text-decoration: none; color: var(--text); background: var(--light-gray);
+  border: 1px solid var(--border); transition: all 0.15s; white-space: nowrap;
+}
+.quick-nav a:hover { background: var(--subaru-blue); color: white; border-color: var(--subaru-blue); }
+
+/* ── MAIN LAYOUT ── */
+.main { max-width: 1300px; margin: 0 auto; padding: 32px 48px 64px; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 40px; }
+.section-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+  padding-bottom: 12px; border-bottom: 2px solid var(--border);
+}
+.section-icon {
+  width: 40px; height: 40px; border-radius: 10px; display: flex;
+  align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+}
+.section-header h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+.section-header .section-desc { font-size: 13px; color: var(--text-secondary); margin-left: auto; max-width: 400px; text-align: right; }
+
+/* ── CARD GRID ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.card-grid.wide { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+
+/* ── ARTIFACT CARD ── */
+.card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: all 0.2s; cursor: pointer; text-decoration: none;
+  color: inherit; display: flex; flex-direction: column;
+}
+.card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: #c0c0c0; }
+.card-accent { height: 4px; width: 100%; }
+.card-body { padding: 18px 20px; flex: 1; }
+.card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.card-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+.card-peek {
+  background: var(--light-gray); border-radius: 8px; padding: 12px 14px;
+  font-size: 11.5px; color: var(--text-secondary); line-height: 1.6;
+}
+.card-peek .peek-label { font-size: 10px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+.card-peek .peek-item { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.card-peek .peek-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.card-footer {
+  padding: 10px 20px; background: var(--light-gray); border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center; font-size: 11px;
+}
+.card-format { font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--white); color: var(--text-secondary); border: 1px solid var(--border); }
+.card-action { color: var(--star-cluster); font-weight: 700; }
+
+/* ── FEATURED CARD (wide, with inline preview) ── */
+.card-featured {
+  grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit;
+}
+.card-featured:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.card-featured .card-left { padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
+.card-featured .card-right { background: var(--light-gray); padding: 20px; border-left: 1px solid var(--border); font-size: 12px; }
+
+/* ── MINI GANTT PREVIEW ── */
+.mini-gantt { display: flex; flex-direction: column; gap: 6px; }
+.mini-lane { display: flex; align-items: center; gap: 8px; }
+.mini-lane-label { font-size: 10px; font-weight: 700; width: 65px; text-align: right; flex-shrink: 0; }
+.mini-bar { height: 16px; border-radius: 3px; position: relative; min-width: 20px; }
+.mini-bar-text { position: absolute; left: 6px; top: 50%; transform: translateY(-50%); font-size: 9px; font-weight: 600; color: white; white-space: nowrap; }
+
+/* ── MINI TIMELINE ── */
+.mini-timeline { position: relative; padding-left: 20px; }
+.mini-timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.tl-item { position: relative; padding: 6px 0 6px 16px; font-size: 11px; }
+.tl-item::before { content: ''; position: absolute; left: -17px; top: 10px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid; background: white; }
+.tl-item .tl-week { font-weight: 700; }
+
+/* ── MINI ORG ── */
+.mini-org-tree { font-size: 11px; }
+.mini-org-node { padding: 3px 8px; border-radius: 4px; margin: 2px 0 2px 16px; display: inline-block; }
+.mini-org-node.root { margin-left: 0; font-weight: 700; }
+
+/* ── CURRICULUM PEEK ── */
+.cat-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.cat-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.cat-name { font-size: 12px; font-weight: 600; flex: 1; }
+.cat-count { font-size: 11px; color: var(--text-secondary); }
+
+/* ── FOOTER ── */
+.page-footer {
+  max-width: 1300px; margin: 0 auto; padding: 24px 48px 40px;
+  border-top: 1px solid var(--border); display: flex;
+  justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--text-secondary);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero { padding: 32px 24px; }
+  .hero h1 { font-size: 24px; }
+  .main { padding: 24px; }
+  .quick-nav { padding: 12px 24px; }
+  .card-featured { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .card-grid.wide { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<!-- ════════ HERO ════════ -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>M.A.R.S. Command Center</h1>
+    <div class="subtitle">Subaru of America — Agile Transformation Engagement · Prepared by Turnberry Solutions</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">20</div><div class="label">Week Engagement</div></div>
+      <div class="hero-stat"><div class="num">156</div><div class="label">Staff Mapped</div></div>
+      <div class="hero-stat"><div class="num">14</div><div class="label">Courses</div></div>
+      <div class="hero-stat"><div class="num">10</div><div class="label">Teams</div></div>
+      <div class="hero-stat"><div class="num">13</div><div class="label">Decisions Logged</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ QUICK NAV ════════ -->
+<div class="quick-nav">
+  <span class="quick-nav-label">Jump to</span>
+  <a href="#schedule">Schedule & Timeline</a>
+  <a href="#organization">Organization</a>
+  <a href="#curriculum">Curriculum & Training</a>
+  <a href="#status">Status & Reporting</a>
+  <a href="#frameworks">Frameworks & Models</a>
+  <a href="#brand">Brand & Design</a>
+  <a href="#tools">Observation Tools</a>
+</div>
+
+<!-- ════════ MAIN CONTENT ════════ -->
+<div class="main">
+
+<!-- ─── SECTION: SCHEDULE & TIMELINE ─── -->
+<div class="section" id="schedule">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--train-bg); color: var(--train);">📅</div>
+    <div>
+      <h2>Schedule & Timeline</h2>
+    </div>
+    <div class="section-desc">20-week engagement plan across 3 phases · training, coaching, Jira, OCM lanes</div>
+  </div>
+
+  <div class="card-grid wide">
+    <!-- FEATURED: Reconciled Schedule -->
+    <a class="card-featured" href="schedule/Subaru_MARS_Reconciled_Schedule.html">
+      <div class="card-left">
+        <div style="height:4px;background:var(--schedule-accent);border-radius:2px;margin-bottom:16px;width:60px"></div>
+        <div class="card-title" style="font-size:18px;">Engagement Schedule</div>
+        <div class="card-desc">The primary reconciled schedule — 20 weeks, 3 phases, all lanes. Click any activity lane to drill into its detail view.</div>
+        <div style="margin-top:12px;"><span class="card-format">HTML</span> <span class="card-action" style="margin-left:8px;">Open Schedule →</span></div>
+      </div>
+      <div class="card-right">
+        <div class="peek-label" style="margin-bottom:10px;">PHASE OVERVIEW</div>
+        <div class="mini-gantt">
+          <div class="mini-lane">
+            <div class="mini-lane-label" style="color:var(--train-text)">Training</div>
+            <div class="mini-bar" style="background:var(--train);width:75%"><span class="mini-bar-text">Wk 1–15 · 14 courses</span></div>
+          </div>
+          <div class="mini-lane">
+            <div class="mini-lane-label" style="color:var(--coach-text)">Coaching</div>
+            <div class="mini-bar" style="background:var(--coach);width:85%"><span class="mini-bar-text">Wk 2–18 · Embedded + Exec</span></div>
+          </div>
+          <div class="mini-lane">
+            <div class="mini-lane-label" style="color:var(--jira-text)">Jira/Tools</div>
+            <div class="mini-bar" style="background:var(--jira);width:50%;margin-left:10%"><span class="mini-bar-text">Wk 3–12 · Config & Migration</span></div>
+          </div>
+          <div class="mini-lane">
+            <div class="mini-lane-label" style="color:var(--ocm-text)">OCM</div>
+            <div class="mini-bar" style="background:var(--ocm);width:90%"><span class="mini-bar-text">Wk 1–19 · Change Management</span></div>
+          </div>
+          <div class="mini-lane">
+            <div class="mini-lane-label" style="color:var(--mile-text)">Milestones</div>
+            <div class="mini-bar" style="background:var(--mile);width:20%;margin-left:5%"><span class="mini-bar-text">Checkpoints</span></div>
+            <div class="mini-bar" style="background:var(--mile);width:15%;margin-left:15%"><span class="mini-bar-text"></span></div>
+            <div class="mini-bar" style="background:var(--mile);width:10%;"><span class="mini-bar-text"></span></div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Gantt Views -->
+    <a class="card" href="schedule/Subaru_MARS_Gantt_Views.html">
+      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Interactive Gantt Chart</div>
+        <div class="card-desc">Tabbed Gantt with overview, phase detail, and lane views. Full bar-chart timeline with swim lanes.</div>
+        <div class="card-peek">
+          <div class="peek-label">VIEWS AVAILABLE</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--train)"></span> Overview · Phase 1 · Phase 2 · Phase 3</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--coach)"></span> Training Lane · Coaching Lane · Jira Lane</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Gantt →</span>
+      </div>
+    </a>
+
+    <!-- Calendar View -->
+    <a class="card" href="schedule/Subaru_MARS_Calendar_View.html">
+      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Calendar View</div>
+        <div class="card-desc">Monthly calendar layout showing all activities by day. Great for "what's happening this week" planning.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Calendar →</span>
+      </div>
+    </a>
+
+    <!-- Two Week Look Ahead -->
+    <a class="card" href="schedule/Subaru_MARS_Two_Week_Look_Ahead.html">
+      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Two-Week Look Ahead</div>
+        <div class="card-desc">Rolling two-week view for standup prep and near-term planning. Focus on what's next.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML · PPTX · DOCX</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+
+    <!-- Card View -->
+    <a class="card" href="schedule/Subaru_MARS_Card_View.html">
+      <div class="card-accent" style="background: var(--schedule-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Activity Cards</div>
+        <div class="card-desc">Kanban-style card view — each activity as a filterable card with lane, week, and status.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Cards →</span>
+      </div>
+    </a>
+
+    <!-- Decision Log -->
+    <a class="card" href="schedule/Subaru_MARS_Decision_Log.html">
+      <div class="card-accent" style="background: var(--mile);"></div>
+      <div class="card-body">
+        <div class="card-title">Decision Log</div>
+        <div class="card-desc">13 reconciliation decisions from schedule alignment with Jason. Tracks resolution status and impact.</div>
+        <div class="card-peek">
+          <div class="peek-label">RECENT DECISIONS</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#2D8A4E"></span> RESOLVED: Phase 1 end date → Week 7 (Mar 28)</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#2D8A4E"></span> RESOLVED: Coaching start → Week 2 (aligned)</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#E8762B"></span> UPDATED: Jira migration timeline compressed</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Log →</span>
+      </div>
+    </a>
+
+    <!-- Schedule Data -->
+    <a class="card" href="schedule/Subaru_MARS_Schedule.xlsx" style="pointer-events:auto;">
+      <div class="card-accent" style="background: var(--admin);"></div>
+      <div class="card-body">
+        <div class="card-title">Schedule Data (Source)</div>
+        <div class="card-desc">Master Excel workbook — all activities, dates, owners, and status. Source of truth for schedule views.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">XLSX</span>
+        <span class="card-action">Download →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── SECTION: ORGANIZATION ─── -->
+<div class="section" id="organization">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--coach-bg); color: var(--coach);">👥</div>
+    <div><h2>Organization</h2></div>
+    <div class="section-desc">156 staff across 10 teams · Interactive org chart and team explorer</div>
+  </div>
+
+  <div class="card-grid wide">
+    <a class="card-featured" href="org/Subaru_MARS_Org_Chart.html">
+      <div class="card-left">
+        <div style="height:4px;background:var(--org-accent);border-radius:2px;margin-bottom:16px;width:60px"></div>
+        <div class="card-title" style="font-size:18px;">Interactive Org Chart</div>
+        <div class="card-desc">Collapsible tree view of 156 mapped staff. Filter by FTE vs. consultant, expand/collapse levels, search by name.</div>
+        <div style="margin-top:12px;"><span class="card-format">HTML</span> <span class="card-action" style="margin-left:8px;">Open Org Chart →</span></div>
+      </div>
+      <div class="card-right">
+        <div class="peek-label" style="margin-bottom:10px;">ORGANIZATION SNAPSHOT</div>
+        <div class="mini-org-tree">
+          <div class="mini-org-node root" style="background:#E8F5E9;border:1px solid #2E7D32;">Hori, Yoichi — CEO</div>
+          <div style="padding-left:16px">
+            <div class="mini-org-node" style="background:#E8F5E9;border:1px solid #2E7D32;">Guzak, Darrin — VP Tech</div>
+            <div style="padding-left:16px">
+              <div class="mini-org-node" style="background:#FFF3E0;border:1px solid #F57C00;">Jason (Turnberry) — Engagement Lead</div>
+              <div class="mini-org-node" style="background:#E8F5E9;border:1px solid #2E7D32;">+ 8 more teams...</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:12px;">
+          <div style="text-align:center;"><span style="font-size:20px;font-weight:800;color:var(--subaru-blue)">54</span><br><span style="font-size:10px;color:var(--text-secondary)">FTEs</span></div>
+          <div style="text-align:center;"><span style="font-size:20px;font-weight:800;color:#F57C00">102</span><br><span style="font-size:10px;color:var(--text-secondary)">Consultants</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" href="org/Subaru_MARS_Team_Explorer.html">
+      <div class="card-accent" style="background: var(--org-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Team Explorer</div>
+        <div class="card-desc">Team-level view — see each scrum team, their composition, coach assignments, and current sprint focus.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Explorer →</span>
+      </div>
+    </a>
+
+    <a class="card" href="org/Subaru_MARS_Org_Roster.xlsx" style="pointer-events:auto;">
+      <div class="card-accent" style="background: var(--admin);"></div>
+      <div class="card-body">
+        <div class="card-title">Org Roster (Data)</div>
+        <div class="card-desc">Complete roster spreadsheet — names, roles, teams, FTE/consultant status.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">XLSX</span>
+        <span class="card-action">Download →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── SECTION: CURRICULUM & TRAINING ─── -->
+<div class="section" id="curriculum">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--jira-bg); color: var(--jira);">📚</div>
+    <div><h2>Curriculum & Training</h2></div>
+    <div class="section-desc">14 courses across 4 categories · Full Agile Academy with course materials</div>
+  </div>
+
+  <div class="card-grid wide">
+    <a class="card-featured" href="curriculum/Subaru_MARS_Course_Catalog.html">
+      <div class="card-left">
+        <div style="height:4px;background:var(--curriculum-accent);border-radius:2px;margin-bottom:16px;width:60px"></div>
+        <div class="card-title" style="font-size:18px;">Course Catalog</div>
+        <div class="card-desc">Interactive catalog of all 14 courses. Filter by category, search by keyword, see objectives and agenda for each course.</div>
+        <div style="margin-top:12px;"><span class="card-format">HTML</span> <span class="card-action" style="margin-left:8px;">Open Catalog →</span></div>
+      </div>
+      <div class="card-right">
+        <div class="peek-label" style="margin-bottom:10px;">CATEGORIES</div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--train)"></div><div class="cat-name">Agile Foundations</div><div class="cat-count">4 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--coach)"></div><div class="cat-name">Role-Based Training</div><div class="cat-count">4 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--jira)"></div><div class="cat-name">Tools & Process</div><div class="cat-count">3 courses</div></div>
+        <div class="cat-row"><div class="cat-dot" style="background:var(--ocm)"></div><div class="cat-name">Leadership & Culture</div><div class="cat-count">3 courses</div></div>
+        <div style="margin-top:12px;font-size:11px;color:var(--text-secondary);">Each course links to its full material in the Agile Academy</div>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_MARS_Interview_Guide.html">
+      <div class="card-accent" style="background: var(--curriculum-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">MARS Interview Guide</div>
+        <div class="card-desc">Structured interview framework for team assessments — discovery questions, observation prompts, and maturity signals.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Guide →</span>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_Roadmap_Session_Observation_Guide.html">
+      <div class="card-accent" style="background: var(--curriculum-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Roadmap Session Observation Guide</div>
+        <div class="card-desc">Structured observation framework for roadmap planning sessions — what to watch, what to capture, scoring rubric.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Guide →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── SECTION: STATUS & REPORTING ─── -->
+<div class="section" id="status">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--ocm-bg); color: var(--ocm);">📊</div>
+    <div><h2>Status & Reporting</h2></div>
+    <div class="section-desc">Weekly dashboards and stakeholder updates</div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card" href="../status_updates/Subaru_MARS_Weekly_Status.html">
+      <div class="card-accent" style="background: var(--status-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Weekly Status Dashboard</div>
+        <div class="card-desc">16:9 dashboard card — highlight reel, lane status, health indicators, next-week look-ahead. Designed for screen share.</div>
+        <div class="card-peek">
+          <div class="peek-label">INCLUDES</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--train)"></span> Lane-by-lane progress</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#2E7D32"></span> Health indicators (On Track / At Risk / Blocked)</div>
+          <div class="peek-item"><span class="peek-dot" style="background:var(--ocm)"></span> Wins, risks, and next-week plan</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Dashboard →</span>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_Visual_Communication_System.html">
+      <div class="card-accent" style="background: var(--status-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Visual Communication System</div>
+        <div class="card-desc">Standards for visual communication across all engagement artifacts — iconography, color coding, status indicators.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+
+    <a class="card" href="schedule/Subaru_MARS_Schedule_Email.html">
+      <div class="card-accent" style="background: var(--admin);"></div>
+      <div class="card-body">
+        <div class="card-title">Schedule Email (Paste-Ready)</div>
+        <div class="card-desc">Pre-formatted schedule summary for email distribution. Copy-paste into Outlook.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── SECTION: FRAMEWORKS & MODELS ─── -->
+<div class="section" id="frameworks">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--mile-bg); color: var(--mile);">🏗️</div>
+    <div><h2>Frameworks & Models</h2></div>
+    <div class="section-desc">Transformation operating system, leadership models, and engagement architecture</div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card" href="Leadership_Altitude_Model.html">
+      <div class="card-accent" style="background: var(--frameworks-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Leadership Altitude Model</div>
+        <div class="card-desc">Interactive 5-level altitude model mapping leadership communications to Enterprise and Enablement operating systems. Dark theme, React-based.</div>
+        <div class="card-peek">
+          <div class="peek-label">ALTITUDE LEVELS</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#1a1a2e"></span> Executive · Strategic · Product · Operational · Team</div>
+          <div class="peek-item"><span class="peek-dot" style="background:#e74c3c"></span> Enterprise OS ↔ Enablement OS mapping</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML (React)</span>
+        <span class="card-action">Open Model →</span>
+      </div>
+    </a>
+
+    <a class="card" href="SOW_Overview_Diagram.html">
+      <div class="card-accent" style="background: var(--frameworks-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">SOW Overview Diagram</div>
+        <div class="card-desc">Visual map of the Statement of Work — scope boundaries, deliverables, and phase alignment.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Diagram →</span>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_RnR_Workbook.docx" style="pointer-events:auto;">
+      <div class="card-accent" style="background: var(--frameworks-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Roles & Responsibilities Workbook</div>
+        <div class="card-desc">Comprehensive R&R definitions for all scrum roles — Product Owner, Scrum Master, Dev Team, stakeholders.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">DOCX</span>
+        <span class="card-action">Download →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── SECTION: BRAND & DESIGN ─── -->
+<div class="section" id="brand">
+  <div class="section-header">
+    <div class="section-icon" style="background: var(--admin-bg); color: var(--admin);">🎨</div>
+    <div><h2>Brand & Design System</h2></div>
+    <div class="section-desc">Co-branding strategy, design tokens, and visual consistency standards</div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card" href="../design/Design_System.html">
+      <div class="card-accent" style="background: var(--brand-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Design System</div>
+        <div class="card-desc">Complete design token reference — colors, typography, spacing, component patterns for all output formats.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+
+    <a class="card" href="../design/brand/Co_Branding_Strategy.html">
+      <div class="card-accent" style="background: var(--brand-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Co-Branding Strategy</div>
+        <div class="card-desc">Turnberry × Subaru co-branding rules — logo placement, height budgets, slide-by-slide placement specs.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+
+    <a class="card" href="examples/Co_Branded_Example.html">
+      <div class="card-accent" style="background: var(--brand-accent);"></div>
+      <div class="card-body">
+        <div class="card-title">Co-Branded Examples</div>
+        <div class="card-desc">Live examples of co-branded artifacts — email templates, web layouts, Miro planograms.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open Examples →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── SECTION: OBSERVATION TOOLS ─── -->
+<div class="section" id="tools">
+  <div class="section-header">
+    <div class="section-icon" style="background: #E8EAF6; color: #3F51B5;">🔍</div>
+    <div><h2>Observation & Assessment Tools</h2></div>
+    <div class="section-desc">Structured guides for team observation, interviews, and readiness assessment</div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card" href="Subaru_MARS_Interview_Guide.html">
+      <div class="card-accent" style="background: #3F51B5;"></div>
+      <div class="card-body">
+        <div class="card-title">MARS Interview Guide</div>
+        <div class="card-desc">Discovery conversation framework — structured questions for understanding team maturity, pain points, and readiness.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_Roadmap_Session_Observation_Guide.html">
+      <div class="card-accent" style="background: #3F51B5;"></div>
+      <div class="card-body">
+        <div class="card-title">Roadmap Session Observation Guide</div>
+        <div class="card-desc">What to watch for during roadmap planning — facilitation quality, decision-making, stakeholder engagement signals.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">HTML</span>
+        <span class="card-action">Open →</span>
+      </div>
+    </a>
+
+    <a class="card" href="Subaru_Training_Recap.pptx" style="pointer-events:auto;">
+      <div class="card-accent" style="background: #3F51B5;"></div>
+      <div class="card-body">
+        <div class="card-title">Training Recap Deck</div>
+        <div class="card-desc">Week 1 training readout — attendance, feedback scores, coaching observations, and improvement actions.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-format">PPTX</span>
+        <span class="card-action">Download →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+</div><!-- end .main -->
+
+<!-- ════════ FOOTER ════════ -->
+<div style="height:3px;background:linear-gradient(90deg,var(--subaru-blue) 0%,var(--star-cluster) 50%,var(--subaru-blue) 100%);"></div>
+<div class="page-footer">
+  <div>Subaru M.A.R.S. Agile Transformation · Prepared by Turnberry Solutions</div>
+  <div>Command Center v1.0 · Updated March 2026</div>
+</div>
+
+<!-- ════════ SMOOTH SCROLL ════════ -->
+<script>
+document.querySelectorAll('.quick-nav a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update active state
+        document.querySelectorAll('.quick-nav a').forEach(n => n.style.background = '');
+        this.style.background = 'var(--subaru-blue)';
+        this.style.color = 'white';
+        this.style.borderColor = 'var(--subaru-blue)';
+      }
+    }
+  });
+});
+
+// Highlight current section in quick nav on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.quick-nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.offsetTop - 80;
+    if (scrollY >= top) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.background = '';
+    a.style.color = '';
+    a.style.borderColor = '';
+    if (a.getAttribute('href') === '#' + current) {
+      a.style.background = 'var(--subaru-blue)';
+      a.style.color = 'white';
+      a.style.borderColor = 'var(--subaru-blue)';
+    }
+  });
+});
+</script>
+</body>
+</html>

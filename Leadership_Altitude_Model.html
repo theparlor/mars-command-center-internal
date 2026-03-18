@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership Altitude &amp; Communications Atomic Model</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  :root {
+    --exec: #1a1a2e;
+    --exec-light: #2d2d4a;
+    --strategic: #16213e;
+    --strategic-light: #1f3054;
+    --product: #0f3460;
+    --product-light: #164a80;
+    --operational: #1a5276;
+    --operational-light: #2471a3;
+    --team: #1e8449;
+    --team-light: #27ae60;
+    --enterprise: #e74c3c;
+    --enablement: #3498db;
+    --both: #9b59b6;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+
+  .app { max-width: 1600px; margin: 0 auto; padding: 24px; }
+
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+  .header p { color: var(--text-muted); font-size: 15px; max-width: 700px; margin: 0 auto; line-height: 1.5; }
+
+  .nav-tabs { display: flex; gap: 4px; background: var(--surface); border-radius: 12px; padding: 4px; margin-bottom: 24px; justify-content: center; }
+  .nav-tab { padding: 10px 20px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+  .nav-tab:hover { color: var(--text); background: var(--surface2); }
+  .nav-tab.active { background: var(--accent); color: #fff; }
+
+  /* ALTITUDE STACK VIEW */
+  .altitude-stack { display: flex; flex-direction: column; gap: 2px; margin-bottom: 32px; }
+  .altitude-row { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 2px; cursor: pointer; transition: all 0.2s; }
+  .altitude-row:hover { transform: scale(1.005); }
+  .altitude-row.selected { transform: scale(1.01); }
+
+  .altitude-label { padding: 20px 16px; display: flex; flex-direction: column; justify-content: center; border-radius: 8px 0 0 8px; position: relative; }
+  .altitude-label h3 { font-size: 16px; font-weight: 600; }
+  .altitude-label .subtitle { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+  .altitude-label .level { font-size: 10px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+
+  .os-cell { padding: 16px; position: relative; }
+  .os-cell.enterprise { background: rgba(231,76,60,0.08); border-top: 2px solid rgba(231,76,60,0.3); }
+  .os-cell.enablement { background: rgba(52,152,219,0.08); border-top: 2px solid rgba(52,152,219,0.3); border-radius: 0 8px 8px 0; }
+  .os-cell h4 { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .accountability-tag { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; margin: 2px 4px 2px 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); }
+  .accountability-tag.own { border-color: rgba(88,166,255,0.4); background: rgba(88,166,255,0.1); }
+  .accountability-tag.decide { border-color: rgba(238,130,238,0.4); background: rgba(238,130,238,0.1); }
+  .accountability-tag.communicate { border-color: rgba(46,204,113,0.4); background: rgba(46,204,113,0.1); }
+  .accountability-tag.measure { border-color: rgba(241,196,15,0.4); background: rgba(241,196,15,0.1); }
+  .accountability-tag.learn { border-color: rgba(230,126,34,0.4); background: rgba(230,126,34,0.1); }
+
+  .os-headers { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 2px; margin-bottom: 8px; }
+  .os-header { text-align: center; padding: 8px; font-size: 13px; font-weight: 600; border-radius: 8px; }
+  .os-header.enterprise-h { background: rgba(231,76,60,0.15); color: #e74c3c; }
+  .os-header.enablement-h { background: rgba(52,152,219,0.15); color: #3498db; }
+
+  /* DETAIL PANEL */
+  .detail-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 16px; }
+  .detail-panel h2 { font-size: 20px; margin-bottom: 16px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .detail-section { background: var(--surface2); border-radius: 8px; padding: 16px; }
+  .detail-section h3 { font-size: 14px; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .detail-section ul { list-style: none; }
+  .detail-section li { padding: 6px 0; font-size: 14px; line-height: 1.5; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .detail-section li:last-child { border-bottom: none; }
+
+  /* ATOM BUILDER VIEW */
+  .atom-container { display: grid; grid-template-columns: 300px 1fr; gap: 24px; }
+  .atom-controls { background: var(--surface); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+  .atom-controls h3 { font-size: 14px; color: var(--accent); margin-bottom: 12px; }
+  .control-group { margin-bottom: 20px; }
+  .control-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .pill-group { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pill { padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 12px; transition: all 0.2s; }
+  .pill:hover { border-color: var(--accent); color: var(--text); }
+  .pill.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .atom-preview { background: var(--surface); border-radius: 12px; padding: 24px; border: 1px solid var(--border); }
+  .atom-card { background: var(--surface2); border-radius: 12px; padding: 24px; margin-bottom: 16px; border-left: 4px solid var(--accent); }
+  .atom-card .meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .meta-badge { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .atom-card .content-block { margin-top: 12px; }
+  .atom-card .content-block h4 { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .atom-card .content-block p { font-size: 14px; line-height: 1.6; }
+
+  /* FLOW DIAGRAM VIEW */
+  .flow-container { position: relative; }
+  .flow-diagram { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-altitude { width: 100%; display: flex; align-items: center; gap: 16px; padding: 16px 0; position: relative; }
+  .flow-altitude::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 2px; height: 16px; background: var(--border); }
+  .flow-altitude:last-child::after { display: none; }
+
+  .flow-node { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+  .flow-node h4 { font-size: 14px; margin-bottom: 8px; }
+  .flow-node p { font-size: 12px; color: var(--text-muted); }
+  .flow-center { width: 140px; text-align: center; flex-shrink: 0; }
+  .flow-center .altitude-badge { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+
+  .arrow-down { width: 24px; height: 24px; margin: 0 auto; color: var(--text-muted); text-align: center; font-size: 18px; }
+
+  /* MATRIX VIEW */
+  .matrix-table { width: 100%; border-collapse: separate; border-spacing: 2px; }
+  .matrix-table th { padding: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface); border-radius: 6px; text-align: center; }
+  .matrix-table th:first-child { text-align: left; }
+  .matrix-table td { padding: 10px; font-size: 13px; background: var(--surface); border-radius: 6px; text-align: center; vertical-align: top; }
+  .matrix-table td:first-child { text-align: left; font-weight: 600; white-space: nowrap; }
+  .matrix-cell { font-size: 12px; line-height: 1.6; text-align: left; }
+  .matrix-cell .primary { color: var(--accent); font-weight: 500; }
+  .matrix-cell .secondary { color: var(--text-muted); }
+
+  /* SUBARU VIEW */
+  .scenario-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .scenario-card h3 { font-size: 16px; margin-bottom: 8px; }
+  .scenario-card .scenario-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+  .scenario-atoms { display: flex; flex-wrap: wrap; gap: 8px; }
+  .scenario-atom { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border); font-size: 12px; }
+  .scenario-atom .dim-label { color: var(--text-muted); font-size: 10px; text-transform: uppercase; }
+  .scenario-atom .dim-value { font-weight: 600; }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; padding: 12px 16px; background: var(--surface); border-radius: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  .section-intro { background: var(--surface); border-radius: 12px; padding: 20px; margin-bottom: 24px; border-left: 3px solid var(--accent); }
+  .section-intro h2 { font-size: 18px; margin-bottom: 8px; }
+  .section-intro p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+// === DATA MODEL ===
+const ALTITUDES = [
+  {
+    id: 'executive',
+    level: 'L5',
+    name: 'Executive / Sponsor',
+    subtitle: 'Portfolio direction & investment',
+    color: '#e74c3c',
+    bgColor: 'rgba(231,76,60,0.12)',
+    timeHorizon: '12-36 months',
+    keyQuestion: 'Are we investing in the right transformation bets?',
+    enterprise: {
+      owns: ['Portfolio direction', 'Investment allocation', 'Organizational health'],
+      decides: ['Program funding', 'Strategic priorities', 'Structural changes'],
+      communicates: ['Vision & intent', 'Investment rationale', 'Organizational narrative'],
+      measures: ['Business outcomes', 'Portfolio ROI', 'Organizational velocity'],
+      learns: ['Market shifts', 'Competitive pressure', 'Capability gaps at scale']
+    },
+    enablement: {
+      owns: ['Transformation portfolio', 'Culture mandate', 'Talent strategy'],
+      decides: ['Program sponsorship', 'Capability investment', 'Learning culture signals'],
+      communicates: ['Why we transform', 'Expectations of leaders', 'Permission to experiment'],
+      measures: ['Capability maturity (aggregate)', 'Adoption velocity', 'Talent retention'],
+      learns: ['Where resistance lives', 'What incentives actually drive', 'Systemic blockers']
+    },
+    subaruExample: {
+      who: 'Laura Matey (CIO), Greg Giuffrida (VP)',
+      context: 'Sponsors the M.A.R.S. proving ground; decides expansion path'
+    }
+  },
+  {
+    id: 'strategic',
+    level: 'L4',
+    name: 'Strategic',
+    subtitle: 'Architecture & cross-cutting concerns',
+    color: '#9b59b6',
+    bgColor: 'rgba(155,89,182,0.12)',
+    timeHorizon: '6-18 months',
+    keyQuestion: 'Are our systems and structures enabling the outcomes we need?',
+    enterprise: {
+      owns: ['Business architecture', 'Operating model design', 'Cross-cutting standards'],
+      decides: ['Architectural patterns', 'Integration strategy', 'Governance models'],
+      communicates: ['Target state vision', 'Trade-off rationale', 'Pattern guidance'],
+      measures: ['Architectural fitness', 'Standards adoption', 'Integration health'],
+      learns: ['Where the model breaks', 'Emerging patterns', 'Unintended consequences']
+    },
+    enablement: {
+      owns: ['Transformation domains', 'Skill tree architecture', 'Assessment frameworks'],
+      decides: ['Domain priorities', 'Capability sequencing', 'Methodology choices'],
+      communicates: ['The "how" behind the "what"', 'Framework rationale', 'Mentoring direction'],
+      measures: ['Domain maturity progression', 'Framework adoption', 'Assessment fidelity'],
+      learns: ['What sticks vs. what slides', 'Emerging skill needs', 'Coaching effectiveness']
+    },
+    subaruExample: {
+      who: 'Brien (Advisory), Jason (Engagement Lead)',
+      context: 'Designs the transformation architecture; frames problems worth solving'
+    }
+  },
+  {
+    id: 'product',
+    level: 'L3',
+    name: 'Product',
+    subtitle: 'Outcomes, trios & delivery',
+    color: '#3498db',
+    bgColor: 'rgba(52,152,219,0.12)',
+    timeHorizon: '3-12 months',
+    keyQuestion: 'Are our products delivering the outcomes that matter?',
+    enterprise: {
+      owns: ['Product roadmaps', 'Outcome metrics', 'Stakeholder alignment'],
+      decides: ['Feature priorities', 'Build/buy/partner', 'Release strategy'],
+      communicates: ['Product vision', 'Outcome progress', 'Prioritization rationale'],
+      measures: ['Outcome achievement', 'Delivery metrics', 'Customer satisfaction'],
+      learns: ['Discovery insights', 'Adoption friction', 'Market feedback']
+    },
+    enablement: {
+      owns: ['Enablement product roadmaps', 'Curriculum design', 'Coaching models'],
+      decides: ['Content priorities', 'Delivery mechanisms', 'Assessment design'],
+      communicates: ['What\'s available', 'What\'s coming', 'What\'s working'],
+      measures: ['Adoption rates', 'Behavior change (30/60/90)', 'NPS/satisfaction'],
+      learns: ['What teams actually need', 'Gaps between curriculum and practice', 'Coaching patterns']
+    },
+    subaruExample: {
+      who: 'Dean (Agile Lead), Joelle (Training), Omar (JIRA)',
+      context: 'Owns specific enablement products; delivers measurable capability'
+    }
+  },
+  {
+    id: 'operational',
+    level: 'L2',
+    name: 'Operational',
+    subtitle: 'People, process & platforms',
+    color: '#f39c12',
+    bgColor: 'rgba(243,156,18,0.12)',
+    timeHorizon: '1-6 months',
+    keyQuestion: 'Is our execution rhythm healthy and sustainable?',
+    enterprise: {
+      owns: ['Cadences & governance', 'Platform operations', 'Talent management'],
+      decides: ['Process optimization', 'Tooling configuration', 'Team composition'],
+      communicates: ['Operational status', 'Blockers & escalations', 'Process changes'],
+      measures: ['Throughput', 'Quality gates', 'Team health'],
+      learns: ['Bottlenecks', 'Capacity patterns', 'Tool effectiveness']
+    },
+    enablement: {
+      owns: ['Delivery mechanisms', 'Coaching logistics', 'Assessment administration'],
+      decides: ['Session scheduling', 'Coaching assignments', 'Support allocation'],
+      communicates: ['Schedule & logistics', 'Coaching observations', 'Support status'],
+      measures: ['Training completion', 'Coaching hours', 'Support queue health'],
+      learns: ['Scheduling friction', 'Attendance patterns', 'Logistical blockers']
+    },
+    subaruExample: {
+      who: 'Rob, Louise, Dan (Turnberry delivery)',
+      context: 'Executes coaching, training, and day-to-day engagement rhythm'
+    }
+  },
+  {
+    id: 'team',
+    level: 'L1',
+    name: 'Team / Practitioner',
+    subtitle: 'Skills, craft & daily work',
+    color: '#2ecc71',
+    bgColor: 'rgba(46,204,113,0.12)',
+    timeHorizon: '1-12 weeks',
+    keyQuestion: 'Am I growing and delivering at my best?',
+    enterprise: {
+      owns: ['Daily delivery', 'Craft quality', 'Team commitments'],
+      decides: ['How to implement', 'Task sequencing', 'Technical approach'],
+      communicates: ['Progress & blockers', 'Peer learning', 'Ideas & concerns'],
+      measures: ['Personal throughput', 'Quality of work', 'Team velocity'],
+      learns: ['New skills', 'Better patterns', 'From retrospectives']
+    },
+    enablement: {
+      owns: ['Personal growth path', 'Learning application', 'Peer teaching'],
+      decides: ['Learning priorities', 'Practice application', 'Mentoring relationships'],
+      communicates: ['What I learned', 'What I need', 'What isn\'t working'],
+      measures: ['Skill progression', 'Learning application rate', 'Confidence growth'],
+      learns: ['From curriculum', 'From coaching', 'From experimentation']
+    },
+    subaruExample: {
+      who: 'Subaru M.A.R.S. team members (156 people)',
+      context: 'Receives training, participates in coaching, applies new practices'
+    }
+  }
+];
+
+const COMM_TYPES = [
+  { id: 'direction', label: 'Direction', color: '#e74c3c', desc: 'Setting course and intent' },
+  { id: 'decision', label: 'Decision', color: '#9b59b6', desc: 'Making and communicating choices' },
+  { id: 'status', label: 'Status', color: '#3498db', desc: 'Reporting progress and health' },
+  { id: 'ask', label: 'Ask', color: '#f39c12', desc: 'Requesting input, approval, or resources' },
+  { id: 'escalation', label: 'Escalation', color: '#e67e22', desc: 'Raising blockers that need higher authority' },
+  { id: 'learn', label: 'Learn', color: '#2ecc71', desc: 'Sharing insights and adaptations' }
+];
+
+const CHANNELS = [
+  { id: 'steering', label: 'Steering Committee', altitudes: ['executive', 'strategic'] },
+  { id: 'leadership-sync', label: 'Leadership Sync', altitudes: ['strategic', 'product'] },
+  { id: 'status-report', label: 'Status Report', altitudes: ['executive', 'strategic', 'product'] },
+  { id: 'slack', label: 'Slack / Chat', altitudes: ['strategic', 'product', 'operational', 'team'] },
+  { id: 'email', label: 'Email', altitudes: ['executive', 'strategic', 'product', 'operational'] },
+  { id: 'deck', label: 'Presentation', altitudes: ['executive', 'strategic'] },
+  { id: 'standup', label: 'Standup / Daily', altitudes: ['operational', 'team'] },
+  { id: 'retro', label: 'Retrospective', altitudes: ['product', 'operational', 'team'] },
+  { id: 'coaching', label: 'Coaching Session', altitudes: ['product', 'operational', 'team'] },
+  { id: 'dashboard', label: 'Dashboard', altitudes: ['executive', 'strategic', 'product', 'operational'] },
+  { id: 'document', label: 'Document / Wiki', altitudes: ['strategic', 'product', 'operational'] },
+  { id: 'workshop', label: 'Workshop', altitudes: ['strategic', 'product', 'team'] }
+];
+
+const CADENCES = [
+  { id: 'ad-hoc', label: 'Ad-hoc' },
+  { id: 'daily', label: 'Daily' },
+  { id: 'weekly', label: 'Weekly' },
+  { id: 'biweekly', label: 'Bi-weekly' },
+  { id: 'monthly', label: 'Monthly' },
+  { id: 'quarterly', label: 'Quarterly' }
+];
+
+const DOMAINS = [
+  { id: 'training', label: 'Training & Toolkit' },
+  { id: 'coaching', label: 'Coaching' },
+  { id: 'jira', label: 'JIRA & Metrics' },
+  { id: 'ocm', label: 'OCM & Change' },
+  { id: 'assessment', label: 'Assessment' },
+  { id: 'expansion', label: 'Expansion Path' }
+];
+
+const ACCOUNTABILITY_TYPES = [
+  { id: 'own', label: 'Owns', color: '#58a6ff' },
+  { id: 'decide', label: 'Decides', color: '#ee82ee' },
+  { id: 'communicate', label: 'Communicates', color: '#2ecc71' },
+  { id: 'measure', label: 'Measures', color: '#f1c40f' },
+  { id: 'learn', label: 'Learns From', color: '#e67e22' }
+];
+
+// === SUBARU SCENARIOS ===
+const SUBARU_SCENARIOS = [
+  {
+    title: 'Bi-weekly Status Report to Greg',
+    desc: 'Engagement progress update for VP sponsor',
+    atoms: [
+      { dim: 'Altitude', value: 'Executive', color: '#e74c3c' },
+      { dim: 'OS', value: 'Both', color: '#9b59b6' },
+      { dim: 'Type', value: 'Status', color: '#3498db' },
+      { dim: 'Channel', value: 'Status Report', color: '#f39c12' },
+      { dim: 'Cadence', value: 'Bi-weekly', color: '#2ecc71' },
+      { dim: 'Domain', value: 'All', color: '#8b949e' },
+    ],
+    contentGuidance: 'Portfolio-level language. Outcomes over activities. Investment confidence. Risk signals requiring sponsorship.'
+  },
+  {
+    title: 'Weekly Turnberry Team Alignment',
+    desc: 'Internal team sync on execution and coordination',
+    atoms: [
+      { dim: 'Altitude', value: 'Operational', color: '#f39c12' },
+      { dim: 'OS', value: 'Enablement', color: '#3498db' },
+      { dim: 'Type', value: 'Status + Ask', color: '#3498db' },
+      { dim: 'Channel', value: 'Leadership Sync', color: '#f39c12' },
+      { dim: 'Cadence', value: 'Weekly', color: '#2ecc71' },
+      { dim: 'Domain', value: 'All', color: '#8b949e' },
+    ],
+    contentGuidance: 'Execution rhythm. Blockers and handoffs. Coaching observations. Schedule adjustments. Who needs what from whom.'
+  },
+  {
+    title: 'Training Readout for Gino',
+    desc: 'Post-training synthesis for Director-level stakeholder',
+    atoms: [
+      { dim: 'Altitude', value: 'Product', color: '#3498db' },
+      { dim: 'OS', value: 'Enablement', color: '#3498db' },
+      { dim: 'Type', value: 'Learn', color: '#2ecc71' },
+      { dim: 'Channel', value: 'Presentation', color: '#f39c12' },
+      { dim: 'Cadence', value: 'Per-module', color: '#2ecc71' },
+      { dim: 'Domain', value: 'Training', color: '#8b949e' },
+    ],
+    contentGuidance: 'Outcomes of training. Behavior signals observed. Capability gaps surfaced. Recommendations for coaching emphasis.'
+  },
+  {
+    title: 'Expansion Recommendation for Laura',
+    desc: 'CIO-level case for broadening transformation scope',
+    atoms: [
+      { dim: 'Altitude', value: 'Executive', color: '#e74c3c' },
+      { dim: 'OS', value: 'Enterprise', color: '#e74c3c' },
+      { dim: 'Type', value: 'Direction + Ask', color: '#e74c3c' },
+      { dim: 'Channel', value: 'Presentation', color: '#f39c12' },
+      { dim: 'Cadence', value: 'Milestone', color: '#2ecc71' },
+      { dim: 'Domain', value: 'Expansion', color: '#8b949e' },
+    ],
+    contentGuidance: 'Evidence from proving ground. Business case for investment. Structural recommendations. Risk/readiness assessment.'
+  },
+  {
+    title: 'Coaching Observation → Brien/Jason Slack Thread',
+    desc: 'Real-time signal from embedded coaching session',
+    atoms: [
+      { dim: 'Altitude', value: 'Strategic', color: '#9b59b6' },
+      { dim: 'OS', value: 'Enablement', color: '#3498db' },
+      { dim: 'Type', value: 'Learn', color: '#2ecc71' },
+      { dim: 'Channel', value: 'Slack', color: '#f39c12' },
+      { dim: 'Cadence', value: 'Ad-hoc', color: '#2ecc71' },
+      { dim: 'Domain', value: 'Coaching', color: '#8b949e' },
+    ],
+    contentGuidance: 'Pattern observed. Systemic implication. Whether it confirms or challenges assumptions. What to adjust.'
+  },
+  {
+    title: 'JIRA Assessment Findings',
+    desc: 'Current state findings from tooling assessment',
+    atoms: [
+      { dim: 'Altitude', value: 'Product', color: '#3498db' },
+      { dim: 'OS', value: 'Both', color: '#9b59b6' },
+      { dim: 'Type', value: 'Status + Decision', color: '#3498db' },
+      { dim: 'Channel', value: 'Document', color: '#f39c12' },
+      { dim: 'Cadence', value: 'Milestone', color: '#2ecc71' },
+      { dim: 'Domain', value: 'JIRA & Metrics', color: '#8b949e' },
+    ],
+    contentGuidance: 'Current state evidence. Gap analysis. Recommended target state. Sequencing options with trade-offs.'
+  }
+];
+
+
+function App() {
+  const [activeView, setActiveView] = useState('altitudes');
+  const [selectedAltitude, setSelectedAltitude] = useState(null);
+  const [selectedAccType, setSelectedAccType] = useState(null);
+
+  // Atom builder state
+  const [atomAltitude, setAtomAltitude] = useState(null);
+  const [atomOS, setAtomOS] = useState(null);
+  const [atomType, setAtomType] = useState(null);
+  const [atomChannel, setAtomChannel] = useState(null);
+  const [atomCadence, setAtomCadence] = useState(null);
+  const [atomDomain, setAtomDomain] = useState(null);
+
+  const views = [
+    { id: 'altitudes', label: 'Altitude Stack' },
+    { id: 'matrix', label: 'Accountability Matrix' },
+    { id: 'atoms', label: 'Atom Builder' },
+    { id: 'subaru', label: 'Subaru Scenarios' }
+  ];
+
+  return (
+    <div className="app">
+      <div className="header">
+        <h1>Leadership Altitude &amp; Communications Model</h1>
+        <p>A multi-dimensional framework for mapping leadership accountabilities across the dual operating system. Each "communication atom" carries metadata that composes into any view.</p>
+      </div>
+
+      <div className="nav-tabs">
+        {views.map(v => (
+          <button key={v.id} className={`nav-tab ${activeView === v.id ? 'active' : ''}`}
+            onClick={() => setActiveView(v.id)}>{v.label}</button>
+        ))}
+      </div>
+
+      {activeView === 'altitudes' && (
+        <AltitudeStackView
+          selectedAltitude={selectedAltitude}
+          setSelectedAltitude={setSelectedAltitude}
+          selectedAccType={selectedAccType}
+          setSelectedAccType={setSelectedAccType}
+        />
+      )}
+      {activeView === 'matrix' && <MatrixView />}
+      {activeView === 'atoms' && (
+        <AtomBuilderView
+          atomAltitude={atomAltitude} setAtomAltitude={setAtomAltitude}
+          atomOS={atomOS} setAtomOS={setAtomOS}
+          atomType={atomType} setAtomType={setAtomType}
+          atomChannel={atomChannel} setAtomChannel={setAtomChannel}
+          atomCadence={atomCadence} setAtomCadence={setAtomCadence}
+          atomDomain={atomDomain} setAtomDomain={setAtomDomain}
+        />
+      )}
+      {activeView === 'subaru' && <SubaruView />}
+    </div>
+  );
+}
+
+function AltitudeStackView({ selectedAltitude, setSelectedAltitude, selectedAccType, setSelectedAccType }) {
+  const selected = ALTITUDES.find(a => a.id === selectedAltitude);
+
+  return (
+    <div>
+      <div className="section-intro">
+        <h2>Five Leadership Altitudes</h2>
+        <p>Each altitude operates at a different time horizon and abstraction level. The same domain (e.g., "Training") means different things at each altitude: investment at Executive, architecture at Strategic, delivery at Product, logistics at Operational, learning at Team. Click any layer to explore.</p>
+      </div>
+
+      <div className="legend">
+        {ACCOUNTABILITY_TYPES.map(t => (
+          <button key={t.id} className="legend-item" style={{ cursor: 'pointer', background: 'none', border: 'none', color: selectedAccType === t.id ? '#fff' : 'var(--text-muted)' }}
+            onClick={() => setSelectedAccType(selectedAccType === t.id ? null : t.id)}>
+            <span className="legend-dot" style={{ background: t.color }}></span>
+            {t.label}
+          </button>
+        ))}
+        <button className="legend-item" style={{ cursor: 'pointer', background: 'none', border: 'none', color: 'var(--text-muted)' }}
+          onClick={() => setSelectedAccType(null)}>
+          <span className="legend-dot" style={{ background: '#555' }}></span>
+          Show All
+        </button>
+      </div>
+
+      <div className="os-headers">
+        <div></div>
+        <div className="os-header enterprise-h">Enterprise OS — How We Run</div>
+        <div className="os-header enablement-h">Enablement OS — How We Grow</div>
+      </div>
+
+      <div className="altitude-stack">
+        {ALTITUDES.map(alt => (
+          <div key={alt.id}
+            className={`altitude-row ${selectedAltitude === alt.id ? 'selected' : ''}`}
+            onClick={() => setSelectedAltitude(selectedAltitude === alt.id ? null : alt.id)}
+          >
+            <div className="altitude-label" style={{ background: alt.bgColor, borderLeft: `4px solid ${alt.color}` }}>
+              <span className="level">{alt.level} · {alt.timeHorizon}</span>
+              <h3 style={{ color: alt.color }}>{alt.name}</h3>
+              <span className="subtitle">{alt.subtitle}</span>
+            </div>
+            <div className="os-cell enterprise">
+              {renderAccountabilities(alt.enterprise, selectedAccType)}
+            </div>
+            <div className="os-cell enablement">
+              {renderAccountabilities(alt.enablement, selectedAccType)}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {selected && (
+        <div className="detail-panel">
+          <h2 style={{ color: selected.color }}>
+            {selected.name}
+            <span style={{ fontSize: '14px', color: 'var(--text-muted)', marginLeft: '12px', fontWeight: 400 }}>
+              Key Question: "{selected.keyQuestion}"
+            </span>
+          </h2>
+          <div className="detail-grid">
+            <div className="detail-section">
+              <h3 style={{ color: '#e74c3c' }}>Enterprise OS Accountabilities</h3>
+              {ACCOUNTABILITY_TYPES.map(t => (
+                <div key={t.id} style={{ marginBottom: '12px' }}>
+                  <div style={{ fontSize: '12px', color: t.color, fontWeight: 600, marginBottom: '4px' }}>{t.label}</div>
+                  <ul>
+                    {selected.enterprise[t.id === 'learn' ? 'learns' : t.id === 'own' ? 'owns' : t.id === 'decide' ? 'decides' : t.id === 'communicate' ? 'communicates' : 'measures'].map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div className="detail-section">
+              <h3 style={{ color: '#3498db' }}>Enablement OS Accountabilities</h3>
+              {ACCOUNTABILITY_TYPES.map(t => (
+                <div key={t.id} style={{ marginBottom: '12px' }}>
+                  <div style={{ fontSize: '12px', color: t.color, fontWeight: 600, marginBottom: '4px' }}>{t.label}</div>
+                  <ul>
+                    {selected.enablement[t.id === 'learn' ? 'learns' : t.id === 'own' ? 'owns' : t.id === 'decide' ? 'decides' : t.id === 'communicate' ? 'communicates' : 'measures'].map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ marginTop: '16px', padding: '12px 16px', background: 'rgba(88,166,255,0.08)', borderRadius: '8px', borderLeft: '3px solid var(--accent)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: 600, marginBottom: '4px' }}>SUBARU MAPPING</div>
+            <div style={{ fontSize: '14px' }}><strong>{selected.subaruExample.who}</strong></div>
+            <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{selected.subaruExample.context}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function renderAccountabilities(os, filterType) {
+  const types = filterType
+    ? [{ id: filterType, items: os[filterType === 'learn' ? 'learns' : filterType === 'own' ? 'owns' : filterType === 'decide' ? 'decides' : filterType === 'communicate' ? 'communicates' : 'measures'] }]
+    : [
+      { id: 'own', items: os.owns },
+      { id: 'decide', items: os.decides }
+    ];
+
+  return (
+    <div>
+      {types.map(t => (
+        t.items.slice(0, filterType ? 3 : 2).map((item, i) => (
+          <span key={`${t.id}-${i}`} className={`accountability-tag ${t.id}`}>{item}</span>
+        ))
+      ))}
+    </div>
+  );
+}
+
+function MatrixView() {
+  const channelHeaders = ['Steering', 'Status Report', 'Slack', 'Standup', 'Retro', 'Coaching', 'Dashboard'];
+
+  const matrixData = {
+    'executive': { 'Steering': { p: 'Direction, Decision', s: 'Quarterly' }, 'Status Report': { p: 'Receive / Approve', s: 'Bi-weekly' }, 'Slack': { p: '—', s: '' }, 'Standup': { p: '—', s: '' }, 'Retro': { p: '—', s: '' }, 'Coaching': { p: '—', s: '' }, 'Dashboard': { p: 'Portfolio view', s: 'On-demand' } },
+    'strategic': { 'Steering': { p: 'Status, Ask', s: 'Quarterly' }, 'Status Report': { p: 'Author / Frame', s: 'Bi-weekly' }, 'Slack': { p: 'Signals, Patterns', s: 'Ad-hoc' }, 'Standup': { p: '—', s: '' }, 'Retro': { p: 'Observe / Coach', s: 'Per-sprint' }, 'Coaching': { p: 'Design / Mentor', s: 'Weekly' }, 'Dashboard': { p: 'Trend analysis', s: 'Weekly' } },
+    'product': { 'Steering': { p: '—', s: '' }, 'Status Report': { p: 'Contribute data', s: 'Bi-weekly' }, 'Slack': { p: 'Coordination', s: 'Daily' }, 'Standup': { p: 'Observe', s: 'Daily' }, 'Retro': { p: 'Facilitate', s: 'Per-sprint' }, 'Coaching': { p: 'Deliver / Adapt', s: 'Weekly' }, 'Dashboard': { p: 'Product metrics', s: 'Weekly' } },
+    'operational': { 'Steering': { p: '—', s: '' }, 'Status Report': { p: 'Source data', s: 'Bi-weekly' }, 'Slack': { p: 'Execution, Blockers', s: 'Daily' }, 'Standup': { p: 'Facilitate', s: 'Daily' }, 'Retro': { p: 'Participate', s: 'Per-sprint' }, 'Coaching': { p: 'Support / Log', s: 'As-needed' }, 'Dashboard': { p: 'Ops health', s: 'Daily' } },
+    'team': { 'Steering': { p: '—', s: '' }, 'Status Report': { p: '—', s: '' }, 'Slack': { p: 'Questions, Learning', s: 'Daily' }, 'Standup': { p: 'Participate', s: 'Daily' }, 'Retro': { p: 'Participate', s: 'Per-sprint' }, 'Coaching': { p: 'Receive / Apply', s: 'Per-session' }, 'Dashboard': { p: 'Team metrics', s: 'Daily' } }
+  };
+
+  return (
+    <div>
+      <div className="section-intro">
+        <h2>Channel × Altitude Matrix</h2>
+        <p>How each altitude engages with each communication channel. The same channel serves different purposes at different altitudes — a dashboard is "portfolio view" at Executive but "team metrics" at Team level. The cells show role/purpose and cadence.</p>
+      </div>
+      <div style={{ overflowX: 'auto' }}>
+        <table className="matrix-table">
+          <thead>
+            <tr>
+              <th>Altitude</th>
+              {channelHeaders.map(h => <th key={h}>{h}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {ALTITUDES.map(alt => (
+              <tr key={alt.id}>
+                <td style={{ color: alt.color }}>{alt.name}</td>
+                {channelHeaders.map(ch => {
+                  const cell = matrixData[alt.id]?.[ch];
+                  return (
+                    <td key={ch}>
+                      {cell && cell.p !== '—' ? (
+                        <div className="matrix-cell">
+                          <div className="primary">{cell.p}</div>
+                          <div className="secondary">{cell.s}</div>
+                        </div>
+                      ) : (
+                        <span style={{ color: 'var(--border)' }}>—</span>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function AtomBuilderView({ atomAltitude, setAtomAltitude, atomOS, setAtomOS, atomType, setAtomType, atomChannel, setAtomChannel, atomCadence, setAtomCadence, atomDomain, setAtomDomain }) {
+
+  const selectedAlt = ALTITUDES.find(a => a.id === atomAltitude);
+  const availableChannels = atomAltitude
+    ? CHANNELS.filter(c => c.altitudes.includes(atomAltitude))
+    : CHANNELS;
+
+  const atomComplete = atomAltitude && atomOS && atomType && atomChannel;
+
+  // Generate content guidance based on selections
+  const getGuidance = () => {
+    if (!atomComplete) return null;
+    const alt = ALTITUDES.find(a => a.id === atomAltitude);
+    const type = COMM_TYPES.find(t => t.id === atomType);
+    return {
+      framing: `At ${alt.name} altitude, frame this ${type.label.toLowerCase()} using ${alt.timeHorizon} time horizon language.`,
+      question: alt.keyQuestion,
+      tone: atomAltitude === 'executive' ? 'Outcomes and investment language. No implementation details.' :
+            atomAltitude === 'strategic' ? 'Architecture and pattern language. Trade-offs and rationale.' :
+            atomAltitude === 'product' ? 'Product and outcome language. Metrics and evidence.' :
+            atomAltitude === 'operational' ? 'Execution and coordination language. Blockers and status.' :
+            'Learning and growth language. Skills and confidence.'
+    };
+  };
+
+  const guidance = getGuidance();
+
+  return (
+    <div>
+      <div className="section-intro">
+        <h2>Communication Atom Builder</h2>
+        <p>Select dimensions to compose a communication atom. Each combination produces specific guidance for tone, content framing, and channel-appropriate abstraction level. This is the "design system" for organizational communication — every update, report, or conversation is built from these atoms.</p>
+      </div>
+      <div className="atom-container">
+        <div className="atom-controls">
+          <div className="control-group">
+            <label>Altitude</label>
+            <div className="pill-group">
+              {ALTITUDES.map(a => (
+                <button key={a.id} className={`pill ${atomAltitude === a.id ? 'selected' : ''}`}
+                  style={atomAltitude === a.id ? { background: a.color, borderColor: a.color } : {}}
+                  onClick={() => setAtomAltitude(atomAltitude === a.id ? null : a.id)}>{a.name}</button>
+              ))}
+            </div>
+          </div>
+          <div className="control-group">
+            <label>Operating System</label>
+            <div className="pill-group">
+              <button className={`pill ${atomOS === 'enterprise' ? 'selected' : ''}`}
+                style={atomOS === 'enterprise' ? { background: '#e74c3c', borderColor: '#e74c3c' } : {}}
+                onClick={() => setAtomOS(atomOS === 'enterprise' ? null : 'enterprise')}>Enterprise</button>
+              <button className={`pill ${atomOS === 'enablement' ? 'selected' : ''}`}
+                style={atomOS === 'enablement' ? { background: '#3498db', borderColor: '#3498db' } : {}}
+                onClick={() => setAtomOS(atomOS === 'enablement' ? null : 'enablement')}>Enablement</button>
+              <button className={`pill ${atomOS === 'both' ? 'selected' : ''}`}
+                style={atomOS === 'both' ? { background: '#9b59b6', borderColor: '#9b59b6' } : {}}
+                onClick={() => setAtomOS(atomOS === 'both' ? null : 'both')}>Both</button>
+            </div>
+          </div>
+          <div className="control-group">
+            <label>Communication Type</label>
+            <div className="pill-group">
+              {COMM_TYPES.map(t => (
+                <button key={t.id} className={`pill ${atomType === t.id ? 'selected' : ''}`}
+                  style={atomType === t.id ? { background: t.color, borderColor: t.color } : {}}
+                  onClick={() => setAtomType(atomType === t.id ? null : t.id)}>{t.label}</button>
+              ))}
+            </div>
+          </div>
+          <div className="control-group">
+            <label>Channel {atomAltitude && <span style={{color: 'var(--accent)', fontWeight: 400}}>· filtered to altitude</span>}</label>
+            <div className="pill-group">
+              {availableChannels.map(c => (
+                <button key={c.id} className={`pill ${atomChannel === c.id ? 'selected' : ''}`}
+                  onClick={() => setAtomChannel(atomChannel === c.id ? null : c.id)}>{c.label}</button>
+              ))}
+            </div>
+          </div>
+          <div className="control-group">
+            <label>Cadence</label>
+            <div className="pill-group">
+              {CADENCES.map(c => (
+                <button key={c.id} className={`pill ${atomCadence === c.id ? 'selected' : ''}`}
+                  onClick={() => setAtomCadence(atomCadence === c.id ? null : c.id)}>{c.label}</button>
+              ))}
+            </div>
+          </div>
+          <div className="control-group">
+            <label>Domain (Subaru)</label>
+            <div className="pill-group">
+              {DOMAINS.map(d => (
+                <button key={d.id} className={`pill ${atomDomain === d.id ? 'selected' : ''}`}
+                  onClick={() => setAtomDomain(atomDomain === d.id ? null : d.id)}>{d.label}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="atom-preview">
+          {atomComplete ? (
+            <div>
+              <div className="atom-card" style={{ borderLeftColor: selectedAlt?.color || 'var(--accent)' }}>
+                <div className="meta-row">
+                  <span className="meta-badge" style={{ background: selectedAlt?.bgColor, color: selectedAlt?.color }}>{selectedAlt?.name}</span>
+                  <span className="meta-badge" style={{ background: atomOS === 'enterprise' ? 'rgba(231,76,60,0.15)' : atomOS === 'enablement' ? 'rgba(52,152,219,0.15)' : 'rgba(155,89,182,0.15)', color: atomOS === 'enterprise' ? '#e74c3c' : atomOS === 'enablement' ? '#3498db' : '#9b59b6' }}>
+                    {atomOS === 'enterprise' ? 'Enterprise OS' : atomOS === 'enablement' ? 'Enablement OS' : 'Both OS'}
+                  </span>
+                  <span className="meta-badge" style={{ background: `${COMM_TYPES.find(t => t.id === atomType)?.color}22`, color: COMM_TYPES.find(t => t.id === atomType)?.color }}>
+                    {COMM_TYPES.find(t => t.id === atomType)?.label}
+                  </span>
+                  {atomChannel && (
+                    <span className="meta-badge" style={{ background: 'rgba(255,255,255,0.06)', color: 'var(--text)' }}>
+                      {CHANNELS.find(c => c.id === atomChannel)?.label}
+                    </span>
+                  )}
+                  {atomCadence && (
+                    <span className="meta-badge" style={{ background: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)' }}>
+                      {CADENCES.find(c => c.id === atomCadence)?.label}
+                    </span>
+                  )}
+                  {atomDomain && (
+                    <span className="meta-badge" style={{ background: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)' }}>
+                      {DOMAINS.find(d => d.id === atomDomain)?.label}
+                    </span>
+                  )}
+                </div>
+
+                {guidance && (
+                  <div>
+                    <div className="content-block">
+                      <h4>Content Framing</h4>
+                      <p>{guidance.framing}</p>
+                    </div>
+                    <div className="content-block" style={{ marginTop: '12px' }}>
+                      <h4>Key Question This Altitude Answers</h4>
+                      <p style={{ fontStyle: 'italic', color: selectedAlt?.color }}>"{guidance.question}"</p>
+                    </div>
+                    <div className="content-block" style={{ marginTop: '12px' }}>
+                      <h4>Tone & Language Guide</h4>
+                      <p>{guidance.tone}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ padding: '16px', background: 'var(--surface2)', borderRadius: '8px' }}>
+                <h4 style={{ fontSize: '13px', color: 'var(--accent)', marginBottom: '8px' }}>ACCOUNTABILITIES AT THIS ALTITUDE</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  {(atomOS === 'enterprise' || atomOS === 'both') && (
+                    <div>
+                      <div style={{ fontSize: '11px', color: '#e74c3c', marginBottom: '4px' }}>ENTERPRISE OS</div>
+                      {selectedAlt?.enterprise.owns.map((o, i) => (
+                        <span key={i} className="accountability-tag own">{o}</span>
+                      ))}
+                    </div>
+                  )}
+                  {(atomOS === 'enablement' || atomOS === 'both') && (
+                    <div>
+                      <div style={{ fontSize: '11px', color: '#3498db', marginBottom: '4px' }}>ENABLEMENT OS</div>
+                      {selectedAlt?.enablement.owns.map((o, i) => (
+                        <span key={i} className="accountability-tag own">{o}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px', opacity: 0.3 }}>&#9670;</div>
+              <p style={{ fontSize: '16px', marginBottom: '8px' }}>Select Altitude + OS + Type + Channel</p>
+              <p style={{ fontSize: '13px' }}>to compose a communication atom with content guidance</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SubaruView() {
+  return (
+    <div>
+      <div className="section-intro">
+        <h2>Subaru Engagement — Atomic Decomposition</h2>
+        <p>Real scenarios from the M.A.R.S. engagement decomposed into their communication atoms. Each scenario shows the dimensional tags that define how content should be framed, who it serves, and what channel it travels through. Use these as templates for consistent "tagging" across the Turnberry team.</p>
+      </div>
+      {SUBARU_SCENARIOS.map((s, i) => (
+        <div key={i} className="scenario-card">
+          <h3>{s.title}</h3>
+          <div className="scenario-desc">{s.desc}</div>
+          <div className="scenario-atoms">
+            {s.atoms.map((a, j) => (
+              <div key={j} className="scenario-atom">
+                <span className="dim-label">{a.dim}</span>
+                <span className="dim-value" style={{ color: a.color }}>{a.value}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: '12px', padding: '10px 14px', background: 'rgba(88,166,255,0.06)', borderRadius: '6px', borderLeft: '3px solid var(--accent)' }}>
+            <div style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: 600, marginBottom: '4px' }}>CONTENT GUIDANCE</div>
+            <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5 }}>{s.contentGuidance}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>

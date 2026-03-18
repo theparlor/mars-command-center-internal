@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-Branding Strategy — Turnberry × Subaru</title>
+<style>
+  :root {
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --bright-blue: #00AEEF;
+    --tb-navy: #032D3E;
+    --tb-accent: #349ED8;
+    --white: #FFFFFF;
+    --stat-bg: #F9FAFB;
+    --border-soft: #E5E7EB;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 1.6; color: var(--text-primary); background: var(--white); }
+
+  .top-bar { height: 4px; background: linear-gradient(90deg, var(--subaru-blue) 0%, var(--subaru-blue) 60%, var(--tb-navy) 60%, var(--tb-navy) 100%); }
+
+  header { background: var(--subaru-blue); color: white; padding: 2.5rem 2rem 2rem; }
+  header h1 { font-size: 28px; font-weight: 300; letter-spacing: 0.5px; margin-bottom: 6px; }
+  header h1 strong { font-weight: 700; }
+  header .sub { font-size: 14px; opacity: 0.8; }
+  header .meta { font-size: 11px; opacity: 0.5; margin-top: 12px; }
+
+  main { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+  section { margin-bottom: 3rem; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--subaru-blue); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--subaru-blue); }
+  h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.75rem; }
+  p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+  @media (max-width: 768px) { .principle-grid { grid-template-columns: 1fr; } }
+
+  .principle-card { border: 1px solid var(--border-soft); border-radius: 10px; padding: 1.5rem; position: relative; overflow: hidden; }
+  .principle-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+  .principle-card.subaru::before { background: var(--subaru-blue); }
+  .principle-card.turnberry::before { background: var(--tb-navy); }
+  .principle-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; margin-top: 4px; }
+  .principle-card.subaru h4 { color: var(--subaru-blue); }
+  .principle-card.turnberry h4 { color: var(--tb-navy); }
+  .principle-card p { font-size: 13px; margin-bottom: 0; }
+
+  .slide-diagram { background: var(--stat-bg); border: 1px solid var(--border-soft); border-radius: 10px; padding: 1.5rem; margin: 1rem 0 1.5rem; }
+  .slide-frame { background: white; border: 2px solid var(--border-soft); border-radius: 4px; position: relative; margin: 0.75rem 0; overflow: hidden; }
+  .slide-frame-16x9 { aspect-ratio: 16/9; max-width: 480px; }
+  .slide-label { position: absolute; top: 6px; right: 8px; font-size: 9px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Title slide mockup */
+  .mock-hero { background: var(--subaru-blue); height: 28%; position: relative; display: flex; align-items: center; padding: 0 16px; }
+  .mock-hero .logo-subaru { background: rgba(255,255,255,0.2); border-radius: 3px; width: 72px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 7px; color: white; font-weight: 700; letter-spacing: 0.5px; }
+  .mock-hero .title-text { margin-left: 16px; color: white; font-size: 11px; font-weight: 700; }
+  .mock-content { height: 58%; padding: 8px 16px; display: flex; flex-direction: column; justify-content: center; }
+  .mock-content .placeholder { background: var(--border-soft); height: 6px; border-radius: 3px; margin: 3px 0; }
+  .mock-content .placeholder.short { width: 60%; }
+  .mock-footer { height: 14%; border-top: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: space-between; padding: 0 12px; }
+  .mock-footer .tb-text { font-size: 7px; color: var(--text-muted); }
+  .mock-footer .tb-logo { background: var(--tb-navy); border-radius: 2px; width: 48px; height: 14px; display: flex; align-items: center; justify-content: center; font-size: 5px; color: white; font-weight: 600; }
+  .mock-footer .subaru-sm { background: var(--stat-bg); border-radius: 2px; width: 40px; height: 12px; display: flex; align-items: center; justify-content: center; font-size: 5px; color: var(--subaru-blue); font-weight: 700; }
+
+  /* Interior slide mockup */
+  .mock-section-bar { background: var(--subaru-blue); height: 2px; }
+  .mock-heading { padding: 8px 16px 4px; font-size: 10px; font-weight: 700; color: var(--subaru-blue); }
+
+  /* Weight bar */
+  .weight-bar { display: flex; height: 24px; border-radius: 12px; overflow: hidden; margin: 8px 0 4px; font-size: 9px; font-weight: 700; color: white; }
+  .weight-bar .seg { display: flex; align-items: center; justify-content: center; }
+  .weight-bar .seg.subaru { background: var(--subaru-blue); }
+  .weight-bar .seg.content { background: var(--text-muted); }
+  .weight-bar .seg.turnberry { background: var(--tb-navy); }
+  .weight-bar .seg.chrome { background: var(--border-soft); color: var(--text-secondary); }
+  .weight-label { font-size: 10px; color: var(--text-muted); text-align: center; margin-bottom: 12px; }
+
+  .insight-box { background: linear-gradient(135deg, rgba(0,32,91,0.03), rgba(3,45,62,0.03)); border-left: 4px solid var(--subaru-blue); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+  .insight-box h4 { color: var(--subaru-blue); font-size: 13px; margin-bottom: 6px; }
+  .insight-box p { font-size: 12.5px; margin-bottom: 0; }
+
+  .anti-pattern { background: #FFF8F8; border: 1px solid #FECACA; border-radius: 8px; padding: 0.75rem 1rem; margin: 0.5rem 0; }
+  .anti-pattern strong { color: #991B1B; font-size: 12px; }
+  .anti-pattern span { font-size: 12px; color: var(--text-secondary); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 0.5rem 0 1.5rem; }
+  th { background: var(--subaru-blue); color: white; padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  tr:nth-child(even) { background: var(--stat-bg); }
+
+  .footer-bar { height: 3px; background: linear-gradient(90deg, var(--subaru-blue) 0%, var(--subaru-blue) 60%, var(--tb-navy) 60%, var(--tb-navy) 100%); margin-top: 2rem; }
+  footer { padding: 1.5rem 2rem; text-align: center; font-size: 11px; color: var(--text-muted); background: var(--stat-bg); }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+
+<header>
+  <h1>Co-Branding Strategy: <strong>Turnberry × Subaru</strong></h1>
+  <div class="sub">Information Design Rationale · Placement Specifications · Anti-Patterns</div>
+  <div class="meta">Turnberry Solutions · Subaru M.A.R.S. Agile Transformation · March 14, 2026 · v1.0</div>
+</header>
+
+<main>
+
+<!-- ================================================================ -->
+<section>
+  <h2>1. The Strategic "Why"</h2>
+
+  <p>Every logo on a slide costs content real estate. The decision to consume that space must be intentional — it has to earn its keep. This isn't decoration; it's a deliberate expression of the consulting relationship.</p>
+
+  <div class="principle-grid">
+    <div class="principle-card subaru">
+      <h4>For Subaru: Ownership & Investment</h4>
+      <p>Seeing their brand dominant on materials about their transformation signals: "This is YOUR program, not something being done to you." Dominant brand presence builds psychological ownership at the executive level. When Marc or Natalie shows a deck to their leadership, Subaru's identity frames the narrative — it's an internal initiative that happens to have expert support, not an outside vendor's project.</p>
+    </div>
+    <div class="principle-card turnberry">
+      <h4>For Turnberry: IP Attribution & Referenceability</h4>
+      <p>Subtle but unmistakable presence establishes intellectual property attribution. These decks will travel — status updates get forwarded, training materials get archived, frameworks get referenced months later. When a Subaru leader moves to another company (and they will), Turnberry's name is embedded in the body of work they remember. This is how consulting firms build referenceability without competing for attention.</p>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <h4>The Consulting-Firm Convention</h4>
+    <p>McKinsey, BCG, Deloitte, and Accenture all follow the same pattern: client brand dominant, firm brand present but subordinate. This isn't humility — it's strategic. The consulting firm's value is demonstrated by the quality of the work, not the size of their logo. The logo just makes sure the attribution sticks.</p>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section>
+  <h2>2. The Height Budget</h2>
+
+  <p>The most common objection to co-branding is "it eats into content space." Here's why that doesn't apply when done correctly:</p>
+
+  <table>
+    <tr><th>Zone</th><th>Height</th><th>% of Canvas</th><th>Logo Impact</th></tr>
+    <tr><td>Hero Band (title slide)</td><td>1.58"</td><td>28%</td><td>Logo placed <strong>inside</strong> existing band. Net additional height: <strong>0.00"</strong></td></tr>
+    <tr><td>Content Zone</td><td>3.55"</td><td>63%</td><td><strong>Sacred space.</strong> No logos, ever. This is where the work lives.</td></tr>
+    <tr><td>Footer</td><td>0.50"</td><td>9%</td><td>Logo placed <strong>inside</strong> existing footer. Net additional height: <strong>0.00"</strong></td></tr>
+  </table>
+
+  <div class="insight-box">
+    <h4>The Key Insight</h4>
+    <p>Logos consume <strong>width within existing structural bands</strong>, not additional height. The hero band and footer already exist in every build script. We're filling space that was previously underutilized — the right side of the hero band held only a date badge, and the footer had room for both a text attribution and a small logo mark. The net vertical cost of co-branding is zero inches.</p>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section>
+  <h2>3. Slide-by-Slide Placement</h2>
+
+  <h3>Title Slide — "The Handshake"</h3>
+  <p>Both brands are visible. The hierarchy is clear: Subaru is the host, Turnberry is the author.</p>
+
+  <div class="slide-diagram">
+    <div class="slide-frame slide-frame-16x9">
+      <div class="slide-label">TITLE SLIDE</div>
+      <div class="mock-hero">
+        <div class="logo-subaru">SUBARU</div>
+        <div class="title-text">Engagement Title Here</div>
+      </div>
+      <div class="mock-content">
+        <div class="placeholder"></div>
+        <div class="placeholder short"></div>
+        <div class="placeholder" style="width:75%"></div>
+      </div>
+      <div class="mock-footer">
+        <div class="tb-text">Prepared by Turnberry Solutions</div>
+        <div class="tb-logo">TURNBERRY</div>
+      </div>
+    </div>
+    <div class="weight-bar">
+      <div class="seg subaru" style="width:60%">Subaru 60%</div>
+      <div class="seg content" style="width:20%">Content</div>
+      <div class="seg turnberry" style="width:20%">TB 20%</div>
+    </div>
+    <div class="weight-label">Visual weight distribution</div>
+  </div>
+
+  <table>
+    <tr><th>Element</th><th>Spec</th><th>Rationale</th></tr>
+    <tr><td>Subaru logo (white horizontal)</td><td>Upper-left in hero · x:0.5, y:0.25 · w:1.8"</td><td>F-pattern dominant read position. Their transformation, their brand.</td></tr>
+    <tr><td>Turnberry logo</td><td>Lower-right corner · x:7.8, y:5.15 · w:1.2" · 85% opacity</td><td>Attribution position. Smaller scale + slight transparency = "authored by" without competing.</td></tr>
+  </table>
+
+  <h3>Interior Slides — "Content is King"</h3>
+  <p>The eye goes to data, not logos. Content occupies 85% of visual attention.</p>
+
+  <div class="slide-diagram">
+    <div class="slide-frame slide-frame-16x9">
+      <div class="slide-label">INTERIOR SLIDE</div>
+      <div class="mock-section-bar"></div>
+      <div class="mock-heading">Section Heading</div>
+      <div class="mock-content" style="height:68%">
+        <div class="placeholder"></div>
+        <div class="placeholder short"></div>
+        <div class="placeholder"></div>
+        <div class="placeholder" style="width:80%"></div>
+        <div class="placeholder short"></div>
+      </div>
+      <div class="mock-footer" style="height:10%">
+        <div class="tb-text">Prepared by Turnberry Solutions</div>
+        <div class="subaru-sm">SUBARU</div>
+      </div>
+    </div>
+    <div class="weight-bar">
+      <div class="seg content" style="width:85%">Content 85%</div>
+      <div class="seg chrome" style="width:10%">Nav</div>
+      <div class="seg subaru" style="width:5%">5%</div>
+    </div>
+    <div class="weight-label">Visual weight distribution</div>
+  </div>
+
+  <table>
+    <tr><th>Element</th><th>Spec</th><th>Rationale</th></tr>
+    <tr><td>Subaru logo (dark horizontal)</td><td>Footer right · x:8.0, y:5.20 · w:1.0"</td><td>Small, unobtrusive. Brand continuity without competing with content.</td></tr>
+    <tr><td>Turnberry (text only)</td><td>Footer left · x:0.5, y:5.30 · Calibri 8pt · #9CA3AF</td><td>One image + one text in footer = clean. Avoids "dueling logos."</td></tr>
+  </table>
+
+  <h3>Section Divider — "The Crest"</h3>
+  <p>The Subaru vertical badge sits centered above the section title like a crest presiding over a phase transition. Turnberry appears as small text at the bottom.</p>
+
+  <h3>Closing Slide — "The Credits"</h3>
+  <p>Both logos at near-full size, separated by a thin vertical divider. Subaru center-left at 2.5" wide, Turnberry center-right at 2.0". This is where the partnership becomes explicit — the "credits" moment.</p>
+</section>
+
+<!-- ================================================================ -->
+<section>
+  <h2>4. Information Design Principles</h2>
+
+  <div class="principle-grid">
+    <div class="principle-card subaru">
+      <h4>F-Pattern Eye Tracking</h4>
+      <p>Users scan slides in an F-pattern: top-left first, then across, then down. Subaru gets the top-left because that's where the eye lands first. This isn't arbitrary — it's where the brain assigns "owner" status to the content that follows.</p>
+    </div>
+    <div class="principle-card turnberry">
+      <h4>Attribution Position (Lower-Right)</h4>
+      <p>The lower-right corner is where readers expect to find "who made this." Book publishers, news organizations, and consulting firms all place attribution marks here. It's the "signature line" of visual communication.</p>
+    </div>
+    <div class="principle-card subaru">
+      <h4>Progressive Disclosure of Partnership</h4>
+      <p>Title slides show both brands clearly. Interior slides whisper the relationship. Section dividers use the Subaru crest. The closing slide makes the partnership explicit. This arc mirrors how trust develops — it doesn't shout at the start.</p>
+    </div>
+    <div class="principle-card turnberry">
+      <h4>Text vs. Image Hierarchy</h4>
+      <p>A logo image always commands more attention than text. By using Subaru's logo as an image and Turnberry's name as text on interior slides, we create a natural visual hierarchy without explicitly declaring one brand "more important." The medium itself communicates the relationship.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section>
+  <h2>5. Anti-Patterns</h2>
+
+  <p>Common co-branding mistakes that erode professionalism and waste real estate:</p>
+
+  <div class="anti-pattern">
+    <strong>Dueling Logos</strong> —
+    <span>Two logo images side-by-side in every slide footer. Creates visual competition in a zone that should be quiet. One image + one text = clean.</span>
+  </div>
+  <div class="anti-pattern">
+    <strong>Logo Soup</strong> —
+    <span>More than two logos on any single slide. If there's a third party (e.g., Atlassian for Jira), use text attribution only.</span>
+  </div>
+  <div class="anti-pattern">
+    <strong>Equal Sizing</strong> —
+    <span>Making both logos the same size signals ambiguity about whose program this is. Subaru should always be larger — it's their transformation.</span>
+  </div>
+  <div class="anti-pattern">
+    <strong>Logo as Decoration</strong> —
+    <span>Scattering logos on slides that don't need them. Data slides, tables, and charts earn 100% of their real estate for content.</span>
+  </div>
+  <div class="anti-pattern">
+    <strong>Footer Logo Wars</strong> —
+    <span>Both logos as images in the footer, fighting for 0.5" of vertical space. This is the single most common co-branding failure in enterprise consulting.</span>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section>
+  <h2>6. Cross-Format Summary</h2>
+
+  <table>
+    <tr><th>Format</th><th>Subaru Placement</th><th>Turnberry Placement</th><th>Notes</th></tr>
+    <tr><td><strong>PPTX (16:9)</strong></td><td>Hero band upper-left (title); footer right (interior)</td><td>Logo lower-right (title only); text footer (interior)</td><td>See slide specs above</td></tr>
+    <tr><td><strong>HTML</strong></td><td>Horizontal logo, left-aligned in header bar</td><td>"Prepared by Turnberry Solutions" right-aligned in header</td><td>No logo in footer — text only</td></tr>
+    <tr><td><strong>PDF</strong></td><td>Horizontal logo in header band (left)</td><td>Text right-aligned in header</td><td>Footer: text-only dual attribution</td></tr>
+    <tr><td><strong>Email</strong></td><td>Horizontal logo above accent bar</td><td>Text attribution in footer only</td><td>Email clients poorly render dual logos</td></tr>
+    <tr><td><strong>XLSX</strong></td><td>None (spreadsheets)</td><td>Attribution in header row or sheet footer text</td><td>Logos in cells create rendering issues</td></tr>
+    <tr><td><strong>Miro</strong></td><td>Badge as frame header icon</td><td>Text in frame description</td><td>Miro's limited rendering constrains logos</td></tr>
+  </table>
+</section>
+
+</main>
+
+<div class="footer-bar"></div>
+<footer>
+  <p><strong>Co-Branding Strategy v1.0</strong> · Turnberry × Subaru</p>
+  <p style="margin-top:4px;">Turnberry Solutions · Subaru M.A.R.S. Agile Transformation · March 14, 2026</p>
+  <p style="margin-top:4px;">Reference document for engagement design decisions. See also: Design_System.html §10b, engagement-style.yaml §co_branding</p>
+</footer>
+
+</body>
+</html>

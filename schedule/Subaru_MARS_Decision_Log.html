@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Reconciliation Decision Log</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+  :root {
+    --navy: #00205B;
+    --blue: #1D4F91;
+    --green: #2D8A4E;
+    --orange: #E8762B;
+    --red: #C0392B;
+    --amber: #E67E22;
+    --purple: #7C3AED;
+    --gray: #6B7280;
+    --light-gray: #F3F4F6;
+    --white: #FFFFFF;
+    --text: #1F2937;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Helvetica,Arial,sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+
+  .header { background:linear-gradient(135deg, #00205B 0%, #1D4F91 100%); color: #ffffff; padding: 32px 40px 24px; }
+  .header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color:rgba(255,255,255,0.8); margin-bottom: 12px; }
+  .header .meta { font-size: 12px; color:rgba(255,255,255,0.7); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 28px 24px; }
+
+  .decision { margin-bottom: 16px; border: 1px solid #E5E7EB; border-radius: 8px; overflow: hidden; }
+  .decision-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; font-weight: 700; font-size: 14px; }
+  .decision-header.resolved { background: #E6F4EA; color: #1B6E35; border-left: 4px solid var(--green); }
+  .decision-header.accepted { background: #E8F0FE; color: #1A56A0; border-left: 4px solid var(--blue); }
+  .decision-header.updated { background: #FEF3C7; color: #92400E; border-left: 4px solid var(--amber); }
+
+  .decision-body { padding: 12px 16px 14px; font-size: 13px; }
+  .decision-body .issue { color: var(--gray); margin-bottom: 6px; }
+  .decision-body .resolution { margin-bottom: 4px; }
+  .decision-body .impact { font-size: 12px; color: var(--gray); font-style: italic; margin-top: 6px; padding-top: 6px; border-top: 1px solid #F3F4F6; }
+
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .tag.resolved { background: #D1FAE5; color: #065F46; }
+  .tag.accepted { background: #DBEAFE; color: #1E40AF; }
+  .tag.updated { background: #FEF3C7; color: #92400E; }
+
+  .footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
+.footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #E5E7EB; font-size: 11px; color: var(--gray); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="header">
+  <h1>Reconciliation Decision Log</h1>
+  <div class="subtitle">Subaru M.A.R.S. Agile Transformation — Schedule Reconciliation Outcomes</div>
+  <div class="meta">Jason's Spine vs. Brien's Schedule · Decisions captured March 13, 2026 · 13 items resolved</div>
+</div>
+
+<div class="container">
+
+  <!-- #1 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      1. Week Numbering — Jason's numbering accepted
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Our original schedule counted Week 0 from Feb 17. Jason's spine counts from Feb 23.</div>
+      <div class="resolution"><strong>Decision:</strong> Accepted. Jason's numbering (Week 0 = Feb 23) is the standard. All downstream references updated.</div>
+      <div class="impact">Impact: All week numbers shift by one vs. original. No operational impact — just documentation alignment.</div>
+    </div>
+  </div>
+
+  <!-- #2 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      2. Gap Week at Mar 23 — Eliminated
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Miro-sourced schedule showed a gap week at Mar 23. Jason's spine runs Week 4 as active.</div>
+      <div class="resolution"><strong>Decision:</strong> Resolved. No gap week. Week 4 (Mar 23) is a full working week with Greg status update, Backlog workshops, and pre-planning coaching.</div>
+      <div class="impact">Impact: 5-week continuous delivery stretch (Weeks 2–6) before Pre-Planning milestone. Monitor for team fatigue.</div>
+    </div>
+  </div>
+
+  <!-- #3 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      3. Week 6 Event — Pre-Planning (not PI Planning #0)
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Our schedule called Week 6 "PI Planning #0" (teams commit to increments). Jason calls it "Pre-Planning Week" (leaders articulate priorities).</div>
+      <div class="resolution"><strong>Decision:</strong> Go with Pre-Planning. Week 6 is a preparatory event — leaders articulating priorities and dependencies, not teams making delivery commitments. This is a lighter, more realistic bar for Week 6 given the engagement maturity at that point.</div>
+      <div class="impact">Impact: Reduces Week 2–5 readiness pressure. Reframes Weeks 2–5 as building toward leader clarity, not team commitment. PI Planning milestones move into Phase 3 scope.</div>
+    </div>
+  </div>
+
+  <!-- #4 -->
+  <div class="decision">
+    <div class="decision-header accepted">
+      <span class="tag accepted">Noted</span>
+      4. Scheduling Debt (9+ items) — Will be tackled
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Weeks 3–6 have ~9 items flagged "needs to be scheduled," multiplying to ~30+ calendar entries across 6 teams.</div>
+      <div class="resolution"><strong>Decision:</strong> Acknowledged. Will be tackled as a near-term action item. Scheduling mechanics need an owner.</div>
+      <div class="impact">Impact: Schedule flags remain in the document as ⚠ markers until calendar entries are confirmed.</div>
+    </div>
+  </div>
+
+  <!-- #5 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      5. Coaching Cohort Assignment — Defined
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Two coaching cohorts established (Dean + Brien) but team assignment undefined.</div>
+      <div class="resolution"><strong>Decision:</strong> <strong>Dean's cohort (Cohort A):</strong> Natalie, Marc, Kadeem. <strong>Brien's cohort (Cohort B):</strong> Gino, Kevin (Subaru.com), Vlad (QA), Sam (DevOps).</div>
+      <div class="impact">Impact: Dean has a tighter, more focused cohort. Brien carries a larger cohort (4 teams) — capacity is something to watch, especially during Jason's remote weeks.</div>
+    </div>
+  </div>
+
+  <!-- #6 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      6. Coaching Roles Clarified — Brien lead, Jason support
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> When Jason is remote (~Weeks 10–15), what happens to Cohort B coaching?</div>
+      <div class="resolution"><strong>Decision:</strong> Brien is lead coach, Jason is support. The primary coaching focus is on Dean and Brien. Louise and Jason are coverage and support roles, not primary coaches.</div>
+      <div class="impact">Impact: Brien is the anchor for his 4-team cohort whether Jason is on-site or remote. Jason's remote period doesn't create a coverage gap — Brien was always the lead.</div>
+    </div>
+  </div>
+
+  <!-- #7 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      7. Louise's Role — OCM Lead + Coverage/Support Coach
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Louise named across coaching, OCM, manager meetings, and training. Capacity concern.</div>
+      <div class="resolution"><strong>Decision:</strong> Louise is primarily the OCM lead. She provides coverage and support to coaching but is not a primary coach. OCM/Comms is her main lane.</div>
+      <div class="impact">Impact: Clarifies Louise's bandwidth. OCM deliverables (comms plans, manager handouts, stakeholder mapping) are her primary output. Coaching support is secondary.</div>
+    </div>
+  </div>
+
+  <!-- #8 -->
+  <div class="decision">
+    <div class="decision-header accepted">
+      <span class="tag accepted">Noted</span>
+      8. Phase 3 Skeleton — Needs Jason's Build-Out
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Jason's spine provides only two markers for Phase 3. Brien's earlier schedule fills the detail.</div>
+      <div class="resolution"><strong>Decision:</strong> Understood. Brien's Phase 3 detail is feathered in as proposed content. Needs Jason's review and validation, particularly around PI Planning #1 (Wk 13) and #2 (Wk 20).</div>
+      <div class="impact">Impact: Phase 3 content marked as "✦ feathered" in the schedule remains draft until Jason confirms.</div>
+    </div>
+  </div>
+
+  <!-- #9 -->
+  <div class="decision">
+    <div class="decision-header accepted">
+      <span class="tag accepted">Noted</span>
+      9. Training Sequence — User Stories at Week 3
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> User Stories moved from Week 8 (our schedule) to Week 3 (Jason's). Aggressive but creates a tight funnel to Pre-Planning.</div>
+      <div class="resolution"><strong>Decision:</strong> Understood and accepted. The logic is sound: Stories (Wk 3) → Backlog (Wk 4) → JIRA (Wk 5) → Pre-Planning (Wk 6).</div>
+      <div class="impact">Impact: Teams will be writing stories with only 1 week of coaching under their belt. Coach support during Week 3 will be critical.</div>
+    </div>
+  </div>
+
+  <!-- #10 -->
+  <div class="decision">
+    <div class="decision-header updated">
+      <span class="tag updated">Updated</span>
+      10. Greg Status Cadence — Made Consistent
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Greg status updates only at Weeks 4 and 6. Insufficient for 20-week engagement with senior sponsor.</div>
+      <div class="resolution"><strong>Decision:</strong> Make cadence consistent. Bi-weekly through Phase 2 (Weeks 2, 4, 6), then bi-weekly or monthly through Phase 3. Added to schedule as recurring cadence.</div>
+      <div class="impact">Impact: Greg stays connected and informed. Early signal detection for engagement health. Low effort, high visibility.</div>
+    </div>
+  </div>
+
+  <!-- #11 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      11. Kadeem and Marc — Dean's teams, from original Miro
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Kadeem and Marc appeared in Jason's Week 0 discovery but weren't in our original team cards.</div>
+      <div class="resolution"><strong>Decision:</strong> These are Dean's teams. They were in the original Miro and Mural boards. "Marc" was previously listed as "Mark." These are in-scope team managers assigned to Dean's coaching cohort.</div>
+      <div class="impact">Impact: Team cards updated. Total in-scope team count may need adjustment — currently showing 6 teams with 6 managers. Kadeem and Marc/Mark bring the picture to 8 named managers. Need to clarify: are these additional teams or alternate names for existing teams?</div>
+    </div>
+  </div>
+
+  <!-- #12 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      12. Daily Office Hours — Dean & Brien staff, low demand expected
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Daily Office Hours starting Week 2 is a significant time commitment. Who staffs?</div>
+      <div class="resolution"><strong>Decision:</strong> Dean and Brien will staff. Expectation is low turnout/demand, especially in early weeks.</div>
+      <div class="impact">Impact: Low capacity risk given expected low demand. Monitor — if demand spikes, may need to formalize into scheduled Q&A blocks rather than open office hours.</div>
+    </div>
+  </div>
+
+  <!-- #13 -->
+  <div class="decision">
+    <div class="decision-header resolved">
+      <span class="tag resolved">Resolved</span>
+      13. Training Schedule Restructured — Individual classes, two per training week, every-other-week cadence
+    </div>
+    <div class="decision-body">
+      <div class="issue"><strong>Issue:</strong> Original training schedule had classes consolidated with unclear spacing. Needed clarity: are classes individual items or combined topics? What is the exact cadence?</div>
+      <div class="resolution"><strong>Decision:</strong> Training schedule restructured with individual classes (not combined), every-other-week cadence starting Week 5. Week 6 is coaching-only (no training). Schedule: <strong>Wk 5:</strong> Estimation (Story Pointing &amp; Capacity). <strong>Wk 7:</strong> User Story Writing + User Stories &amp; Backlog Fundamentals. <strong>Wk 9:</strong> Planning for Adaptability + Story Splitting. <strong>Wk 11:</strong> Flow / WIP + Product Mindset. <strong>Wk 13:</strong> Navigating Change. <strong>Wk 15+:</strong> On-Demand Training.</div>
+      <div class="impact">Impact: Allows 2–4 week coaching observation period before applied training begins (Weeks 2–5). Each class stands alone as a discrete training unit. Two classes per training week maintains engagement without overwhelming. Every-other-week rhythm (5, 7, 9, 11, 13) allows teams to absorb and apply between sessions. Week 6 coaching-only protects pre-planning focus. Status: Corrected by Brien, March 13, 2026.</div>
+    </div>
+  </div>
+
+  <div class="footer-bar"></div>
+<div class="footer">
+    <span>Subaru M.A.R.S. Agile Transformation · Turnberry Solutions · Bru Crew Coaching</span>
+    <span>Decision Log — March 13, 2026 · Confidential</span>
+  </div>
+
+</div>
+</body>
+</html>

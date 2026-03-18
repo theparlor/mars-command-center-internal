@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-Branding Planogram — Miro Staging Visual</title>
+<style>
+  :root {
+    --subaru-blue: #00205B;
+    --star-cluster: #1D4F91;
+    --bright-blue: #00AEEF;
+    --tb-navy: #032D3E;
+    --tb-accent: #349ED8;
+    --white: #FFFFFF;
+    --stat-bg: #F9FAFB;
+    --border-soft: #E5E7EB;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --yellow-callout: #FFFDE7;
+    --yellow-border: #FBC02D;
+    --red-light: #FFF5F5;
+    --red-border: #FCA5A5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #F3F4F6; color: var(--text-primary); padding: 2rem; }
+
+  .planogram-title { text-align: center; margin-bottom: 2rem; }
+  .planogram-title h1 { font-size: 28px; font-weight: 700; color: var(--subaru-blue); }
+  .planogram-title p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* === MASTER GRID === */
+  .plano-grid { display: grid; grid-template-columns: 160px 1fr 1fr 160px; grid-template-rows: auto; gap: 0; max-width: 1400px; margin: 0 auto; }
+
+  /* === ROW HEADERS (left column) === */
+  .row-header { background: var(--subaru-blue); color: white; padding: 16px 12px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.15); min-height: 120px; }
+  .row-header.first { border-radius: 8px 0 0 0; }
+  .row-header.last { border-radius: 0 0 0 8px; }
+
+  /* === COLUMN HEADERS === */
+  .col-header { background: var(--subaru-blue); color: white; padding: 14px 16px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 2px solid var(--bright-blue); }
+  .col-header.corner-l { border-radius: 8px 0 0 0; }
+  .col-header.corner-r { border-radius: 0 8px 0 0; }
+
+  /* === WEIGHT COLUMN (right side) === */
+  .weight-cell { background: var(--stat-bg); padding: 12px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-soft); font-size: 10px; color: var(--text-muted); text-align: center; min-height: 120px; }
+  .weight-cell.last { border-radius: 0 0 8px 0; }
+  .weight-bar-v { width: 100%; height: 16px; border-radius: 8px; overflow: hidden; display: flex; margin: 6px 0 4px; }
+  .weight-bar-v .seg { height: 100%; }
+  .weight-bar-v .seg.s { background: var(--subaru-blue); }
+  .weight-bar-v .seg.c { background: var(--text-muted); }
+  .weight-bar-v .seg.t { background: var(--tb-navy); }
+
+  /* === CONTENT CELLS === */
+  .cell { background: white; border-bottom: 1px solid var(--border-soft); border-right: 1px solid var(--border-soft); padding: 14px 16px; min-height: 120px; }
+  .cell h4 { font-size: 11px; font-weight: 700; color: var(--subaru-blue); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .cell .spec { font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+  .cell .spec strong { color: var(--text-primary); }
+  .cell .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 9px; font-weight: 700; text-transform: uppercase; margin-top: 6px; }
+  .cell .tag.logo { background: #E0E7FF; color: #3730A3; }
+  .cell .tag.text { background: #FEF3C7; color: #92400E; }
+  .cell .tag.none { background: #F3F4F6; color: #6B7280; }
+
+  /* === SLIDE MOCKUPS (mini previews) === */
+  .mini-slide { width: 100%; aspect-ratio: 16/9; border: 1.5px solid var(--border-soft); border-radius: 4px; overflow: hidden; margin: 8px 0; position: relative; background: white; }
+  .mini-slide .hero { background: var(--subaru-blue); height: 28%; display: flex; align-items: center; padding: 0 8px; }
+  .mini-slide .hero .s-mark { background: rgba(255,255,255,0.25); border-radius: 2px; padding: 1px 6px; font-size: 7px; color: white; font-weight: 700; }
+  .mini-slide .hero .title { font-size: 8px; color: white; font-weight: 700; margin-left: 6px; }
+  .mini-slide .content { height: 58%; padding: 4px 8px; }
+  .mini-slide .content .bar { background: var(--border-soft); height: 4px; border-radius: 2px; margin: 3px 0; }
+  .mini-slide .content .bar.short { width: 60%; }
+  .mini-slide .ft { height: 14%; border-top: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: space-between; padding: 0 6px; }
+  .mini-slide .ft .tb-txt { font-size: 5px; color: var(--text-muted); }
+  .mini-slide .ft .s-sm { font-size: 5px; color: var(--subaru-blue); font-weight: 700; }
+  .mini-slide .ft .tb-box { background: var(--tb-navy); border-radius: 1px; padding: 1px 4px; font-size: 4px; color: white; font-weight: 600; }
+
+  .mini-slide.divider { background: var(--subaru-blue); }
+  .mini-slide.divider .crest { width: 20px; height: 20px; background: rgba(255,255,255,0.2); border-radius: 50%; margin: 12px auto 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: white; }
+  .mini-slide.divider .d-title { text-align: center; font-size: 8px; color: white; font-weight: 700; }
+  .mini-slide.divider .d-sub { text-align: center; font-size: 5px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  .mini-slide.closing { background: var(--stat-bg); }
+  .mini-slide.closing .logos { display: flex; align-items: center; justify-content: center; height: 100%; gap: 12px; }
+  .mini-slide.closing .logos .brand { text-align: center; }
+  .mini-slide.closing .logos .brand .name { font-size: 9px; font-weight: 700; }
+  .mini-slide.closing .logos .brand.sub .name { color: var(--subaru-blue); }
+  .mini-slide.closing .logos .brand.tb .name { color: var(--tb-navy); font-size: 8px; }
+  .mini-slide.closing .logos .divl { width: 1px; height: 30px; background: var(--border-soft); }
+
+  /* === ANTI-PATTERN ROW === */
+  .anti-row { grid-column: 1 / -1; background: var(--red-light); border: 1px solid var(--red-border); border-radius: 8px; padding: 16px 20px; margin-top: 1.5rem; }
+  .anti-row h3 { font-size: 14px; font-weight: 700; color: #991B1B; margin-bottom: 8px; }
+  .anti-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .anti-card { background: white; border: 1px solid var(--red-border); border-radius: 6px; padding: 10px; }
+  .anti-card strong { font-size: 11px; color: #991B1B; display: block; margin-bottom: 4px; }
+  .anti-card span { font-size: 10px; color: var(--text-secondary); line-height: 1.4; }
+
+  /* === LEGEND === */
+  .legend { grid-column: 1 / -1; margin-top: 1.5rem; background: white; border: 1px solid var(--border-soft); border-radius: 8px; padding: 16px 20px; }
+  .legend h3 { font-size: 14px; font-weight: 700; color: var(--subaru-blue); margin-bottom: 10px; }
+  .legend-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-secondary); }
+  .legend-item .dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="planogram-title">
+  <h1>Co-Branding Planogram</h1>
+  <p>Visual mapping of Turnberry × Subaru brand placement across all deliverable formats · Design System v6.0 · March 2026</p>
+</div>
+
+<div class="plano-grid">
+
+  <!-- === COLUMN HEADERS === -->
+  <div class="col-header corner-l">Format</div>
+  <div class="col-header">Subaru Placement</div>
+  <div class="col-header">Turnberry Placement</div>
+  <div class="col-header corner-r">Visual Weight</div>
+
+  <!-- ================================================================
+       ROW 1: PPTX — TITLE SLIDE
+       ================================================================ -->
+  <div class="row-header first">PPTX<br>Title Slide<br><span style="font-size:9px;opacity:0.7;font-weight:400">"The Handshake"</span></div>
+  <div class="cell">
+    <h4>Subaru — Dominant</h4>
+    <div class="spec">
+      White horizontal logo in <strong>upper-left</strong> of hero band<br>
+      x:0.5, y:0.25 · w:1.8"<br>
+      <strong>F-pattern dominant read position</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+    <div class="mini-slide">
+      <div class="hero">
+        <div class="s-mark">★ SUBARU</div>
+        <div class="title">Status Overview</div>
+      </div>
+      <div class="content"><div class="bar"></div><div class="bar short"></div></div>
+      <div class="ft"><div class="tb-txt">Prepared by Turnberry</div><div class="tb-box">TB</div></div>
+    </div>
+  </div>
+  <div class="cell">
+    <h4>Turnberry — Attribution</h4>
+    <div class="spec">
+      Logo in <strong>lower-right corner</strong><br>
+      x:7.8, y:5.15 · w:1.2" · 85% opacity<br>
+      <strong>Consulting-firm convention position</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:60%"></div>
+      <div class="seg c" style="width:20%"></div>
+      <div class="seg t" style="width:20%"></div>
+    </div>
+    <span>Subaru 60%</span>
+    <span>Content 20%</span>
+    <span>TB 20%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 2: PPTX — INTERIOR SLIDES
+       ================================================================ -->
+  <div class="row-header">PPTX<br>Interior<br><span style="font-size:9px;opacity:0.7;font-weight:400">"Content is King"</span></div>
+  <div class="cell">
+    <h4>Subaru — Quiet Presence</h4>
+    <div class="spec">
+      Dark horizontal logo in <strong>footer right</strong><br>
+      x:8.0, y:5.20 · w:1.0"<br>
+      <strong>Brand continuity, never competing</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+    <div class="mini-slide">
+      <div style="height:4px;background:var(--subaru-blue)"></div>
+      <div style="padding:6px 8px;font-size:8px;font-weight:700;color:var(--subaru-blue)">Workstream Updates</div>
+      <div class="content" style="height:60%"><div class="bar"></div><div class="bar short"></div><div class="bar"></div></div>
+      <div class="ft"><div class="tb-txt">Prepared by Turnberry Solutions</div><div class="s-sm">SUBARU</div></div>
+    </div>
+  </div>
+  <div class="cell">
+    <h4>Turnberry — Text Only</h4>
+    <div class="spec">
+      "Prepared by Turnberry Solutions"<br>
+      Footer left · Calibri 8pt · #9CA3AF<br>
+      <strong>One image + one text = clean footer</strong>
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:5%"></div>
+      <div class="seg c" style="width:85%"></div>
+      <div class="seg t" style="width:10%"></div>
+    </div>
+    <span>Content 85%</span>
+    <span>Nav 10%</span>
+    <span>Brand 5%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 3: PPTX — SECTION DIVIDER
+       ================================================================ -->
+  <div class="row-header">PPTX<br>Divider<br><span style="font-size:9px;opacity:0.7;font-weight:400">"The Crest"</span></div>
+  <div class="cell">
+    <h4>Subaru — Centered Crest</h4>
+    <div class="spec">
+      Vertical badge <strong>centered above title</strong><br>
+      x:4.5, y:1.5 · h:0.8"<br>
+      <strong>Presides over phase transition</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+    <div class="mini-slide divider">
+      <div class="crest">★</div>
+      <div class="d-title">Phase 2: Scaling</div>
+      <div class="d-sub">Turnberry Solutions</div>
+    </div>
+  </div>
+  <div class="cell">
+    <h4>Turnberry — Subtle Text</h4>
+    <div class="spec">
+      "Turnberry Solutions"<br>
+      Bottom center · 9pt · white 50% opacity<br>
+      <strong>Minimal — the section title is the focus</strong>
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:40%"></div>
+      <div class="seg c" style="width:50%"></div>
+      <div class="seg t" style="width:10%"></div>
+    </div>
+    <span>Subaru 40%</span>
+    <span>Content 50%</span>
+    <span>TB 10%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 4: PPTX — CLOSING
+       ================================================================ -->
+  <div class="row-header">PPTX<br>Closing<br><span style="font-size:9px;opacity:0.7;font-weight:400">"The Credits"</span></div>
+  <div class="cell">
+    <h4>Subaru — Full Size Left</h4>
+    <div class="spec">
+      Dark horizontal · center-left · w:2.5"<br>
+      <strong>Still larger — it's their program</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+    <div class="mini-slide closing">
+      <div class="logos">
+        <div class="brand sub"><div class="name">★ SUBARU</div><div style="font-size:5px;color:var(--text-muted)">of America</div></div>
+        <div class="divl"></div>
+        <div class="brand tb"><div class="name">TURNBERRY</div><div style="font-size:5px;color:var(--text-muted)">Solutions</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="cell">
+    <h4>Turnberry — Full Size Right</h4>
+    <div class="spec">
+      Logo · center-right · w:2.0"<br>
+      Full opacity · thin divider between<br>
+      <strong>The "credits" moment — partnership explicit</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:45%"></div>
+      <div class="seg c" style="width:20%"></div>
+      <div class="seg t" style="width:35%"></div>
+    </div>
+    <span>Subaru 45%</span>
+    <span>Chrome 20%</span>
+    <span>TB 35%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 5: HTML
+       ================================================================ -->
+  <div class="row-header">HTML<br>Dashboards<br><span style="font-size:9px;opacity:0.7;font-weight:400">& Reports</span></div>
+  <div class="cell">
+    <h4>Header Bar — Left Aligned</h4>
+    <div class="spec">
+      Horizontal logo in <strong>header bar, left</strong><br>
+      180px wide · vertically centered<br>
+      Subaru badge in footer (centered, 48px)
+    </div>
+    <span class="tag logo">Logo Image</span>
+  </div>
+  <div class="cell">
+    <h4>Header Bar — Right Text</h4>
+    <div class="spec">
+      "Prepared by Turnberry Solutions"<br>
+      Right-aligned in header · 11px · muted<br>
+      <strong>No logo in footer — text only</strong>
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:30%"></div>
+      <div class="seg c" style="width:60%"></div>
+      <div class="seg t" style="width:10%"></div>
+    </div>
+    <span>Subaru 30%</span>
+    <span>Content 60%</span>
+    <span>TB 10%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 6: PDF
+       ================================================================ -->
+  <div class="row-header">PDF<br>Reports<br><span style="font-size:9px;opacity:0.7;font-weight:400">& Readouts</span></div>
+  <div class="cell">
+    <h4>Header Band — Left</h4>
+    <div class="spec">
+      Horizontal logo in <strong>navy header band, left</strong><br>
+      White variant on Subaru Blue fill
+    </div>
+    <span class="tag logo">Logo Image</span>
+  </div>
+  <div class="cell">
+    <h4>Header Band — Right Text</h4>
+    <div class="spec">
+      "Prepared by Turnberry Solutions" right<br>
+      Footer: dual text attribution line<br>
+      <strong>No footer logo — text only</strong>
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:25%"></div>
+      <div class="seg c" style="width:65%"></div>
+      <div class="seg t" style="width:10%"></div>
+    </div>
+    <span>Subaru 25%</span>
+    <span>Content 65%</span>
+    <span>TB 10%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 7: EMAIL
+       ================================================================ -->
+  <div class="row-header">Email<br>Status<br><span style="font-size:9px;opacity:0.7;font-weight:400">Updates</span></div>
+  <div class="cell">
+    <h4>Above Accent Bar</h4>
+    <div class="spec">
+      Horizontal logo <strong>above the 4px accent bar</strong><br>
+      200px wide · left-aligned<br>
+      <strong>Email clients poorly render dual logos</strong>
+    </div>
+    <span class="tag logo">Logo Image</span>
+  </div>
+  <div class="cell">
+    <h4>Footer Text Only</h4>
+    <div class="spec">
+      "Turnberry Solutions · Subaru M.A.R.S."<br>
+      Footer area · 10px · muted gray<br>
+      <strong>No Turnberry logo in email — ever</strong>
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:35%"></div>
+      <div class="seg c" style="width:60%"></div>
+      <div class="seg t" style="width:5%"></div>
+    </div>
+    <span>Subaru 35%</span>
+    <span>Content 60%</span>
+    <span>TB 5%</span>
+  </div>
+
+  <!-- ================================================================
+       ROW 8: XLSX
+       ================================================================ -->
+  <div class="row-header">XLSX<br>Schedules<br><span style="font-size:9px;opacity:0.7;font-weight:400">& Trackers</span></div>
+  <div class="cell">
+    <h4>No Logo</h4>
+    <div class="spec">
+      <strong>No logos in spreadsheets</strong><br>
+      Brand identity via color system only:<br>
+      Subaru Blue headers, lane-color fills
+    </div>
+    <span class="tag none">Color System Only</span>
+  </div>
+  <div class="cell">
+    <h4>Header Row / Sheet Footer</h4>
+    <div class="spec">
+      Title row: "Subaru M.A.R.S. Training Schedule"<br>
+      Subtitle row: "Prepared by Turnberry Solutions"<br>
+      <strong>Attribution in cell text, not images</strong>
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell last">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:15%"></div>
+      <div class="seg c" style="width:80%"></div>
+      <div class="seg t" style="width:5%"></div>
+    </div>
+    <span>Colors 15%</span>
+    <span>Content 80%</span>
+    <span>TB 5%</span>
+  </div>
+
+  <div class="row-header last">Miro<br>Frames<br><span style="font-size:9px;opacity:0.7;font-weight:400">& Boards</span></div>
+  <div class="cell">
+    <h4>Frame Header Icon</h4>
+    <div class="spec">
+      Subaru badge as <strong>frame header icon</strong><br>
+      Compact vertical variant · 64px<br>
+      Miro's limited rendering constrains logos
+    </div>
+    <span class="tag logo">Logo Image</span>
+  </div>
+  <div class="cell">
+    <h4>Frame Description</h4>
+    <div class="spec">
+      "Turnberry Solutions" in <strong>frame description text</strong><br>
+      Not a visual element — metadata only
+    </div>
+    <span class="tag text">Text Attribution</span>
+  </div>
+  <div class="weight-cell last">
+    <div class="weight-bar-v">
+      <div class="seg s" style="width:20%"></div>
+      <div class="seg c" style="width:75%"></div>
+      <div class="seg t" style="width:5%"></div>
+    </div>
+    <span>Subaru 20%</span>
+    <span>Content 75%</span>
+    <span>TB 5%</span>
+  </div>
+
+</div>
+
+<!-- === ANTI-PATTERNS === -->
+<div style="max-width:1400px; margin:1.5rem auto 0;">
+  <div class="anti-row">
+    <h3>Anti-Patterns — What NOT to Do</h3>
+    <div class="anti-grid">
+      <div class="anti-card">
+        <strong>Dueling Logos</strong>
+        <span>Two logo images side-by-side in every footer. Creates visual competition.</span>
+      </div>
+      <div class="anti-card">
+        <strong>Logo Soup</strong>
+        <span>More than 2 logos on one slide. Third parties get text only.</span>
+      </div>
+      <div class="anti-card">
+        <strong>Equal Sizing</strong>
+        <span>Same-size logos signal ambiguity. Subaru should always be larger.</span>
+      </div>
+      <div class="anti-card">
+        <strong>Logo as Decoration</strong>
+        <span>Data slides earn 100% real estate for content. No logos needed.</span>
+      </div>
+      <div class="anti-card">
+        <strong>Footer Logo Wars</strong>
+        <span>Both as images in footer. One image + one text = clean.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- === LEGEND === -->
+<div style="max-width:1400px; margin:1.5rem auto;">
+  <div class="legend">
+    <h3>Legend & Design Tokens</h3>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="dot" style="background:var(--subaru-blue)"></div> Subaru Blue #00205B (PMS 281)</div>
+      <div class="legend-item"><div class="dot" style="background:var(--star-cluster)"></div> Star Cluster #1D4F91 (PMS 7686)</div>
+      <div class="legend-item"><div class="dot" style="background:var(--bright-blue)"></div> Bright Blue #00AEEF (PMS 299)</div>
+      <div class="legend-item"><div class="dot" style="background:var(--tb-navy)"></div> Turnberry Navy #032D3E</div>
+      <div class="legend-item"><span class="tag logo" style="margin:0">Logo Image</span> Actual logo file placed</div>
+      <div class="legend-item"><span class="tag text" style="margin:0">Text Attribution</span> Name in text, no logo</div>
+      <div class="legend-item"><span class="tag none" style="margin:0">Color System Only</span> Brand via colors, not logos</div>
+      <div class="legend-item" style="font-size:10px;color:var(--text-muted)">Visual weight bars show attention distribution</div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; margin:2rem 0 1rem; font-size:11px; color:var(--text-muted);">
+  Co-Branding Planogram v1.0 · Turnberry Solutions × Subaru M.A.R.S. · March 14, 2026<br>
+  Designed for Miro board staging — paste as HTML frame or screenshot for visual reference
+</div>
+
+</body>
+</html>

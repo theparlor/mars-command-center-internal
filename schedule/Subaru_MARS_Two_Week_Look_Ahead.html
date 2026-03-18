@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Leadership Update</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+  :root {
+    /* Subaru Chrome (client-facing) */
+    --chrome-primary: #00205B;
+    --chrome-secondary: #1D4F91;
+    --chrome-gray: #53565A;
+    --white: #FFFFFF;
+    /* Lane Colors (engagement-neutral) */
+    --train: #1976D2;   --train-lt: #E3F2FD;  --train-dk: #0D47A1;
+    --coach: #7B1FA2;   --coach-lt: #F3E5F5;  --coach-dk: #4A148C;
+    --jira: #00897B;    --jira-lt: #E0F2F1;   --jira-dk: #004D40;
+    --ocm: #EF6C00;     --ocm-lt: #FFF3E0;    --ocm-dk: #BF360C;
+    --mile: #C62828;    --mile-lt: #FFEBEE;   --mile-dk: #B71C1C;
+    --admin: #546E7A;   --admin-lt: #ECEFF1;  --admin-dk: #37474F;
+    /* Status */
+    --on-track: #2E7D32; --at-risk: #FFB300; --blocked: #C62828;
+    /* Structural */
+    --text: #1F2937;
+    --gray: #6B7280;
+    --light-bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --border: #E5E7EB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Helvetica,Arial,sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--chrome-primary) 0%, var(--chrome-secondary) 100%);
+    color: var(--white);
+    padding: 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -5%;
+    width: 350px;
+    height: 350px;
+    background: rgba(29, 79, 145, 0.15);
+    border-radius: 50%;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.25rem;
+  }
+
+  .header .subtitle {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color:#6B7280;
+  }
+
+  .header .meta-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color:#6B7280;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .strategic-context {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--chrome-secondary);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .strategic-context h2 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--chrome-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  .strategic-context p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  .week-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .week-badge {
+    background: var(--chrome-primary);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .week-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--chrome-primary);
+  }
+
+  .week-theme {
+    font-size: 0.8rem;
+    color: var(--gray);
+    font-weight: 500;
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  .activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .activity-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .activity-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 32, 91, 0.08);
+  }
+
+  .activity-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .activity-card.type-coaching::before { background: var(--coach); }
+  .activity-card.type-jira::before { background: var(--jira); }
+  .activity-card.type-ocm::before { background: var(--ocm); }
+  .activity-card.type-training::before { background: var(--train); }
+  .activity-card.type-milestone::before { background: var(--mile); }
+  .activity-card.type-admin::before { background: var(--admin); }
+
+  .activity-card .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--chrome-primary);
+  }
+
+  .type-tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .tag-coaching { background: var(--coach-lt); color: var(--coach); }
+  .tag-jira { background: var(--jira-lt); color: var(--jira); }
+  .tag-ocm { background: var(--ocm-lt); color: var(--ocm); }
+  .tag-training { background: var(--train-lt); color: var(--train); }
+  .tag-milestone { background: var(--mile-lt); color: var(--mile); }
+  .tag-admin { background: var(--admin-lt); color: var(--admin); }
+
+  .card-detail {
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .card-owner {
+    font-size: 0.7rem;
+    color: var(--chrome-gray);
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+
+  .focus-areas {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .focus-areas h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--chrome-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .focus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .focus-item {
+    background: var(--light-bg);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    border-left: 3px solid var(--chrome-secondary);
+  }
+
+  .focus-item .focus-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--chrome-secondary);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .risk-section {
+    background: var(--ocm-lt);
+    border: 1px solid #FFCC80;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .risk-section h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--at-risk);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .risk-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.78rem;
+    color: #5A4A36;
+    line-height: 1.5;
+  }
+
+  .risk-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-top: 1px;
+  }
+
+  .risk-high { background: var(--blocked); }
+  .risk-medium { background: var(--at-risk); }
+
+  .deliverables-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .deliverables-section h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--chrome-primary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .deliverable-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--gray);
+  }
+
+  .deliverable-check {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--chrome-secondary);
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .team-bar {
+    background: var(--chrome-primary);
+    color: var(--white);
+    padding: 1.25rem 2rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .team-member {
+    text-align: center;
+  }
+
+  .team-member .name {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .team-member .role {
+    font-size: 0.65rem;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .comms-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .comms-col h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--chrome-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .comms-col p {
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.7rem;
+    color: #6B7280;
+    border-top:1px solid #E5E7EB;
+    margin-top: 2rem;
+  }
+
+  .value-callout {
+    background: linear-gradient(135deg, var(--coach-lt) 0%, var(--train-lt) 100%);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .value-callout h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--coach);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .value-item {
+    font-size: 0.78rem;
+    color: var(--coach-dk);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .value-item::before {
+    content: '\2192';
+    position: absolute;
+    left: 0;
+    color: var(--coach);
+    font-weight: 700;
+  }
+
+  .needs-section {
+    background: var(--ocm-lt);
+    border: 1px solid #FFCC80;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .needs-section h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ocm);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .need-item {
+    font-size: 0.78rem;
+    color: #5A4A36;
+    margin-bottom: 0.4rem;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .need-item::before {
+    content: '!';
+    position: absolute;
+    left: 0;
+    color: var(--ocm);
+    font-weight: 800;
+  }
+
+  @media print {
+    body { background: white; }
+    .container { max-width: 100%; padding: 0.5rem; }
+    .activity-grid { grid-template-columns: 1fr 1fr; }
+    .focus-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .header { padding: 1.5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="header">
+  <h1>Leadership Update</h1>
+  <div class="subtitle">One week review, two week look ahead</div>
+  <div class="meta-row">
+    <span>Period: March 9 – March 20, 2026</span>
+    <span>Weeks 2 & 3 of 20</span>
+    <span>Phase 2: Creating the Foundation</span>
+    <span>Prepared for: Greg & Leadership</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Strategic Context -->
+  <div class="strategic-context">
+    <h2>Coaching Phase Rationale</h2>
+    <p>
+      With foundational training complete, we're transitioning into embedded coaching and discovery. Over the next two weeks, our coaches will be observing, learning, and building trust with each team before introducing hands-on guidance. This is intentional — the operational topics we need to address (estimation, story writing, backlog management) vary significantly from team to team. Training on these topics now, before we understand each team's unique workflows, would risk creating six different implementations of the same concept — the opposite of the "single pane of glass" outcome we're building toward.
+    </p>
+  </div>
+
+  <!-- VALUE DELIVERED -->
+  <div class="value-callout">
+    <h3>Value to Be Delivered These Two Weeks</h3>
+    <div class="value-grid">
+      <div class="value-item">Real-world understanding of how each team actually operates day-to-day</div>
+      <div class="value-item">Identification of quick wins we can deliver early to build momentum</div>
+      <div class="value-item">Baseline documentation to measure improvement against over 20 weeks</div>
+      <div class="value-item">Relationship foundation that makes future coaching recommendations stick</div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-section">
+    <div class="week-header">
+      <span class="week-badge">Week 2</span>
+      <span class="week-title">March 9 – 13 · Coaching Begins</span>
+      <span class="week-theme">"Observe, learn, establish trust"</span>
+    </div>
+
+    <div class="activity-grid">
+
+      <div class="activity-card type-milestone">
+        <div class="card-header">
+          <span class="card-title">Monday Alignment with Greg & Gino</span>
+          <span class="type-tag tag-milestone">Milestone</span>
+        </div>
+        <div class="card-detail">Kickoff alignment on coaching approach, two-week plan walkthrough, and expectation setting for the observation period. Discuss five key agenda items including Phase 2 structure, risk-based coaching priorities, and JIRA integration approach.</div>
+        <div class="card-owner">Dean · Brien · Jason</div>
+      </div>
+
+      <div class="activity-card type-coaching">
+        <div class="card-header">
+          <span class="card-title">Leader Readout — Week 1 Debrief</span>
+          <span class="type-tag tag-coaching">Coaching</span>
+        </div>
+        <div class="card-detail">Summarize Week 1 training learnings for leadership. Cover key themes from Agile Fundamentals, Achieving Flow, and Scrum Fundamentals. Highlight team engagement observations and initial coaching recommendations for Week 2 embedded work.</div>
+        <div class="card-owner">Dean · Brien</div>
+      </div>
+
+      <div class="activity-card type-coaching">
+        <div class="card-header">
+          <span class="card-title">Team-Level Coaching Begins</span>
+          <span class="type-tag tag-coaching">Coaching</span>
+        </div>
+        <div class="card-detail"><strong>Cohort A (Dean):</strong> Natalie Miller, Marc Rullo, Kadeem Williams<br><strong>Cohort B (Brien):</strong> Gino Guarnere, Kevin McCracken, Vladimir Goldsteyhn, Sam Sharkay<br>Focus: observing events, understanding workflows, building relationships.</div>
+        <div class="card-owner">Dean (A) · Brien (B)</div>
+      </div>
+
+      <div class="activity-card type-jira">
+        <div class="card-header">
+          <span class="card-title">JIRA Initial Onboarding</span>
+          <span class="type-tag tag-jira">JIRA</span>
+        </div>
+        <div class="card-detail">Guided introduction to JIRA for teams. Assess current state of environments, document naming conventions, hierarchy patterns, and existing usage across teams. Establish baseline for standardization roadmap.</div>
+        <div class="card-owner">Jason · Dean</div>
+      </div>
+
+      <div class="activity-card type-coaching">
+        <div class="card-header">
+          <span class="card-title">Daily Office Hours Q&A</span>
+          <span class="type-tag tag-coaching">Coaching</span>
+        </div>
+        <div class="card-detail">Open-door daily sessions for any team member to ask questions, surface concerns, or debrief on training topics. Creates a safe space for informal coaching and relationship building.</div>
+        <div class="card-owner">Dean · Brien</div>
+      </div>
+
+      <div class="activity-card type-ocm">
+        <div class="card-header">
+          <span class="card-title">OCM Manager Meetings</span>
+          <span class="type-tag tag-ocm">OCM</span>
+        </div>
+        <div class="card-detail">30-minute sessions with each manager. Cover stakeholder mapping, Subaru-specific language and culture, barriers to adoption, and strategy for embedding change. Start building manager-level coaching relationships.</div>
+        <div class="card-owner">Louise</div>
+      </div>
+
+      <div class="activity-card type-admin">
+        <div class="card-header">
+          <span class="card-title">Pulse Check & Leader Sentiment — Baseline</span>
+          <span class="type-tag tag-admin">Baseline</span>
+        </div>
+        <div class="card-detail">Deploy Team Pulse Check and Leader Sentiment surveys to establish engagement baseline. This data becomes the measurement foundation for the entire 20-week engagement.</div>
+        <div class="card-owner">Jason</div>
+      </div>
+
+      <div class="activity-card type-admin">
+        <div class="card-header">
+          <span class="card-title">Status Update with Greg</span>
+          <span class="type-tag tag-admin">Admin</span>
+        </div>
+        <div class="card-detail">Weekly status cadence begins. Cover coaching observations, initial team dynamics, JIRA assessment progress, and any early risks or blockers requiring leadership support.</div>
+        <div class="card-owner">Jason · Dean</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-section">
+    <div class="week-header">
+      <span class="week-badge">Week 3</span>
+      <span class="week-title">March 16 – 20 · Observe & Document</span>
+      <span class="week-theme">"Understand before you standardize"</span>
+    </div>
+
+    <div class="focus-areas">
+      <h3>Deep-Dive Focus Areas — What We're Studying Across Teams</h3>
+      <div class="focus-grid">
+        <div class="focus-item">
+          <span class="focus-num">01</span>
+          Intake & Prioritization
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">02</span>
+          Estimation & Capacity Planning
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">03</span>
+          QA Structure & Vlad's Integration Plan
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">04</span>
+          Stakeholder Management
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">05</span>
+          JIRA Conventions, Hierarchy & Usage
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">06</span>
+          Shared Language & Working Glossary
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">07</span>
+          Definition of Done
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">08</span>
+          Release Planning
+        </div>
+        <div class="focus-item">
+          <span class="focus-num">09</span>
+          Project Charters
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-grid">
+
+      <div class="activity-card type-training">
+        <div class="card-header">
+          <span class="card-title">No Training Activities Scheduled</span>
+          <span class="type-tag tag-training">Training</span>
+        </div>
+        <div class="card-detail">Week 3 continues embedded coaching focus. <strong>Next training: Estimation in Week 5</strong> (week of March 30). This timing allows coaching to establish team-specific context before classroom content.<br><br><strong>Forward-Looking Schedule:</strong><br>• <strong>Wk 5:</strong> Estimation (Story Pointing & Capacity) — individual class<br>• <strong>Wk 6:</strong> No training<br>• <strong>Wk 7:</strong> User Story Writing — individual class<br>• <strong>Wk 7:</strong> User Stories & Backlog Fundamentals — individual class</div>
+        <div class="card-owner">Jason · Dean · Brien</div>
+      </div>
+
+      <div class="activity-card type-coaching">
+        <div class="card-header">
+          <span class="card-title">Embedded Coaching — Events & Side-by-Side</span>
+          <span class="type-tag tag-coaching">Coaching</span>
+        </div>
+        <div class="card-detail">Coaches embedded in daily team activities: stand-ups, planning sessions, retrospectives, and working sessions. Documenting current-state practices across all 9 focus areas to build toward standardized recommendations.</div>
+        <div class="card-owner">Dean (Cohort A) · Brien (Cohort B)</div>
+      </div>
+
+      <div class="activity-card type-jira">
+        <div class="card-header">
+          <span class="card-title">JIRA Deep Dives by Team</span>
+          <span class="type-tag tag-jira">JIRA</span>
+        </div>
+        <div class="card-detail">Team-specific JIRA sessions with leads. Document current state configurations, gather baseline data, and begin initial coaching on conventions. Feeds into the JIRA standardization roadmap.</div>
+        <div class="card-owner">Jason · Team Leads</div>
+      </div>
+
+      <div class="activity-card type-ocm">
+        <div class="card-header">
+          <span class="card-title">OCM / Comms Planning</span>
+          <span class="type-tag tag-ocm">OCM</span>
+        </div>
+        <div class="card-detail">Develop communications for JIRA usage expectations, standardization approach, and pre-planning awareness. Coordinate with managers on change messaging and team readiness.</div>
+        <div class="card-owner">Louise</div>
+      </div>
+
+      <div class="activity-card type-coaching">
+        <div class="card-header">
+          <span class="card-title">Daily Office Hours (Continued)</span>
+          <span class="type-tag tag-coaching">Coaching</span>
+        </div>
+        <div class="card-detail">Open-door sessions continue. By Week 3, expect increased engagement as teams process training content against real-world work. Office Hours become a key venue for organic coaching moments.</div>
+        <div class="card-owner">Dean · Brien</div>
+      </div>
+
+    </div>
+
+    <!-- Deliverables -->
+    <div class="deliverables-section">
+      <h3>Key Deliverables — End of Week 3</h3>
+      <div class="deliverable-row"><div class="deliverable-check"></div>First Friday Written Update to Greg & Gino</div>
+      <div class="deliverable-row"><div class="deliverable-check"></div>First Weekly Coaching Round-Up to all participants</div>
+      <div class="deliverable-row"><div class="deliverable-check"></div>Team-specific observation notes & baseline documentation</div>
+      <div class="deliverable-row"><div class="deliverable-check"></div>Initial JIRA assessment findings per team</div>
+      <div class="deliverable-row"><div class="deliverable-check"></div>Pulse Check baseline results summary</div>
+    </div>
+  </div>
+
+  <!-- RISKS -->
+  <div class="risk-section">
+    <h3>Risk Flags</h3>
+    <div class="risk-item">
+      <div class="risk-icon risk-medium">M</div>
+      <div><strong>Room availability:</strong> Coaching sessions and JIRA deep dives require dedicated meeting space. Need Subaru to confirm room booking for recurring sessions through Phase 2.</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-icon risk-medium">M</div>
+      <div><strong>Calendar access:</strong> Teams need to add coaches to working sessions, stand-ups, and planning meetings. Incomplete access limits observation quality and delays baseline documentation.</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-icon risk-medium">M</div>
+      <div><strong>Expectation gap:</strong> Teams may expect classroom-style training to continue in Week 3. OCM comms should proactively frame the shift to embedded coaching as the next phase — not a pause.</div>
+    </div>
+  </div>
+
+  <!-- WHAT WE NEED -->
+  <div class="needs-section">
+    <h3>What We Need from You</h3>
+    <div class="need-item">Confirm room availability and booking for coaching sessions (Week 2 onward)</div>
+    <div class="need-item">Encourage teams to add Turnberry coaches to their working sessions and events</div>
+  </div>
+
+  <!-- COMMS CADENCE -->
+  <div class="comms-section">
+    <div class="comms-col">
+      <h3>Weekly Leadership Update</h3>
+      <p>Written Friday update to Greg & Gino covering coaching progress, observations, risks, and next-week preview. Starts end of Week 3.</p>
+    </div>
+    <div class="comms-col">
+      <h3>Weekly Coaching Round-Up</h3>
+      <p>All-participant email summarizing what was covered, key takeaways, and what's coming next. Keeps teams informed and reinforces coaching themes. Starts end of Week 3.</p>
+    </div>
+  </div>
+
+  <!-- TEAM BAR -->
+  <div class="team-bar">
+    <div class="team-member">
+      <div class="name">Jason Lindmeyer</div>
+      <div class="role">Engagement Lead</div>
+    </div>
+    <div class="team-member">
+      <div class="name">Dean Gabbert</div>
+      <div class="role">Lead Agile Coach · Cohort A</div>
+    </div>
+    <div class="team-member">
+      <div class="name">Brien Tate</div>
+      <div class="role">Lead Agile Coach · Cohort B</div>
+    </div>
+    <div class="team-member">
+      <div class="name">Louise Teeter</div>
+      <div class="role">OCM & Communications</div>
+    </div>
+    <div class="team-member">
+      <div class="name">Omar Rashid</div>
+      <div class="role">JIRA Administration</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-bar"></div>
+<div class="footer">
+  Subaru of America — M.A.R.S. Agile Transformation · Prepared by Turnberry Solutions · Confidential
+</div>
+
+</body>
+</html>

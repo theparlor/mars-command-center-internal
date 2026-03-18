@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Team Explorer & Org Chart</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+:root {
+  /* Subaru Chrome (client-facing) */
+  --chrome-primary: #00205B;
+  --chrome-secondary: #1D4F91;
+  --chrome-gray: #53565A;
+  --white: #FFFFFF;
+  /* Role Colors */
+  --exec: #00205B;
+  --leader: #1D4F91;
+  --fte: #2E7D32;
+  --contractor: #F57C00;
+  --turnberry: #546E7A;
+  /* Structural */
+  --text: #1F2937;
+  --gray: #6B7280;
+  --border: #E5E7EB;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Helvetica,Arial,sans-serif;background:#f8f9fa;color:var(--text)}
+.header{background:#ffffff;color:#00205B;padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-0.3px;color:#00205B}
+.header .meta{font-size:12px;color:#6B7280}
+.controls{background:white;padding:16px 32px;border-bottom:2px solid var(--chrome-secondary);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.controls label{font-size:13px;font-weight:700;color:var(--chrome-primary)}
+.controls select,.controls input{padding:6px 12px;border:1px solid #ccc;border-radius:4px;font-size:13px}
+.controls input[type=text]{width:220px}
+.legend{display:flex;gap:16px;margin-left:auto;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:12px}
+.legend-dot{width:12px;height:12px;border-radius:50%}
+.stats-bar{background:white;padding:12px 32px;border-bottom:1px solid #e0e0e0;display:flex;gap:32px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:28px;font-weight:800;color:var(--chrome-primary)}
+.stat .lbl{font-size:11px;color:#4A4A4A;text-transform:uppercase;letter-spacing:.5px}
+.tree-container{padding:24px 32px;overflow-x:auto}
+.node{margin:4px 0;user-select:none}
+.node-row{display:flex;align-items:center;padding:6px 10px;border-radius:6px;cursor:pointer;transition:background .15s}
+.node-row:hover{background:#e8f0fd}
+.toggle{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;color:var(--chrome-secondary);font-weight:700;flex-shrink:0}
+.dot{width:10px;height:10px;border-radius:50%;margin-right:8px;flex-shrink:0}
+.dot.exec{background:var(--exec)}.dot.leader{background:var(--leader)}.dot.fte{background:var(--fte)}
+.dot.contractor{background:var(--contractor)}.dot.turnberry{background:var(--turnberry)}.dot.summary{background:#9E9E9E}
+.dot.contractor_group{background:var(--contractor);border:2px solid #E65100}
+.node-name{font-weight:700;font-size:14px;margin-right:6px}
+.node-title{font-size:12px;color:#4A4A4A}
+.node-badge{background:var(--chrome-secondary);color:white;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:6px}
+.contractor-badge{background:var(--contractor);color:white;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:6px}
+.children{margin-left:24px;border-left:2px solid #e0e0e0;padding-left:4px}
+.hidden{display:none}
+.highlight{background:#fff3cd !important;border-radius:6px}
+.tab-bar{display:flex;gap:0;margin-bottom:16px}
+.tab{padding:10px 24px;cursor:pointer;font-weight:700;font-size:14px;color:#4A4A4A;border-bottom:3px solid transparent;transition:all .2s}
+.tab:hover{color:var(--chrome-primary)}
+.tab.active{color:var(--chrome-primary);border-bottom-color:var(--chrome-secondary)}
+.view{display:none}.view.active{display:block}
+.roster-table{width:100%;border-collapse:collapse;font-size:13px}
+.roster-table th{background:var(--chrome-primary);color:white;padding:8px 12px;text-align:left;position:sticky;top:0}
+.roster-table td{padding:6px 12px;border-bottom:1px solid #e0e0e0}
+.roster-table tr:nth-child(even){background:#F5F5F5}
+.roster-table tr:hover{background:#e8f0fd}
+.turnberry-badge-t{background:var(--turnberry);color:white;padding:1px 8px;border-radius:10px;font-size:11px}
+.fte-badge-t{background:var(--fte);color:white;padding:1px 8px;border-radius:10px;font-size:11px}
+.contractor-badge-t{background:var(--contractor);color:white;padding:1px 8px;border-radius:10px;font-size:11px}
+.contractor-folder{border-left:2px dashed var(--contractor);margin-left:24px;padding-left:4px}
+.footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
+.footer{background:#F9FAFB;color:#6B7280;padding:12px 32px;font-size:11px;display:flex;justify-content:space-between;margin-top:24px;border-top:1px solid #E5E7EB}
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="header">
+  <div>
+    <h1>Subaru M.A.R.S. — Team Explorer</h1>
+    <div class="meta">Agile Transformation Engagement · 156 Staff Mapped</div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:11px;color:#6B7280">Updated Mar 10, 2026</div>
+    <div style="font-size:11px;color:#6B7280">CONFIDENTIAL</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="num">156</div><div class="lbl">Total Staff</div></div>
+  <div class="stat"><div class="num">45</div><div class="lbl">FTE (Subaru)</div></div>
+  <div class="stat"><div class="num">96</div><div class="lbl">Contractors</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Turnberry</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Teams In-Scope</div></div>
+  <div class="stat"><div class="num">7</div><div class="lbl">Managers</div></div>
+</div>
+
+<div class="controls">
+  <label>Search:</label>
+  <input type="text" id="search" placeholder="Name, title, or team..." oninput="filterTree()">
+  <label>Filter:</label>
+  <select id="typeFilter" onchange="filterTree()">
+    <option value="all">All Types</option>
+    <option value="exec">Executive</option>
+    <option value="leader">Leader/Manager</option>
+    <option value="fte">FTE (Subaru)</option>
+    <option value="contractor">Contractor</option>
+    <option value="turnberry">Turnberry</option>
+  </select>
+  <label style="margin-left:16px">
+    <input type="checkbox" id="showContractors" onchange="toggleContractors()"> Show Contractors
+  </label>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--exec)"></div>Exec</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--leader)"></div>Leader</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--fte)"></div>FTE</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--contractor)"></div>Contractor</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--turnberry)"></div>Turnberry</div>
+  </div>
+</div>
+
+<div style="padding:16px 32px 0">
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchView('tree',this)">Org Tree</div>
+    <div class="tab" onclick="switchView('roster',this)">Roster Table</div>
+    <div class="tab" onclick="switchView('teams',this)">Team Overview</div>
+  </div>
+</div>
+
+<div class="tree-container">
+  <div id="treeView" class="view active"></div>
+  <div id="rosterView" class="view"></div>
+  <div id="teamsView" class="view"></div>
+</div>
+
+<div class="footer-bar"></div>
+<div class="footer">
+  <span>Subaru of America — M.A.R.S. Agile Transformation · Prepared by Turnberry Solutions</span>
+  <span>Source: Teams Org Captures (Feb 17, 2026) · 156 staff mapped · Contractors collapsible</span>
+</div>
+
+<script>
+const ORG = {"name": "Hori, Yoichi", "title": "Chairman & CEO", "type": "exec", "children": [{"name": "Walters, Jeff", "title": "President & COO", "type": "exec", "children": [{"name": "Matey, Laura", "title": "VP - Information Technology", "type": "exec", "children": [{"name": "Giuffrida, Greg", "title": "IT Director - M.A.R.S.", "type": "leader", "direct": 8, "children": [{"name": "Miller, Natalie", "title": "IT Manager Retailer Solutions", "type": "leader", "direct": 13, "children": [{"name": "Rullo, Marc", "title": "IT Manager", "type": "leader", "direct": 25, "children": [{"name": "Delgado, Angel", "title": "Lead Software Engineer", "type": "fte"}, {"name": "Burt, Robert", "title": "Sr. Business Analyst", "type": "fte"}, {"name": "Shivhare, Swapnil", "title": "Sr. Software Engineer", "type": "fte"}, {"name": "Scola, Dominic", "title": "Sr. Software Engineer", "type": "fte"}, {"name": "Vahabzadeh, Joe", "title": "Sr. Software Engineer", "type": "fte"}, {"name": "Meyer, Joseph", "title": "Sr. Software Engineer", "type": "fte"}, {"name": "Gattumedhi, Shashi Kumar", "title": "Java Developer", "type": "fte"}, {"name": "Placencia, Christian", "title": "Software Engineer", "type": "fte"}, {"name": "Chintam, Udaya Kumar", "title": "QA Tester", "type": "fte"}, {"name": "Contractors (16)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Kar, Sandip", "title": "Java Developer", "type": "contractor"}, {"name": "Shivanagaram, Ramesh", "title": "Offshore Developer", "type": "contractor"}, {"name": "Keesara, Vijay Kethan", "title": "Offshore Developer", "type": "contractor"}, {"name": "P, Mahendar", "title": "Offshore Developer", "type": "contractor"}, {"name": "Quinn, Colin", "title": "Contractor", "type": "contractor"}, {"name": "Mohammed, Faizan", "title": "Contractor", "type": "contractor"}, {"name": "Vertucio, Jason", "title": "Contractor", "type": "contractor"}, {"name": "Gade, Michaeli", "title": "Contractor", "type": "contractor"}, {"name": "Sengodan, Selvakumar", "title": "Offshore Consultant", "type": "contractor"}, {"name": "Nama, VedaVyas", "title": "Offshore Tester", "type": "contractor"}, {"name": "Vaddi, Sravani", "title": "Offshore Tester", "type": "contractor"}, {"name": "Shaik, Parveen", "title": "QA Tester", "type": "contractor"}, {"name": "Angajala, Sai", "title": "QA Tester", "type": "contractor"}, {"name": "Muvvala, Prasad", "title": "QA Tester", "type": "contractor"}, {"name": "Anumala, Narendar", "title": "Vendor", "type": "contractor"}, {"name": "Adnan, Muhammad", "title": "Vendor", "type": "contractor"}]}]}, {"name": "Williams, Kadeem", "title": "IT Manager - TechShare", "type": "leader", "direct": 16, "children": [{"name": "Bendu, Maria", "title": "Sr. Business Analyst", "type": "fte"}, {"name": "Gandi, Sunny", "title": "Sr. Software Engineer", "type": "fte"}, {"name": "Feld, Bryant", "title": "Software Engineer", "type": "fte"}, {"name": "Contractors (13)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Mullapati, Venkateswara", "title": "Contractor", "type": "contractor"}, {"name": "Jethwani, Smruti Mukesh", "title": "Contractor", "type": "contractor"}, {"name": "Rao Jampani, Koteswara", "title": "Contractor", "type": "contractor"}, {"name": "Hiremath, Akshata", "title": "Contractor", "type": "contractor"}, {"name": "Bush, Carl", "title": "Contractor", "type": "contractor"}, {"name": "Karuturi, Akash", "title": "Contractor", "type": "contractor"}, {"name": "Deepali, Perugu", "title": "Contractor", "type": "contractor"}, {"name": "Chavers, Luke", "title": "Contractor", "type": "contractor"}, {"name": "Aiyappan Vasanthakumar, H.", "title": "Temp Agency", "type": "contractor"}, {"name": "Nieva, Ignacio", "title": "UI/UX Designer", "type": "contractor"}, {"name": "Madavedi, Gangothri", "title": "Vendor", "type": "contractor"}, {"name": "Vijayakumar, Sairam", "title": "Vendor", "type": "contractor"}, {"name": "Bollina, Lakshmi", "title": "Vendor", "type": "contractor"}]}]}, {"name": "Fernandez Abeijón, Lucas", "title": "Graphic Designer", "type": "fte"}, {"name": "Contractors (10)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Ou, Yangci", "title": "DevOps Engineer", "type": "contractor"}, {"name": "Gowie, Matt", "title": "DevOps Engineer", "type": "contractor"}, {"name": "Mazzara, Miranda", "title": "Graphic Designer", "type": "contractor"}, {"name": "Smargiassi, Emanuel", "title": "Graphic Designer", "type": "contractor"}, {"name": "Argá, Laura", "title": "Graphic Designer", "type": "contractor"}, {"name": "Igusa, Kazuma", "title": "SBR", "type": "contractor"}, {"name": "Yasumasa, Imai", "title": "SBR Vendor", "type": "contractor"}, {"name": "Blandford, Shane", "title": "Software Consultant", "type": "contractor"}, {"name": "Reeder, Nate", "title": "Software Consultant", "type": "contractor"}, {"name": "Salatino, Ezequiel", "title": "UI/UX Designer", "type": "contractor"}]}]}, {"name": "Guarnere, Gino", "title": "Information Technology Manager", "type": "leader", "direct": 16, "children": [{"name": "Poole, Carolyn", "title": "Lead Business Analyst", "type": "fte"}, {"name": "Sinha, Ruchi", "title": "Lead Software Engineer", "type": "fte"}, {"name": "Vadla, Prathibha", "title": "Lead Software Engineer", "type": "fte"}, {"name": "Thomas, Kevin", "title": "Lead Software Engineer", "type": "fte"}, {"name": "Saxena, Abhay", "title": "Lead Software Engineer", "type": "fte"}, {"name": "Whitmeyer, Rebecca", "title": "Sr. Business Analyst", "type": "fte"}, {"name": "Lambrechts, Beth Anne", "title": "Sr. Business Analyst", "type": "fte"}, {"name": "Peterson, Charlie", "title": "Sr. Software Engineer", "type": "fte"}, {"name": "Khanna, Raj", "title": "Business Analyst", "type": "fte"}, {"name": "Contractors (6)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Gabbert, Dean", "title": "Agile Lead Coach", "type": "turnberry"}, {"name": "Lindmeyer, Jason", "title": "Engagement Lead", "type": "turnberry"}, {"name": "McPherson, Denise", "title": "Business Analyst", "type": "contractor"}, {"name": "Shea, Robert", "title": "Consultant", "type": "turnberry"}, {"name": "Datt, Anil", "title": "Contractor", "type": "contractor"}, {"name": "Tate, Brien", "title": "Transformation Advisor", "type": "turnberry"}]}]}, {"name": "Mccracken, Kevin", "title": "Information Technology Manager", "type": "leader", "direct": 73, "children": [{"name": "Malik, Bijender", "title": "Lead Software Engineer", "type": "fte"}, {"name": "Lacorte, Tricia", "title": "Sr. Business Analyst", "type": "fte"}, {"name": "Madrigal Steller, Geovanni", "title": "Test Engineering Senior Analyst", "type": "fte"}, {"name": "Sanchez Espinoza, Bernardo", "title": "Web Developer Senior Analyst", "type": "fte"}, {"name": "Ambalathandi, Krishna", "title": "AEM Architect", "type": "fte"}, {"name": "Saravanan, Kiruthik", "title": "AEM Backend Developer", "type": "fte"}, {"name": "Budhalakoti, Mayank", "title": "AEM Frontend Developer", "type": "fte"}, {"name": "Selvavinayagamoorthy, P.S.", "title": "AEM Frontend Developer", "type": "fte"}, {"name": "Saviouk Azofeifa, Natasha", "title": "Front End Developer", "type": "fte"}, {"name": "Manoharan, Thamizhini", "title": "Front End Developer", "type": "fte"}, {"name": "Sugumar, Kishore Kumar", "title": "QA Analyst", "type": "fte"}, {"name": "Lalu, Chris", "title": "Software Engineer", "type": "fte"}, {"name": "Solano Berrocal, Keren", "title": "Test Engineering Analyst", "type": "fte"}, {"name": "Moreira Bolanos, Jonathan", "title": "Test Engineering Associate", "type": "fte"}, {"name": "Chacon Hernandez, Juan", "title": "Web Developer Analyst", "type": "fte"}, {"name": "Salazar Sanchez, Jesus", "title": "Web Developer Analyst", "type": "fte"}, {"name": "Obando Espinoza, Javier", "title": "Web Developer Analyst", "type": "fte"}, {"name": "Cordero Hernandez, Carlos", "title": "Web Developer Associate", "type": "fte"}, {"name": "Rivera Avendano, Tatiana", "title": "Web Developer Associate", "type": "fte"}, {"name": "Rao Nowpada, Kodanda", "title": "QA", "type": "fte"}, {"name": "Contractors (53)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Pellerin, Bethany", "title": "Program Director", "type": "contractor"}, {"name": "Angadi, Shankar", "title": "Backend Lead Architect", "type": "contractor"}, {"name": "Parmar, Puneet", "title": "Program Delivery Lead", "type": "contractor"}, {"name": "Bodde, Lou", "title": "Senior Frontend Developer", "type": "contractor"}, {"name": "Joel, Suraj A", "title": "Senior Product Manager", "type": "contractor"}, {"name": "Chakraborty, Gourav", "title": "AEM Backend Architect", "type": "contractor"}, {"name": "Upadhyay, Ashutosh", "title": "AEM Backend Architect", "type": "contractor"}, {"name": "Chhabra, Diksha", "title": "AEM Backend Developer", "type": "contractor"}, {"name": "Surampadi, Satya", "title": "AEM Backend Developer", "type": "contractor"}, {"name": "Ranjan, Ravi", "title": "AEM Backend Developer", "type": "contractor"}, {"name": "Goshal, Lopamudra", "title": "AEM Frontend Developer", "type": "contractor"}, {"name": "Quesada, Gunther", "title": "BE Developer", "type": "contractor"}, {"name": "Aggarwal, Rishabh", "title": "Backend Developer", "type": "contractor"}, {"name": "Peters, Matt", "title": "Bounteous QA Engineer", "type": "contractor"}, {"name": "Lara, Andres", "title": "Developer", "type": "contractor"}, {"name": "Murugan, Prabu", "title": "Developer", "type": "contractor"}, {"name": "Sadh, Rohit-kumar", "title": "Developer", "type": "contractor"}, {"name": "Ghosh, Rajib", "title": "Developer", "type": "contractor"}, {"name": "Solera, Roy", "title": "Developer", "type": "contractor"}, {"name": "Colburn, Danielle", "title": "Developer", "type": "contractor"}, {"name": "McGrath, Ian", "title": "Engineer", "type": "contractor"}, {"name": "Auti, Tushar", "title": "Front End Developer", "type": "contractor"}, {"name": "Walker, David", "title": "Front End Developer", "type": "contractor"}, {"name": "Santhosh, Kubera", "title": "Frontend Developer", "type": "contractor"}, {"name": "Kim, Henry", "title": "QA Analyst", "type": "contractor"}, {"name": "Sultana, Naziya", "title": "QA Analyst", "type": "contractor"}, {"name": "Gayas, Sulthan", "title": "QA Analyst", "type": "contractor"}, {"name": "Kumar, Deepak", "title": "QA Analyst - Automation", "type": "contractor"}, {"name": "Jaisankar, Balaji", "title": "QA Analyst - Manual", "type": "contractor"}, {"name": "Fallas Mora, Josue", "title": "Test Engineering Associate", "type": "contractor"}, {"name": "Kissling, John", "title": "Associate", "type": "contractor"}, {"name": "Holmes, Katia", "title": "Account Director", "type": "contractor"}, {"name": "Mog, Colton", "title": "Account Manager", "type": "contractor"}, {"name": "McGinnis, Conor", "title": "Author", "type": "contractor"}, {"name": "Mukku, Anusha", "title": "Bounteous QA", "type": "contractor"}, {"name": "Hossain, Anowar", "title": "Bounteous QA", "type": "contractor"}, {"name": "Gruss, Carter", "title": "CL Tech Resource", "type": "contractor"}, {"name": "Chang, Kue", "title": "CL Tech Resource", "type": "contractor"}, {"name": "Marcin, Janik", "title": "CapGem Help Desk", "type": "contractor"}, {"name": "Sheehan, Kevin", "title": "Capgemini (Digital POP)", "type": "contractor"}, {"name": "Konakanchi, Srinivasa", "title": "Capgemini (Digital POP)", "type": "contractor"}, {"name": "Walter, Jacob", "title": "Consultant", "type": "contractor"}, {"name": "Kumar, Pankaj", "title": "Contractor", "type": "contractor"}, {"name": "Carter, Steven", "title": "Contractor", "type": "contractor"}, {"name": "Agrawal, Anuja", "title": "Contractor", "type": "contractor"}, {"name": "Budzynowski, Krystian", "title": "Help Desk Cap Gem", "type": "contractor"}, {"name": "Rudy, Oskar", "title": "Help Desk Cap Gem", "type": "contractor"}, {"name": "Kapula, Ravi", "title": "IT Contractor", "type": "contractor"}, {"name": "Sevy, Michale", "title": "Producer", "type": "contractor"}, {"name": "Hance, Emilie", "title": "Producer", "type": "contractor"}, {"name": "Ballestero, Roy", "title": "Project Manager", "type": "contractor"}, {"name": "Virdi, Soni", "title": "Project Manager", "type": "contractor"}, {"name": "Gregier, Linda", "title": "Project Manager", "type": "contractor"}]}]}, {"name": "Sokeye, Samuel", "title": "Lead Software Engineer", "type": "fte", "direct": 2, "children": [{"name": "Patel, Krupa", "title": "Intern", "type": "fte"}, {"name": "Contractors (1)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Ahsan, Nayeem", "title": "Temp Agency", "type": "contractor"}]}]}, {"name": "Cesarano, Dave", "title": "Principal", "type": "fte"}, {"name": "Contractors (3)", "title": "Toggle to expand/collapse", "type": "contractor_group", "collapsed": true, "children": [{"name": "Teeter, Louise", "title": "Consultant / OCM", "type": "turnberry"}, {"name": "Lambert, Jim", "title": "Contractor", "type": "contractor"}, {"name": "Rashid, Muhammad O.", "title": "JIRA Specialist", "type": "turnberry"}]}]}]}]}]};
+
+function buildTree(node, container) {
+  const el = document.createElement('div');
+  el.className = 'node';
+  const hasKids = node.children && node.children.length > 0;
+  const isContractorGroup = node.type === 'contractor_group';
+
+  const row = document.createElement('div');
+  row.className = 'node-row';
+  row.dataset.name = (node.name||'').toLowerCase();
+  row.dataset.title = (node.title||'').toLowerCase();
+  row.dataset.type = node.type||'';
+
+  const toggle = document.createElement('span');
+  toggle.className = 'toggle';
+  toggle.textContent = hasKids ? (node.collapsed ? '\u25B6' : '\u25BC') : ' ';
+
+  const dot = document.createElement('span');
+  dot.className = 'dot ' + (node.type||'fte');
+
+  const name = document.createElement('span');
+  name.className = 'node-name';
+  name.textContent = node.name;
+  if (isContractorGroup) name.style.color = '#F57C00';
+
+  const title = document.createElement('span');
+  title.className = 'node-title';
+  title.textContent = node.title;
+
+  row.appendChild(toggle);
+  row.appendChild(dot);
+  row.appendChild(name);
+  row.appendChild(title);
+
+  if (node.direct) {
+    const badge = document.createElement('span');
+    badge.className = 'node-badge';
+    badge.textContent = node.direct + ' reports';
+    row.appendChild(badge);
+  }
+
+  if (isContractorGroup) {
+    const badge = document.createElement('span');
+    badge.className = 'contractor-badge';
+    badge.textContent = 'collapsed by default';
+    row.appendChild(badge);
+  }
+
+  el.appendChild(row);
+
+  if (hasKids) {
+    const childContainer = document.createElement('div');
+    childContainer.className = isContractorGroup ? 'contractor-folder' : 'children';
+    if (node.collapsed) childContainer.classList.add('hidden');
+    if (isContractorGroup) childContainer.dataset.contractorGroup = 'true';
+    node.children.forEach(c => buildTree(c, childContainer));
+    el.appendChild(childContainer);
+
+    row.addEventListener('click', () => {
+      const hidden = childContainer.classList.toggle('hidden');
+      toggle.textContent = hidden ? '\u25B6' : '\u25BC';
+    });
+  }
+
+  container.appendChild(el);
+}
+
+function buildRoster(node, rows, depth) {
+  if (node.type === 'contractor_group') {
+    if (node.children) node.children.forEach(c => buildRoster(c, rows, depth));
+    return;
+  }
+  rows.push({name:node.name, title:node.title, type:node.type, depth:depth, direct:node.direct||0});
+  if (node.children) node.children.forEach(c => buildRoster(c, rows, depth+1));
+}
+
+function renderRoster() {
+  const rows = [];
+  buildRoster(ORG, rows, 0);
+  const typeBadge = t => {
+    if(t==='turnberry') return '<span class="turnberry-badge-t">Turnberry</span>';
+    if(t==='fte') return '<span class="fte-badge-t">FTE</span>';
+    if(t==='contractor') return '<span class="contractor-badge-t">Contractor</span>';
+    return '<span style="font-size:11px">'+t+'</span>';
+  };
+  let html = '<table class="roster-table"><thead><tr><th>Name</th><th>Title</th><th>Type</th><th>Reports</th></tr></thead><tbody>';
+  rows.forEach(r => {
+    html += '<tr><td style="padding-left:'+(12+r.depth*18)+'px"><b>'+r.name+'</b></td><td>'+r.title+'</td><td>'+typeBadge(r.type)+'</td><td>'+(r.direct||'')+'</td></tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('rosterView').innerHTML = html;
+}
+
+function renderTeams() {
+  const teams = [
+    {name:'M.A.R.S. (Gino Guarnere)',count:16,focus:'Marketing technology platforms',members:'Ruchi Sinha, Prathibha Vadla, Rebecca Whitmeyer, Raj Khanna, Beth Anne Lambrechts, Kevin Thomas, Charlie Peterson, Carolyn Poole, Abhay Saxena + consultants'},
+    {name:'Subaru.net (Natalie Miller \u2192 Marc Rullo)',count:25,focus:'Digital retail platform — Subaru.net',members:'Swapnil Shivhare, Dominic Scola, Robert Burt, Angel Delgado, Joe Vahabzadeh, Joseph Meyer, Christian Placencia + contractors'},
+    {name:'TechShare (Kadeem Williams)',count:16,focus:'Shared services & cross-platform capabilities',members:'Maria Bendu, Sunny Gandi, Bryant Feld + contractors/vendors'},
+    {name:'Subaru.com (Kevin Mccracken)',count:73,focus:'Web properties \u2014 AEM, Frontend, QA, DevOps',members:'21 FTEs + 52 contractors: AEM architects, frontend/backend devs, QA analysts, project managers, Capgemini & Bounteous partners'},
+    {name:'QA (cross-functional)',count:0,focus:'Quality assurance across all streams',members:'Embedded within each team stream'},
+    {name:'DevOps (cross-functional)',count:0,focus:'DevOps / Infrastructure',members:'Yangci Ou, Matt Gowie + embedded resources'},
+  ];
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:16px">';
+  teams.forEach(t => {
+    html += '<div style="background:white;border-radius:8px;border:1px solid #e0e0e0;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08)"><div style="font-size:18px;font-weight:800;color:var(--chrome-secondary);margin-bottom:4px">'+t.name+'</div><div style="font-size:12px;color:#4A4A4A;margin-bottom:8px">'+t.focus+'</div>'+(t.count ? '<div style="font-size:24px;font-weight:700;color:var(--chrome-primary);margin-bottom:8px">'+t.count+' <span style="font-size:12px;font-weight:400;color:#4A4A4A">people</span></div>' : '')+'<div style="font-size:12px;line-height:1.5">'+t.members+'</div></div>';
+  });
+  html += '</div>';
+  document.getElementById('teamsView').innerHTML = html;
+}
+
+function filterTree() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const type = document.getElementById('typeFilter').value;
+  document.querySelectorAll('.node-row').forEach(row => {
+    const matchQ = !q || row.dataset.name.includes(q) || row.dataset.title.includes(q);
+    const matchT = type === 'all' || row.dataset.type === type;
+    row.closest('.node').style.display = (matchQ && matchT) ? '' : 'none';
+    if (matchQ && matchT && q) row.classList.add('highlight'); else row.classList.remove('highlight');
+  });
+}
+
+function toggleContractors() {
+  const show = document.getElementById('showContractors').checked;
+  document.querySelectorAll('[data-contractor-group]').forEach(el => {
+    if (show) el.classList.remove('hidden');
+    else el.classList.add('hidden');
+    const toggle = el.previousElementSibling?.querySelector('.toggle');
+    if (toggle) toggle.textContent = show ? '\u25BC' : '\u25B6';
+  });
+}
+
+function switchView(id, tab) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id+'View').classList.add('active');
+  tab.classList.add('active');
+}
+
+// Init
+buildTree(ORG, document.getElementById('treeView'));
+renderRoster();
+renderTeams();
+</script>
+</body>
+</html>

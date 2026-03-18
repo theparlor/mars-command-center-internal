@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Agile Academy Course Catalog</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN APPROACH: Consultant-Authored, Client-Branded
+   - Subaru Blue (#00205B) as accent, not dominant chrome
+   - White/light canvas for readability
+   - Helvetica/Arial (Subaru-approved secondary fonts)
+   - Category colors for functional differentiation
+   - Logo placement + attribution in header/footer
+   ═══════════════════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Helvetica,Arial,sans-serif;background:#ffffff;color:#1A1A1A;line-height:1.55}
+
+/* ACCENT BAR — thin brand mark at very top */
+.accent-bar{height:4px;background:#00205B}
+
+/* HEADER — light, breathable, professional */
+.header{background:#ffffff;padding:28px 40px 24px;border-bottom:1px solid #E5E7EB}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.header-brand{display:flex;align-items:center;gap:16px}
+.header-logo{width:36px;height:36px;background:#00205B;border-radius:6px;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:800;letter-spacing:-.5px;flex-shrink:0}
+.header h1{font-size:20px;font-weight:800;color:#00205B;letter-spacing:-0.3px;line-height:1.2}
+.header .subtitle{font-size:13px;color:#6B7280;margin-top:3px}
+.header-meta{display:flex;gap:24px;font-size:12px;color:#6B7280;flex-wrap:wrap}
+.header-meta strong{color:#374151}
+.prepared-by{font-size:11px;color:#9CA3AF;text-align:right}
+.prepared-by strong{color:#6B7280}
+
+/* HERO STATS — light background, colored numbers */
+.hero{background:#F9FAFB;padding:20px 40px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;border-bottom:1px solid #E5E7EB}
+.stat-card{background:white;border-radius:10px;padding:16px;text-align:center;border:1px solid #E5E7EB;transition:box-shadow .15s}
+.stat-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat-card .num{font-size:32px;font-weight:800;color:#00205B}
+.stat-card .label{font-size:11px;color:#6B7280;margin-top:2px;font-weight:600}
+
+/* CONTROLS — sticky filter bar */
+.controls{background:#ffffff;padding:12px 40px;border-bottom:1px solid #E5E7EB;display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.filter-label{font-size:12px;font-weight:700;color:#374151;margin-right:4px}
+.filter-btn{padding:6px 14px;border:1px solid #D1D5DB;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s;background:white;color:#374151}
+.filter-btn:hover{background:#F3F4F6;border-color:#9CA3AF}
+.filter-btn.active{background:#00205B;color:white;border-color:#00205B}
+.search-box{margin-left:auto;padding:6px 14px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;width:220px;font-family:inherit}
+.search-box:focus{outline:none;border-color:#00205B;box-shadow:0 0 0 2px rgba(0,32,91,.1)}
+
+/* LAYOUT */
+.container{max-width:1200px;margin:0 auto;padding:24px 40px}
+.phase-section{margin-bottom:36px}
+.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.phase-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.phase-header h2{font-size:17px;font-weight:800;letter-spacing:-0.2px;color:#1A1A1A}
+.phase-count{font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;margin-left:auto;flex-shrink:0}
+.phase-desc{font-size:13px;color:#6B7280;margin-bottom:16px;max-width:800px;line-height:1.6}
+
+/* COURSE CARDS — left accent border for category, clean white */
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(540px,1fr));gap:14px}
+.course-card{background:white;border-radius:10px;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:all .2s;border-left:4px solid transparent}
+.course-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
+.cc-header{padding:14px 20px 10px;display:flex;justify-content:space-between;align-items:flex-start}
+.cc-title{font-weight:800;font-size:15px;color:#1A1A1A}
+.cc-badges{display:flex;gap:5px;flex-shrink:0;margin-left:12px}
+.badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap}
+.badge-phase{background:#F3F4F6;color:#374151}
+.badge-week{background:#ECFDF5;color:#065F46}
+.badge-format{background:#FFFBEB;color:#92400E}
+.badge-cancelled{background:#F3F4F6;color:#9CA3AF;text-decoration:line-through}
+
+.cc-body{padding:14px 20px}
+.cc-desc{font-size:13px;color:#4B5563;margin-bottom:12px;line-height:1.6}
+.cc-section-title{font-size:10px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.8px;margin:14px 0 6px}
+.cc-objectives{list-style:none;padding:0}
+.cc-objectives li{font-size:12px;color:#374151;padding:3px 0 3px 20px;position:relative;line-height:1.5}
+.cc-objectives li::before{content:'';position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;border:2px solid}
+.cc-agenda{display:flex;gap:6px;flex-wrap:wrap}
+.agenda-tag{font-size:11px;padding:3px 10px;border-radius:12px;background:#F3F4F6;color:#374151;font-weight:500}
+.cc-footer{padding:10px 20px;background:#F9FAFB;border-top:1px solid #F3F4F6;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#6B7280}
+.materials-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.mat-ready{background:#ECFDF5;color:#065F46}
+.mat-partial{background:#EFF6FF;color:#1E40AF}
+.mat-gap{background:#FEF2F2;color:#991B1B}
+.mat-cancelled{background:#F3F4F6;color:#9CA3AF}
+
+/* MATERIALS INVENTORY */
+.inventory{background:#F9FAFB;border-radius:10px;border:1px solid #E5E7EB;padding:20px;margin-top:24px}
+.inventory h3{font-size:15px;font-weight:800;color:#1A1A1A;margin-bottom:12px}
+.inv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.inv-item{font-size:12px;padding:8px 12px;background:white;border-radius:6px;border:1px solid #E5E7EB;display:flex;align-items:center;gap:8px}
+.inv-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* FOOTER — light, professional, not reversed */
+.footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:32px}
+.footer{background:#F9FAFB;padding:16px 40px;font-size:11px;display:flex;justify-content:space-between;color:#6B7280;border-top:1px solid #E5E7EB}
+.footer strong{color:#00205B}
+
+@media(max-width:700px){
+  .hero{grid-template-columns:repeat(2,1fr)}
+  .course-grid{grid-template-columns:1fr}
+  .header{padding:20px}
+  .container{padding:16px}
+  .header-top{flex-direction:column;gap:12px}
+}
+@media print{
+  .controls{position:static;box-shadow:none}
+  .course-card{break-inside:avoid}
+  .accent-bar{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-brand">
+        <div class="header-logo">SOA</div>
+        <div>
+          <h1>Agile Academy Course Catalog</h1>
+          <div class="subtitle">Comprehensive Course Descriptions, Learning Objectives & Delivery Schedule</div>
+        </div>
+      </div>
+    </div>
+    <div class="prepared-by">
+      <strong>Prepared by Turnberry Solutions</strong><br>
+      Mar 13, 2026
+    </div>
+  </div>
+  <div class="header-meta">
+    <span><strong>Program:</strong> M.A.R.S. Agile Transformation</span>
+    <span><strong>Duration:</strong> 20 Weeks</span>
+    <span><strong>Delivery:</strong> Turnberry Solutions · Bru Crew Coaching</span>
+    <span><strong>Lead Trainer:</strong> Dean</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="stat-card"><div class="num">15</div><div class="label">Total Courses</div></div>
+  <div class="stat-card"><div class="num">4</div><div class="label">Categories</div></div>
+  <div class="stat-card"><div class="num">4</div><div class="label">Delivery Phases</div></div>
+  <div class="stat-card"><div class="num">20</div><div class="label">Week Engagement</div></div>
+  <div class="stat-card"><div class="num">3</div><div class="label">Triggered (On-Demand)</div></div>
+</div>
+
+<div class="controls">
+  <span class="filter-label">Filter:</span>
+  <div class="filter-btn active" data-cat="all" onclick="setFilter(this)">All Courses</div>
+  <div class="filter-btn" data-cat="foundations" onclick="setFilter(this)">Foundations</div>
+  <div class="filter-btn" data-cat="customer" onclick="setFilter(this)">Customer Centricity</div>
+  <div class="filter-btn" data-cat="delivery" onclick="setFilter(this)">Delivery</div>
+  <div class="filter-btn" data-cat="frameworks" onclick="setFilter(this)">Frameworks</div>
+  <input type="text" class="search-box" placeholder="Search courses..." oninput="doSearch(this.value)">
+</div>
+
+<div class="container" id="catalog"></div>
+
+<div class="container">
+  <div class="inventory">
+    <h3>Materials Inventory Summary</h3>
+    <div class="inv-grid" id="inventoryGrid"></div>
+  </div>
+</div>
+
+<div class="footer-bar"></div>
+<div class="footer">
+  <span><strong>Subaru of America</strong> — M.A.R.S. Agile Transformation · Prepared by Turnberry Solutions</span>
+  <span>Course Catalog · Mar 13, 2026 · CONFIDENTIAL</span>
+</div>
+
+<script>
+const COLORS = {
+  foundations:'#2E7D32', customer:'#1565C0', delivery:'#E65100', frameworks:'#7B1FA2'
+};
+const BG_LIGHT = {
+  foundations:'#F0FFF4', customer:'#EFF6FF', delivery:'#FFF7ED', frameworks:'#FAF5FF'
+};
+
+const CATEGORIES = [
+  {key:'foundations',label:'Foundations',icon:'🧭',desc:'Core agile concepts for consultants supporting client transformations. Understand why agile and product thinking matter, how to identify barriers, and develop strategies to support organizational change.'},
+  {key:'customer',label:'Customer Centricity',icon:'🎯',desc:'Help teams shift from assumption-driven to evidence-based product decisions. Persona creation, hypothesis testing, story mapping, goal setting, and outcome tracking.'},
+  {key:'delivery',label:'Delivery',icon:'🚀',desc:'Essential planning and execution methods — adaptive roadmaps, customer-focused user stories, and flow optimization that deliver better business outcomes.'},
+  {key:'frameworks',label:'Frameworks & Practices',icon:'⚙️',desc:'Foundational frameworks including Scrum, Kanban, roles & responsibilities, and team dynamics for effective product development.'}
+];
+
+const COURSES = [
+  // FOUNDATIONS
+  {id:'agile-mindset',cat:'foundations',title:'Agile Mindset',
+   week:'Wk 1',phase:'Phase 1',format:'Workshop',duration:'Half day',audience:'All teams (x2 rooms)',
+   desc:'While many organizations use Scrum, many organizational structures hold them back into traditional development modes. Teams learn how agile development creates better business outcomes by enabling incremental learning and delivery. They work together to identify organizational barriers that inhibit adoption of Agile principles.',
+   objectives:['Identify how incremental delivery could benefit organizations','Identify organizational barriers to Agile Manifesto principles','Compare traditional and agile mindsets','Identify potential mitigation strategies to the natural human resistance to continuous improvement'],
+   agenda:['Value of Agility','Agile Manifesto','Agile Mindset','Continuous Improvement'],
+   materials:'ready',matNote:'Deck + Handout + Worksheets'},
+
+  {id:'estimation',cat:'delivery',title:'Estimation',
+   week:'Wk 5',phase:'Phase 2',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Effective estimation enables teams to forecast delivery, plan sprints accurately, and communicate realistic timelines. Participants learn relative sizing techniques and how to estimate team capacity considering velocity, sprint capacity, and availability factors.',
+   objectives:['Understand the purpose of estimation in agile planning','Apply story pointing techniques including relative sizing, Fibonacci sequence, and T-shirt sizing','Calculate and interpret team velocity','Estimate sprint capacity accounting for team availability','Use capacity-based planning to forecast delivery timelines'],
+   agenda:['Why We Estimate','Story Pointing','Relative Sizing','Fibonacci & T-Shirt Sizing','Team Velocity','Sprint Capacity','Availability & Planning'],
+   materials:'gap',matNote:'Needs development'},
+
+  {id:'product-mindset',cat:'foundations',title:'Product Mindset',
+   week:'Wk 11',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Teams often spend months building wrong solutions because they jump straight from company strategy to delivery. Participants learn how a product mindset addresses those problems and explore how their organization could move closer to a product mindset. They explore how product vision and strategy keep teams focused on customer problems rather than solutions.',
+   objectives:['Distinguish between project and product approaches when making decisions','Apply product principles to identify improvement opportunities in their context','Describe how vision and strategy connect and their importance in product development','Recognize the value of product discovery and its impact on product development'],
+   agenda:['Projects vs Products','From Project to Product','Product Management Vacuum','Product Discovery'],
+   materials:'ready',matNote:'Deck + Generated Content'},
+
+  {id:'navigating-change',cat:'foundations',title:'Navigating Change',
+   week:'Wk 13',phase:'Phase 4',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Resistance to change is a normal part of the human condition. This course helps teams identify concrete steps for engagement. Participants reflect on where they can become owners of the change and help move the change initiative forward. They practice converting areas of concern into positive action and increased engagement.',
+   objectives:['Recognize resistance to change as a natural response','Identify change agent archetypes and the value each brings to navigating change','Explain the levels of change engagement and benefits of increased engagement','Identify opportunities for team ownership during organizational change'],
+   agenda:['Resistance to Change','Change Archetypes','Change Engagement','Change Ownership'],
+   materials:'ready',matNote:'Deck + Handout'},
+
+  // CUSTOMER CENTRICITY
+  {id:'challenging-assumptions',cat:'customer',title:'Challenging Assumptions (Personas & Hypothesis Testing)',
+   week:'Wk 14–19',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+   desc:'Teams unknowingly make assumptions about customers without validation, leading to products that miss the mark. Participants learn to use personas to understand their customer\'s context and motivations, then create hypotheses and tests to validate those insights.',
+   objectives:['Explain what personas are and why they are useful','Create a pragmatic persona for team use in product development','Create testable hypotheses about customer assumptions','Design methods to test product hypotheses'],
+   agenda:['Personas','Product Hypothesis','Hypothesis Testing'],
+   materials:'gap',matNote:'SOW deliverable — needs development'},
+
+  {id:'aligning-on-value',cat:'customer',title:'Aligning on Value (Story Maps & MVP)',
+   week:'Wk 14–19',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+   desc:'Without understanding the big picture of the customer and their situation, teams end up mechanically building from sterile requirements documents. This course shows the value of taking the time to understand the goal of the customer in their day-to-day life. Participants create a Story Map to break down work into pieces that focus on customer value.',
+   objectives:['Articulate the value of a visual representation over text documentation','Explain the structure of user story maps','Use a persona and user goal to provide focus for the story map','Create a user story map to visualize user experiences','Define an MVP for maximum learning with minimum effort'],
+   agenda:['Why We Story Map','User Story Maps','MVP'],
+   materials:'gap',matNote:'SOW deliverable — needs development'},
+
+  {id:'customer-outcomes',cat:'customer',title:'Customer Outcomes & Leading/Lagging Indicators',
+   week:'Wk 14–19',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+   desc:'Teams make big commitments based on assumptions, then discover months later they built the wrong thing. This course teaches teams to set customer-focused goals, use leading indicators to track progress early, and test assumptions through small experiments before major investment.',
+   objectives:['Identify opportunities for smaller increments','Create customer-focused product goals that bridge strategy and execution','Distinguish between leading and lagging indicators','Use leading indicators as early signals for progress towards goals','Understand the benefits of involving the whole team in understanding customers'],
+   agenda:['Make Small Bets','Product Goals','Measuring Progress','Whole Team Discovery'],
+   materials:'gap',matNote:'SOW deliverable — needs development'},
+
+  // DELIVERY
+  {id:'planning-adaptability',cat:'delivery',title:'Planning for Adaptability',
+   week:'Wk 9',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Traditional planning assumes we can predict the future and focuses on implementation rather than customer value. Participants learn to organize work around customer outcomes instead of technical components, prioritize capabilities based on customer value and learning potential, and create roadmaps that acknowledge uncertainty.',
+   objectives:['Articulate the advantages of adaptable planning over traditional planning','Organize work by customer outcomes rather than technical components','Identify factors used to prioritize product capabilities based on their potential impact and feasibility','Create and maintain a roadmap that acknowledges uncertainty and plans for learning'],
+   agenda:['Traditional vs Adaptable Planning','Organizing Work','Prioritization','Roadmaps'],
+   materials:'partial',matNote:'Content exists — needs Subaru customization'},
+
+  {id:'effective-user-stories',cat:'delivery',title:'User Stories & Backlog Fundamentals',
+   week:'Wk 7',phase:'Phase 2',format:'Workshop',duration:'Half day',audience:'All teams',
+   desc:'User stories that contain dependencies, are too big or have unclear test criteria slow teams down. Participants will learn to identify when stories fail to meet INVEST criteria. They will practice splitting stories, writing them to focus on value, and writing testable acceptance criteria. Combined with backlog structure, prioritization techniques, and refinement cadence.',
+   objectives:['Recognize warning signs that stories violate INVEST criteria','Apply INVEST to evaluate if user stories are ready for development','Break down large user stories into smaller, manageable pieces','Write story descriptions that clearly communicate intent','Write testable acceptance criteria that define story completion'],
+   agenda:['INVEST','Splitting Stories','Descriptions','Acceptance Criteria','Backlog Structure','Prioritization','Refinement Cadence'],
+   materials:'ready',matNote:'Deck + Handout + Slide Export'},
+
+  {id:'user-story-writing',cat:'delivery',title:'User Story Writing',
+   week:'Wk 7',phase:'Phase 2',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Participants learn practical techniques for writing clear, valuable user stories that communicate intent and enable team collaboration. This course focuses on story description formats, acceptance criteria patterns, and techniques that help teams understand and deliver customer value.',
+   objectives:['Write user story descriptions that clearly communicate customer intent','Develop testable acceptance criteria that define story completion','Apply common user story formats to organize work around customer value','Collaborate effectively using stories as communication vehicles'],
+   agenda:['Story Formats','Descriptions & Intent','Acceptance Criteria','Story Refinement'],
+   materials:'gap',matNote:'Needs development'},
+
+  {id:'achieving-flow',cat:'delivery',title:'Achieving Flow',
+   week:'Wk 11',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Teams get stuck in cycles where senior members become bottlenecks while junior members wait on sidelines. Through hands-on exercises, participants experience how small batch sizes, limited WIP, focusing on overall flow, knowledge sharing, and self-organization reduce these problems.',
+   objectives:['Understand why smaller batch sizes create faster time to value and reduce risk','Articulate the productivity loss due to multi-tasking','Explain the importance of prioritizing flow over individual utilization','Articulate the importance of knowledge sharing','Describe the benefits of self-organizing teams'],
+   agenda:['Batch Size','Work in Progress','Shared Learning','Self-Organizing Teams'],
+   materials:'ready',matNote:'Deck + Handout + Notes + Worksheets'},
+
+  {id:'story-splitting',cat:'delivery',title:'Story Splitting Deep-Dive',
+   week:'Wk 9',phase:'Phase 3',format:'Workshop',duration:'~2 hrs',audience:'All teams',
+   desc:'Advanced story splitting techniques, vertical slicing, small batch delivery. Building on the foundations from Effective User Stories, teams practice advanced decomposition patterns.',
+   objectives:['Apply vertical slicing techniques to decompose features','Identify dependencies that prevent independent delivery','Practice splitting stories while preserving customer value','Use splitting patterns to reduce batch size and accelerate feedback'],
+   agenda:['Vertical Slicing','Splitting Patterns','Dependency Identification','Practice Exercises'],
+   materials:'partial',matNote:'Builds on User Stories deck'},
+
+  // FRAMEWORKS
+  {id:'scrum-fundamentals',cat:'frameworks',title:'Scrum Fundamentals',
+   week:'Wk 1',phase:'Phase 1',format:'Workshop',duration:'~2 hrs',audience:'All teams (x1 room)',
+   desc:'Many teams struggle with Scrum because they don\'t understand the principles that make it work. Through hands-on exercises, participants build foundational competency in Scrum\'s structure: the roles, events, artifacts, and the empirical principles that guide effective product development.',
+   objectives:['Appreciate the value of empiricism in fostering a learning-oriented team environment','Recognize the importance of Scrum values to a team\'s success','Understand the structure and organization of the Scrum Framework','Grasp the meaning and purpose of Scrum roles, ceremonies, and artifacts','Explore Scrum Anti-Patterns and how to address them'],
+   agenda:['Foundations of Scrum','Scrum Roles','Scrum Ceremonies','Scrum Artifacts','Review'],
+   materials:'ready',matNote:'Deck + Handout + Worksheets (Subaru version)'},
+
+  {id:'scrum-roles',cat:'frameworks',title:'Scrum Roles & Responsibilities',
+   week:'Wk 1',phase:'Phase 1',format:'Interactive',duration:'~90 min',audience:'All teams + leaders',
+   desc:'Teams often struggle when Product Owners become gatekeepers, Scrum Masters turn into project managers, or Developers wait for assignments. Through interactive exercises, participants explore behavioral patterns that distinguish effective Scrum roles from common dysfunctions.',
+   objectives:['Distinguish between effective patterns and anti-patterns for POs, SMs, and Developers','Identify how roles can support each other in adopting effective patterns','Experience the difference between manager-led and self-managing team dynamics'],
+   agenda:['Self-Managing Teams','Product Owner Patterns','Scrum Master Patterns','Developer Patterns'],
+   materials:'ready',matNote:'Deck + Stances Reference'},
+
+  {id:'kanban-fundamentals',cat:'frameworks',title:'Kanban Fundamentals',
+   week:'—',phase:'Cancelled',format:'—',duration:'—',audience:'—',
+   desc:'Cancelled by client request (Greg). Originally covered Kanban\'s lean origins, principles for managing change and service delivery, and pull systems. Retained in catalog for reference.',
+   objectives:['Explain how Kanban\'s lean foundations support flow-based work management','Assess team practices against Kanban principles','Identify gaps in team Kanban implementation','Describe how pull systems prevent bottlenecks'],
+   agenda:['Foundations','Principles','Practices','Pull Systems','Review'],
+   materials:'cancelled',matNote:'Cancelled — not delivered'},
+
+  {id:'psych-safety',cat:'frameworks',title:'Building Psychological Safety',
+   week:'On-Demand',phase:'Triggered',format:'Workshop',duration:'TBD',audience:'Triggered by need',
+   desc:'Helps teams identify their biggest effectiveness challenges and build awareness of how individual differences impact team dynamics. Teams share personal trust factors, reflect on psychological safety barriers, explore conflict styles, and practice shifting from blame to learning.',
+   objectives:['Describe the elements of the trust equation and their importance','Understand psychological safety stages','Differentiate between healthy and unhealthy conflict','Recognize cognitive biases that reinforce blame culture','Apply blameless approaches to team failures'],
+   agenda:['Trust','Psychological Safety','Managing Conflict','Dealing with Failure'],
+   materials:'partial',matNote:'Content exists — needs engagement customization'}
+];
+
+const MATERIALS_MAP = {
+  'agile-mindset':['AgileMindset.pptx','Agile Mindset.docx','Agile Mindset Worksheets.pdf','Agile Mindset Notes.pdf','28 Slide Exports'],
+  'estimation':['Content in development'],
+  'product-mindset':['ProductMindset.pptx','26 Slide Exports','Generated images & case content'],
+  'navigating-change':['NavigatingChange.pptx','Navigating Change.docx','22 Slide Exports'],
+  'achieving-flow':['Achieving Flow.pptx','Achieving Flow.docx','Achieving Flow Notes.pdf','Achieving Flow Worksheets.pdf','AchievingFlow.pdf','27 Slide Exports'],
+  'effective-user-stories':['EffectiveUserStories.pptx','Effective User Stories.docx','EffectiveUserStories.pdf','41 Slide Exports'],
+  'user-story-writing':['Content in development'],
+  'scrum-fundamentals':['Scrum Fundamentals.pptx','Scrum Fundamentals.docx','Scrum Fundamentals Subaru.docx','Handouts.pdf','Worksheet.pdf','Working Copy.pptx'],
+  'scrum-roles':['Scrum Roles and Responsibilities.pptx','Scrum Role Preferred Stances.docx','PO_Stances_Options.pptx'],
+  'kanban-fundamentals':['Kanban Fundamentals.docx','practicalkanban.pdf'],
+  'planning-adaptability':['Content in development'],
+  'story-splitting':['Builds on EffectiveUserStories.pptx'],
+  'challenging-assumptions':['No materials yet'],
+  'aligning-on-value':['No materials yet'],
+  'customer-outcomes':['No materials yet'],
+  'psych-safety':['Content framework exists']
+};
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function setFilter(el) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = el.dataset.cat;
+  render();
+}
+
+function doSearch(val) {
+  searchTerm = val.toLowerCase();
+  render();
+}
+
+function matClass(status) {
+  return status === 'ready' ? 'mat-ready' : status === 'partial' ? 'mat-partial' : status === 'cancelled' ? 'mat-cancelled' : 'mat-gap';
+}
+function matLabel(status) {
+  return status === 'ready' ? 'Ready' : status === 'partial' ? 'Partial' : status === 'cancelled' ? 'Cancelled' : 'Gap';
+}
+
+function render() {
+  const container = document.getElementById('catalog');
+  container.innerHTML = '';
+
+  CATEGORIES.forEach(cat => {
+    if (activeFilter !== 'all' && activeFilter !== cat.key) return;
+
+    let courses = COURSES.filter(c => c.cat === cat.key);
+    if (searchTerm) {
+      courses = courses.filter(c =>
+        c.title.toLowerCase().includes(searchTerm) ||
+        c.desc.toLowerCase().includes(searchTerm) ||
+        c.objectives.some(o => o.toLowerCase().includes(searchTerm)) ||
+        c.agenda.some(a => a.toLowerCase().includes(searchTerm))
+      );
+    }
+    if (courses.length === 0) return;
+
+    const color = COLORS[cat.key];
+    const bgLight = BG_LIGHT[cat.key];
+    const section = document.createElement('div');
+    section.className = 'phase-section';
+    section.innerHTML = `
+      <div class="phase-header">
+        <div class="phase-icon" style="background:${bgLight}">${cat.icon}</div>
+        <h2>${cat.label}</h2>
+        <span class="phase-count" style="background:${bgLight};color:${color}">${courses.length} course${courses.length>1?'s':''}</span>
+      </div>
+      <div class="phase-desc">${cat.desc}</div>
+    `;
+
+    const grid = document.createElement('div');
+    grid.className = 'course-grid';
+
+    courses.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'course-card';
+      card.dataset.cat = c.cat;
+      card.style.borderLeftColor = color;
+
+      card.innerHTML = `
+        <div class="cc-header">
+          <div class="cc-title">${c.title}</div>
+          <div class="cc-badges">
+            <span class="badge badge-phase${c.phase==='Cancelled'?' badge-cancelled':''}">${c.phase}</span>
+            ${c.week !== '—' ? `<span class="badge badge-week">${c.week}</span>` : ''}
+            ${c.format !== '—' ? `<span class="badge badge-format">${c.format}</span>` : ''}
+          </div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-desc">${c.desc}</div>
+          <div class="cc-section-title">Learning Objectives</div>
+          <ul class="cc-objectives">
+            ${c.objectives.map(o => `<li>${o}</li>`).join('')}
+          </ul>
+          <div class="cc-section-title">Agenda</div>
+          <div class="cc-agenda">
+            ${c.agenda.map(a => `<span class="agenda-tag">${a}</span>`).join('')}
+          </div>
+        </div>
+        <div class="cc-footer">
+          <span>${c.duration !== 'TBD' && c.duration !== '—' ? c.duration : 'Duration TBD'} · ${c.audience}</span>
+          <span class="materials-status ${matClass(c.materials)}">${matLabel(c.materials)} — ${c.matNote}</span>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+
+  // Render inventory
+  const invGrid = document.getElementById('inventoryGrid');
+  invGrid.innerHTML = '';
+  const filtered = activeFilter === 'all' ? COURSES : COURSES.filter(c => c.cat === activeFilter);
+  filtered.forEach(c => {
+    const mats = MATERIALS_MAP[c.id] || [];
+    const dotColor = c.materials === 'ready' ? '#2E7D32' : c.materials === 'partial' ? '#1565C0' : c.materials === 'cancelled' ? '#9CA3AF' : '#C62828';
+    mats.forEach(m => {
+      invGrid.innerHTML += `<div class="inv-item"><div class="inv-dot" style="background:${dotColor}"></div><strong style="font-size:11px;color:#374151">${c.title}:</strong> ${m}</div>`;
+    });
+  });
+}
+
+// Fix CSS for objective dots — use category colors
+const style = document.createElement('style');
+style.textContent = CATEGORIES.map(cat =>
+  `.course-card[data-cat="${cat.key}"] .cc-objectives li::before{border-color:${COLORS[cat.key]}}`
+).join('\n');
+document.head.appendChild(style);
+
+render();
+</script>
+</body>
+</html>

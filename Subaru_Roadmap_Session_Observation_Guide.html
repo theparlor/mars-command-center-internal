@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Observation Guide — Roadmap Planning Session</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+:root {
+  --navy: #00205B;
+  --dark-blue: #1D4F91;
+  --med-blue: #1D4F91;
+  --light-blue: #D6EAF8;
+  --orange: #EF6C00;
+  --light-orange: #FFF3E0;
+  --light-green: #E8F5E9;
+  --light-gray: #F5F5F5;
+  --white: #FFFFFF;
+  --text: #1A1A1A;
+  --muted: #666666;
+  --red: #E53935;
+  --red-bg: #FFEBEE;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: Helvetica,Arial,sans-serif;
+  background: var(--light-gray);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}
+.top-bar {
+  background: #ffffff;
+  color: #00205B;
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #E5E7EB;
+}
+.top-bar h1 { font-size: 15px; font-weight: 600; color: #00205B; }
+.top-bar .sub { font-size: 12px; color: #6B7280; margin-top: 2px; }
+.section {
+  margin: 8px;
+  background: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.section-header {
+  background: var(--orange);
+  color: white;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.section-header .tag {
+  font-size: 10px;
+  background: rgba(255,255,255,0.25);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.section-body { padding: 0; }
+.signal-group {
+  border-bottom: 1px solid #EEE;
+  padding: 10px 14px;
+}
+.signal-group:last-child { border-bottom: none; }
+.signal-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark-blue);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.signal-label .type {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.type-explicit { background: var(--light-blue); color: var(--dark-blue); }
+.type-inferred { background: var(--light-orange); color: #E65100; }
+.signal-prompts {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.signal-maps {
+  font-size: 10px;
+  color: var(--med-blue);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.note-area {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  -webkit-appearance: none;
+}
+.note-area:focus { outline: none; border-color: var(--med-blue); box-shadow: 0 0 0 2px rgba(36,158,216,0.2); }
+.people-tracker {
+  background: var(--white);
+  margin: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.people-header {
+  background: #00205B;
+  color: white;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.person-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid #EEE;
+  align-items: center;
+}
+.person-name {
+  width: 30%;
+  font-size: 13px;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.person-role {
+  width: 25%;
+  font-size: 13px;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.person-notes {
+  flex: 1;
+  font-size: 13px;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.add-person-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: var(--light-gray);
+  font-size: 13px;
+  color: var(--dark-blue);
+  font-weight: 600;
+  cursor: pointer;
+}
+.hot-takes {
+  margin: 8px;
+  background: var(--red-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--red);
+}
+.hot-takes-header {
+  background: var(--red);
+  color: white;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.hot-takes-body { padding: 12px 14px; }
+.hot-takes-body .prompt {
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.hot-take-area {
+  width: 100%;
+  min-height: 60px;
+  border: 1px solid #FFCDD2;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+.bottom-actions {
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.action-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-export { background: #00205B; color: white; }
+.btn-clear { background: #EEE; color: var(--text); }
+.timestamp-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+  text-align: center;
+}
+@media print {
+  .top-bar, .bottom-actions, .timestamp-btn { display: none; }
+  .section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="top-bar">
+  <h1>Roadmap Planning Session — Observation Guide</h1>
+  <div class="sub">Subaru M.A.R.S. · Agile Transformation Assessment · <span id="sessionDate"></span></div>
+</div>
+
+<!-- PEOPLE TRACKER -->
+<div class="people-tracker">
+  <div class="people-header">Who's in the Room (name / role-team / initial observations)</div>
+  <div id="peopleList"></div>
+  <button class="add-person-btn" onclick="addPerson()">+ Add Person</button>
+</div>
+
+<!-- OBSERVATION SECTIONS -->
+<div class="section">
+  <div class="section-header" onclick="toggle('s1')">
+    <span>1. Priority & Decision Mechanics</span>
+    <span class="tag">Intake · Backlog</span>
+  </div>
+  <div class="section-body" id="s1">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> How are items presented?</div>
+      <div class="signal-prompts">Slides with business cases? Jira epics on screen? A spreadsheet list? Verbal pitches? Watch what artifacts are used — this tells you the planning tool reality.</div>
+      <div class="signal-maps">Maps to → jira_project_structure, intake_source, prioritization_method</div>
+      <textarea class="note-area" placeholder="What did you see..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> Decision mechanism</div>
+      <div class="signal-prompts">Is there a framework (WSJF, RICE, MoSCoW)? Voting? Does one person just decide? Do they reference customer data or is it gut feel? Listen for "we need this because..." vs. "the business wants..."</div>
+      <div class="signal-maps">Maps to → prioritization_method, intake_approval</div>
+      <textarea class="note-area" placeholder="How are decisions actually made..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Who has the real power?</div>
+      <div class="signal-prompts">Watch eye contact — who do people look at before committing? Who can veto? Who stays silent but whose silence blocks progress? HIPPO or distributed authority?</div>
+      <div class="signal-maps">Maps to → role_product_lead, role_business_partners, decision_making</div>
+      <textarea class="note-area" placeholder="Power dynamics observed..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header" onclick="toggle('s2')">
+    <span>2. Capacity & Estimation Reality</span>
+    <span class="tag">Estimation · Capacity</span>
+  </div>
+  <div class="section-body" id="s2">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> How is capacity expressed?</div>
+      <div class="signal-prompts">Story points? Sprints? "Developer-weeks"? T-shirt sizes? Or just "we can do it" / "we can't"? Is capacity data on screen or in someone's head?</div>
+      <div class="signal-maps">Maps to → estimation_method, estimation_accuracy</div>
+      <textarea class="note-area" placeholder="How capacity is communicated..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Confidence vs. compliance</div>
+      <div class="signal-prompts">Do managers push back on scope? Or silently accept everything? Watch body language when commitments are made — crossed arms, hesitation, looking away. "We'll try" vs. "We will" is a crucial distinction.</div>
+      <div class="signal-maps">Maps to → capacity_planning, estimation_accuracy</div>
+      <textarea class="note-area" placeholder="Commitment confidence signals..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> Are there numbers?</div>
+      <div class="signal-prompts">Velocity charts? Historical data? Burndown references? Or is everything aspirational? If numbers exist, do people trust them or argue about them?</div>
+      <div class="signal-maps">Maps to → jira_reporting, estimation_accuracy</div>
+      <textarea class="note-area" placeholder="Data vs. gut feel observed..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header" onclick="toggle('s3')">
+    <span>3. Cross-Team Dependencies</span>
+    <span class="tag">Dependencies · Release</span>
+  </div>
+  <div class="section-body" id="s3">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> Are dependencies named?</div>
+      <div class="signal-prompts">Do managers say "we need X from [team]"? Are dependencies mapped visually? Or does someone discover a dependency mid-discussion and look surprised? Watch for the "oh wait, that depends on..." moments.</div>
+      <div class="signal-maps">Maps to → dependency_identification, dependency_management</div>
+      <textarea class="note-area" placeholder="Dependencies surfaced..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> How are conflicts resolved?</div>
+      <div class="signal-prompts">When two teams need the same resource or have competing timelines, what happens? Escalation? Horse-trading? Avoidance? Does anyone own cross-team sequencing?</div>
+      <div class="signal-maps">Maps to → dependency_management, cross_team_ceremonies</div>
+      <textarea class="note-area" placeholder="Conflict resolution patterns..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Shared Services & TechShare dynamics</div>
+      <div class="signal-prompts">How do shared teams (Giuffrida, Williams) negotiate capacity across their consumers? Do product teams assume availability or ask? Is there a queuing model?</div>
+      <div class="signal-maps">Maps to → dependency_management, intake_source</div>
+      <textarea class="note-area" placeholder="Shared team dynamics..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header" onclick="toggle('s4')">
+    <span>4. Roles & Accountability (Live)</span>
+    <span class="tag">Roles · New Category</span>
+  </div>
+  <div class="section-body" id="s4">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> Who speaks for each team?</div>
+      <div class="signal-prompts">Is it always the manager? Does a Scrum Lead or Engineering Lead present? Does anyone from the "business" side present alongside the team? Name every speaker and their role.</div>
+      <div class="signal-maps">Maps to → role_scrum_lead, role_engineering_lead, role_product_lead</div>
+      <textarea class="note-area" placeholder="Who speaks for whom..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Product voice present or absent?</div>
+      <div class="signal-prompts">Is anyone articulating customer outcomes, success metrics, or "why this matters"? Or is the discussion purely about features and timelines? The absence of product voice is the loudest signal.</div>
+      <div class="signal-maps">Maps to → role_product_lead, role_business_partners</div>
+      <textarea class="note-area" placeholder="Product voice observations..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Business stakeholder behavior</div>
+      <div class="signal-prompts">Are business partners in the room? Do they observe, participate, or drive? Do they bypass the process and lobby individual managers? Do they talk outcomes or features?</div>
+      <div class="signal-maps">Maps to → role_business_partners, intake_source, intake_approval</div>
+      <textarea class="note-area" placeholder="Business stakeholder dynamics..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header" onclick="toggle('s5')">
+    <span>5. Tooling Reality Check</span>
+    <span class="tag">Jira · Tooling</span>
+  </div>
+  <div class="section-body" id="s5">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> What's on screen?</div>
+      <div class="signal-prompts">Jira boards? PowerPoint? Excel spreadsheets? Confluence? Miro? The tool that's on screen during planning is the tool that actually matters — regardless of what they say in interviews.</div>
+      <div class="signal-maps">Maps to → jira_project_structure, jira_hierarchy (Outside Jira / Hybrid options)</div>
+      <textarea class="note-area" placeholder="Tools actually used in session..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Jira trust level</div>
+      <div class="signal-prompts">Does anyone say "let me check Jira" or do they check a spreadsheet? When data is questioned, what source do they trust? If Jira is on screen, do people agree with what it shows?</div>
+      <div class="signal-maps">Maps to → jira_hygiene, jira_reporting</div>
+      <textarea class="note-area" placeholder="Data trust signals..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header" onclick="toggle('s6')">
+    <span>6. Communication & Process Signals</span>
+    <span class="tag">Communication · Events</span>
+  </div>
+  <div class="section-body" id="s6">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> Language & vocabulary</div>
+      <div class="signal-prompts">Do they say "sprint" or "iteration" or "cycle"? "Story" or "ticket" or "task"? "Velocity" or "throughput"? Vocabulary reveals training lineage. Do teams use the same terms or different ones?</div>
+      <div class="signal-maps">Maps to → overall agile maturity signal</div>
+      <textarea class="note-area" placeholder="Key terms and vocabulary used..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Planning horizon & cadence</div>
+      <div class="signal-prompts">Are they planning by quarter? PI? Sprint? Is there a rhythm or does this feel ad hoc? How far out are they comfortable committing? The planning horizon reveals process maturity.</div>
+      <div class="signal-maps">Maps to → sprint_cadence, refinement_practice</div>
+      <textarea class="note-area" placeholder="Planning cadence signals..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Information flow direction</div>
+      <div class="signal-prompts">Top-down ("here's what we're doing") vs. bottom-up ("here's what we can deliver") vs. collaborative? Does information flow through managers or do ICs participate? This tells you the team's actual operating model.</div>
+      <div class="signal-maps">Maps to → decision_making, communication_channels</div>
+      <textarea class="note-area" placeholder="Information flow patterns..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header" onclick="toggle('s7')">
+    <span>7. Release & Quality Signals</span>
+    <span class="tag">Release · QA</span>
+  </div>
+  <div class="section-body" id="s7">
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-explicit">Explicit</span> Release constraints mentioned</div>
+      <div class="signal-prompts">Do teams mention release windows, code freezes, environment availability, or QA bottlenecks? These constraints reveal the real deployment pipeline regardless of what they tell you later.</div>
+      <div class="signal-maps">Maps to → release_cadence, release_process, qa_integration</div>
+      <textarea class="note-area" placeholder="Release constraints surfaced..."></textarea>
+    </div>
+    <div class="signal-group">
+      <div class="signal-label"><span class="type type-inferred">Inferred</span> Technical debt posture</div>
+      <div class="signal-prompts">Does anyone advocate for tech debt, infrastructure, or "keep the lights on" work? Or is it all features? The ratio of new vs. sustain work in planning reveals engineering health.</div>
+      <div class="signal-maps">Maps to → quality_ownership, pain_points</div>
+      <textarea class="note-area" placeholder="Tech debt and sustain signals..."></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- HOT TAKES (capture immediately after) -->
+<div class="hot-takes">
+  <div class="hot-takes-header">Gut Check — Capture Immediately After Session</div>
+  <div class="hot-takes-body">
+    <div class="prompt">What surprised you most?</div>
+    <textarea class="hot-take-area" placeholder="The thing that made you go 'huh'..."></textarea>
+    <div class="prompt">What was conspicuously absent?</div>
+    <textarea class="hot-take-area" placeholder="What you expected to see/hear but didn't..."></textarea>
+    <div class="prompt">If you had to bet: is this org doing agile, or doing agile theater?</div>
+    <textarea class="hot-take-area" placeholder="Honest assessment..."></textarea>
+    <div class="prompt">Which team(s) seem most/least mature based on this session?</div>
+    <textarea class="hot-take-area" placeholder="Relative maturity impressions..."></textarea>
+    <div class="prompt">What questions should you ask FIRST in the team interviews now?</div>
+    <textarea class="hot-take-area" placeholder="What this session tells you to dig into..."></textarea>
+  </div>
+</div>
+
+<div class="bottom-actions">
+  <button class="action-btn btn-export" onclick="exportData()">Export JSON</button>
+  <button class="action-btn btn-clear" onclick="clearAll()">Clear All</button>
+</div>
+
+<button class="timestamp-btn" onclick="addTimestamp()">+ Time<br>Stamp</button>
+
+<script>
+document.getElementById('sessionDate').textContent = new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+let data = { people: [], sections: {}, hotTakes: {} };
+try {
+  const saved = localStorage.getItem('subaru_obs_roadmap');
+  if (saved) data = JSON.parse(saved);
+} catch(e) {}
+
+function save() {
+  // Collect all textarea values
+  document.querySelectorAll('.note-area, .hot-take-area').forEach((ta, i) => {
+    data.sections['note_' + i] = ta.value;
+  });
+  // Collect people
+  data.people = [];
+  document.querySelectorAll('.person-row').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    data.people.push({
+      name: inputs[0]?.value || '',
+      role: inputs[1]?.value || '',
+      notes: inputs[2]?.value || ''
+    });
+  });
+  try { localStorage.setItem('subaru_obs_roadmap', JSON.stringify(data)); } catch(e) {}
+}
+
+function restore() {
+  document.querySelectorAll('.note-area, .hot-take-area').forEach((ta, i) => {
+    if (data.sections['note_' + i]) ta.value = data.sections['note_' + i];
+  });
+  // Restore people
+  const list = document.getElementById('peopleList');
+  list.innerHTML = '';
+  if (data.people && data.people.length) {
+    data.people.forEach(p => {
+      addPersonRow(p.name, p.role, p.notes);
+    });
+  } else {
+    // Start with 6 empty rows (one per team manager expected)
+    for (let i = 0; i < 6; i++) addPersonRow('','','');
+  }
+}
+
+function addPersonRow(name, role, notes) {
+  const list = document.getElementById('peopleList');
+  const row = document.createElement('div');
+  row.className = 'person-row';
+  row.innerHTML = `
+    <input class="person-name" placeholder="Name" value="${name}" oninput="save()">
+    <input class="person-role" placeholder="Role / Team" value="${role}" oninput="save()">
+    <input class="person-notes" placeholder="Initial read..." value="${notes}" oninput="save()">
+  `;
+  list.appendChild(row);
+}
+
+function addPerson() {
+  addPersonRow('','','');
+}
+
+// Auto-save on any textarea input
+document.addEventListener('input', save);
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function addTimestamp() {
+  const time = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+  const focused = document.activeElement;
+  if (focused && (focused.classList.contains('note-area') || focused.classList.contains('hot-take-area'))) {
+    const pos = focused.selectionStart;
+    const before = focused.value.substring(0, pos);
+    const after = focused.value.substring(pos);
+    focused.value = before + '[' + time + '] ' + after;
+    focused.selectionStart = focused.selectionEnd = pos + time.length + 3;
+    focused.focus();
+    save();
+  }
+}
+
+function exportData() {
+  save();
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'roadmap_session_obs_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function clearAll() {
+  if (confirm('Clear all observation notes? Cannot be undone.')) {
+    data = { people: [], sections: {}, hotTakes: {} };
+    localStorage.removeItem('subaru_obs_roadmap');
+    document.querySelectorAll('.note-area, .hot-take-area').forEach(ta => ta.value = '');
+    document.getElementById('peopleList').innerHTML = '';
+    for (let i = 0; i < 6; i++) addPersonRow('','','');
+  }
+}
+
+restore();
+</script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Week 2 Status</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+  /* ── Reset & Base ── */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Helvetica,Arial,sans-serif;
+    background: #f4f5f7;
+    color: #1a1a2e;
+    line-height: 1.5;
+  }
+
+  /* ── Dashboard Card (16:9 hero) ── */
+  .dashboard {
+    width: 960px;
+    height: 540px; /* 16:9 */
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    color: #1a1a1a;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* ── Row 1: Highlight Reel Banner — 2/9 of 540 = 120px ── */
+  .highlight-banner {
+    height: 120px;
+    background: linear-gradient(135deg, #00205B 0%, #1D4F91 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e7eb;
+    color: #ffffff;
+  }
+  .highlight-banner::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .highlight-left {
+    flex: 1;
+  }
+  .highlight-left .week-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 4px;
+  }
+  .highlight-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+    color: #ffffff;
+  }
+  .highlight-left .subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+  }
+  .highlight-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .highlight-stat {
+    text-align: center;
+  }
+  .highlight-stat .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #ffffff;
+  }
+  .highlight-stat .stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.7);
+  }
+  .highlight-divider {
+    width: 1px;
+    height: 48px;
+    background: #e5e7eb;
+  }
+
+  /* ── Row 2: Training | Coaching — 3/9 of 540 = 180px ── */
+  .row-two {
+    height: 180px;
+    display: flex;
+  }
+  .block {
+    padding: 16px 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    background: #ffffff;
+  }
+  .block:hover { background-color: #f9fafb; }
+  .block .block-tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888888;
+    margin-bottom: 6px;
+  }
+  .block h2 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+  .block p, .block li {
+    font-size: 12px;
+    color: #444444;
+    line-height: 1.55;
+  }
+  .block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .block ul li {
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 3px;
+  }
+  .block ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 7px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  /* Training block */
+  .block-training {
+    flex: 1;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+  }
+  .block-training ul li::before { background: #1976D2; }
+
+  /* Coaching block */
+  .block-coaching {
+    flex: 1;
+    background: #ffffff;
+  }
+  .block-coaching ul li::before { background: #1565C0; }
+
+  .status-chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .chip-complete { background: rgba(46,125,50,0.15); color: #2E7D32; }
+  .chip-active { background: rgba(25,118,210,0.15); color: #1976D2; }
+  .chip-upcoming { background: rgba(255,179,0,0.15); color: #FFB300; }
+
+  /* ── Row 3: JIRA | OCM | Logistics — 3/9 of 540 = 180px ── */
+  .row-three {
+    height: 180px;
+    display: flex;
+  }
+  .block-jira {
+    flex: 3;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+  }
+  .block-jira ul li::before { background: #00897B; }
+
+  .block-ocm {
+    flex: 3;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+  }
+  .block-ocm ul li::before { background: #EF6C00; }
+
+  .block-logistics {
+    flex: 2;
+    background: #ffffff;
+  }
+  .block-logistics ul li::before { background: #E65100; }
+
+  /* ── Row 4: Teams Bar — 1/9 of 540 = 60px ── */
+  .teams-bar {
+    height: 60px;
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 8px;
+    border-top: 1px solid #e5e7eb;
+  }
+  .teams-bar-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888888;
+    margin-right: 8px;
+    white-space: nowrap;
+  }
+  .team-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: #1a1a1a;
+    white-space: nowrap;
+  }
+  .team-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-onboarding { background: #1976D2; box-shadow: 0 0 6px rgba(25,118,210,0.3); }
+  .dot-active { background: #2E7D32; box-shadow: 0 0 6px rgba(46,125,50,0.3); }
+  .dot-pending { background: #FFB300; box-shadow: 0 0 6px rgba(255,179,0,0.3); }
+
+  .team-pill .cohort-badge {
+    font-size: 8px;
+    font-weight: 700;
+    background: #f0f0f0;
+    border-radius: 3px;
+    padding: 1px 4px;
+    color: #666666;
+  }
+
+  /* ── Detail Blocks Below ── */
+  .detail-section {
+    width: 960px;
+    margin: 0 auto;
+    background: #fff;
+  }
+  .detail-block {
+    padding: 28px 32px;
+    border-bottom: 1px solid #e8eaed;
+  }
+  .detail-block:last-child { border-bottom: none; }
+  .detail-block h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0054a4;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .detail-block h3 .icon {
+    font-size: 18px;
+  }
+  .detail-block .detail-subtitle {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .detail-block h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    margin: 14px 0 6px;
+  }
+  .detail-block p {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .detail-block ul {
+    padding-left: 18px;
+    margin-bottom: 10px;
+  }
+  .detail-block li {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.65;
+    margin-bottom: 3px;
+  }
+  .callout {
+    background: #f0f7ff;
+    border-left: 3px solid #0054a4;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: #1a3a5c;
+  }
+  .callout-warn {
+    background: #fff8e1;
+    border-left-color: #f9a825;
+    color: #5d4037;
+  }
+
+  /* ── Footer ── */
+  .footer-bar{height:3px;background:#00205B;margin-top:24px}
+.footer {
+    width: 960px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    background: #f9fafb;
+    font-size: 11px;
+    color: #888888;
+    text-align: center;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  /* ── Anchor links ── */
+  .block[data-section] { cursor: pointer; }
+  a.block-link {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    height: 100%;
+  }
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DASHBOARD: 16:9 Visual Header                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="dashboard">
+
+  <!-- ROW 1: Highlight Banner (120px) -->
+  <div class="highlight-banner">
+    <div class="highlight-left">
+      <div class="week-label">Week 2 · Phase 2 — Creating the Foundation</div>
+      <h1>Coaching Begins · Leader Readout · Baseline Set</h1>
+      <div class="subtitle">Bru Crew Coaching · Subaru M.A.R.S. Agile Transformation · March 13, 2026</div>
+    </div>
+    <div class="highlight-right">
+      <div class="highlight-stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Sessions<br>Delivered</div>
+      </div>
+      <div class="highlight-divider"></div>
+      <div class="highlight-stat">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Teams<br>In-Scope</div>
+      </div>
+      <div class="highlight-divider"></div>
+      <div class="highlight-stat">
+        <div class="stat-value">W2</div>
+        <div class="stat-label">of 20</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Training | Coaching (180px) -->
+  <div class="row-two">
+    <a href="#detail-training" class="block block-training" style="text-decoration:none;color:inherit;flex:1;display:flex;flex-direction:column;">
+      <div class="block-tag">Training</div>
+      <h2>Week 1 Recap & Week 2 Look-Forward</h2>
+      <ul>
+        <li>Agile Fundamentals & Mindset — delivered ×2 rooms <span class="status-chip chip-complete">Done</span></li>
+        <li>Achieving Flow — delivered ×1 room <span class="status-chip chip-complete">Done</span></li>
+        <li>Scrum Fundamentals — delivered ×1 room <span class="status-chip chip-complete">Done</span></li>
+        <li>Kanban Fundamentals — <span class="status-chip" style="background:rgba(198,40,40,0.15);color:#C62828;">Cancelled</span></li>
+        <li>Leader Readout (Wk 2) <span class="status-chip chip-active">This Week</span></li>
+      </ul>
+    </a>
+    <a href="#detail-coaching" class="block block-coaching" style="text-decoration:none;color:inherit;flex:1;display:flex;flex-direction:column;">
+      <div class="block-tag">Coaching</div>
+      <h2>Cohort Launch & Trust Building</h2>
+      <ul>
+        <li><strong>Cohort A</strong> — Dean (lead) + Louise</li>
+        <li style="padding-left:28px;font-size:11px;">Natalie · Marc · Kadeem</li>
+        <li><strong>Cohort B</strong> — Brien (lead) + Jason</li>
+        <li style="padding-left:28px;font-size:11px;">Gino · Kevin · Vladimir · Sam</li>
+        <li>Office Hours Q&A — daily <span class="status-chip chip-active">Starting</span></li>
+      </ul>
+    </a>
+  </div>
+
+  <!-- ROW 3: JIRA/Metrics | OCM/Comms | Logistics (180px) -->
+  <div class="row-three">
+    <a href="#detail-jira" class="block block-jira" style="text-decoration:none;color:inherit;flex:3;display:flex;flex-direction:column;">
+      <div class="block-tag">JIRA / Metrics</div>
+      <h2>Environment Assessment</h2>
+      <ul>
+        <li>JIRA onboarding & environment assessment initiated</li>
+        <li>Guided by Jason & Dean — team-by-team</li>
+        <li>Baseline data collection begins</li>
+        <li>Team Pulse Check & Leader Sentiment — <strong>BASELINE</strong> send <span class="status-chip chip-active">This Week</span></li>
+      </ul>
+    </a>
+    <a href="#detail-ocm" class="block block-ocm" style="text-decoration:none;color:inherit;flex:3;display:flex;flex-direction:column;">
+      <div class="block-tag">OCM / Comms</div>
+      <h2>Stakeholder Mapping Begins</h2>
+      <ul>
+        <li>Louise-led 30-min manager meetings starting</li>
+        <li>Stakeholder mapping & Subaru language audit</li>
+        <li>Barrier identification & strategy alignment</li>
+        <li>Pre-training handouts delivered <span class="status-chip chip-complete">Done</span></li>
+      </ul>
+    </a>
+    <a href="#detail-logistics" class="block block-logistics" style="text-decoration:none;color:inherit;flex:2;display:flex;flex-direction:column;">
+      <div class="block-tag">Logistics</div>
+      <h2>On-Site Rhythm</h2>
+      <ul>
+        <li>Camden, NJ — 3 days/wk</li>
+        <li>Greg status update <span class="status-chip chip-active">Scheduled</span></li>
+        <li>Room bookings confirmed</li>
+      </ul>
+    </a>
+  </div>
+
+  <!-- ROW 4: Teams Bar (60px) -->
+  <div class="teams-bar">
+    <div class="teams-bar-label">Teams</div>
+    <div class="team-pill"><span class="team-dot dot-onboarding"></span>Subaru.net <span class="cohort-badge">A</span></div>
+    <div class="team-pill"><span class="team-dot dot-onboarding"></span>TechShare <span class="cohort-badge">A</span></div>
+    <div class="team-pill"><span class="team-dot dot-onboarding"></span>Subaru.com <span class="cohort-badge">B</span></div>
+    <div class="team-pill"><span class="team-dot dot-onboarding"></span>M.A.R.S. <span class="cohort-badge">B</span></div>
+    <div class="team-pill"><span class="team-dot dot-onboarding"></span>QA <span class="cohort-badge">B</span></div>
+    <div class="team-pill"><span class="team-dot dot-onboarding"></span>DevOps <span class="cohort-badge">B</span></div>
+    <div style="margin-left:auto; display:flex; align-items:center; gap:12px; font-size:10px; color:#888888;">
+      <span><span class="team-dot dot-onboarding" style="display:inline-block;width:6px;height:6px;vertical-align:middle;margin-right:3px;"></span>Onboarding</span>
+      <span><span class="team-dot dot-active" style="display:inline-block;width:6px;height:6px;vertical-align:middle;margin-right:3px;"></span>Coaching Active</span>
+      <span><span class="team-dot dot-pending" style="display:inline-block;width:6px;height:6px;vertical-align:middle;margin-right:3px;"></span>Watch</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DETAIL BLOCKS: Expanded Text Sections                      -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="detail-section">
+
+  <!-- TRAINING -->
+  <div class="detail-block" id="detail-training">
+    <h3><span class="icon">📘</span> Training — Week 1 Recap & Week 2 Look-Forward</h3>
+    <div class="detail-subtitle">Covers: Agile Academy sessions delivered, observations, what's next</div>
+
+    <h4>Week 1 Recap (Mar 2–6)</h4>
+    <p>Week 1 was a full in-person training week at Camden. The team delivered four sessions across two parallel rooms to maximize coverage across all six in-scope teams. Attendance was strong and engagement was high — individual contributors demonstrated genuine curiosity and willingness to question current practices, which is a healthy signal this early.</p>
+    <ul>
+      <li><strong>Agile Fundamentals & Mindset</strong> — Delivered twice (two rooms). Established shared vocabulary around the "why" of agile, product thinking, and iterative delivery. Several participants connected the content to friction points they experience today, particularly around handoff delays and scope ambiguity.</li>
+      <li><strong>Achieving Flow</strong> — Single session. Introduced WIP limits, pull-based systems, and the relationship between utilization and cycle time. The "highway at 100% capacity" analogy resonated strongly. This will be reinforced during embedded coaching.</li>
+      <li><strong>Scrum Fundamentals</strong> — Single session. Covered roles, events, and artifacts using modern Scrum Guide (2020+) language. Notable: teams are already running some form of sprints but with inconsistent event structures and unclear role boundaries.</li>
+      <li><strong>Kanban Fundamentals</strong> — Cancelled. This was a scheduling decision to make room for the newly added Roles & Responsibilities session (Dean, Louise, Brien, Turnberry consultants). Kanban deep-dive / Flow optimization is rescheduled to Week 11 as part of the "Flow / WIP + Product Mindset" advanced track.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Key Observation:</strong> Teams are enthusiastic but leadership engagement during training was uneven. Some managers attended portions; others delegated entirely. The leader readout this week is an opportunity to close that gap and ensure managers internalize the same language their teams are now using.
+    </div>
+
+    <h4>Week 2 Look-Forward (Mar 9–13)</h4>
+    <ul>
+      <li><strong>Leader Readout</strong> — Brien and Dean will present a Week 1 learnings debrief to Greg, Gino, and platform managers. The goal is to share what we observed, what resonated, where gaps exist, and what coaching will target first.</li>
+      <li><strong>No new formal training sessions this week</strong> — The focus shifts to coaching, observation, and relationship-building. The next training block (Estimation: Story Pointing & Capacity Planning) is Week 5.</li>
+    </ul>
+
+    <h4>Upcoming Training (Weeks 3–7)</h4>
+    <p>Weeks 3–4 are coaching-focused with no classroom training (observation, relationship-building, coaching only). Week 5 brings Estimation: Story Pointing & Capacity Planning (2hr, all teams) — this is the only training that week. Week 7 brings two individual sessions: User Story Writing and User Stories & Backlog Fundamentals, run per-team (1hr each). These sessions build the practical scaffolding teams need before the Pre-Planning milestone at Week 6.</p>
+  </div>
+
+  <!-- COACHING -->
+  <div class="detail-block" id="detail-coaching">
+    <h3><span class="icon">🧭</span> Coaching — Cohort Launch & Embedded Rhythm</h3>
+    <div class="detail-subtitle">Covers: Cohort assignments, coaching approach, Week 2 focus</div>
+
+    <h4>Cohort Structure</h4>
+    <p>Coaching is organized into two cohorts to ensure coverage depth and relationship continuity. Each cohort has a lead coach and a support resource for coverage and complementary perspective.</p>
+    <ul>
+      <li><strong>Cohort A — Dean Gabbert (Lead Coach)</strong>, Louise Teeter (OCM Lead + coverage). Teams: Natalie, Marc, Kadeem.</li>
+      <li><strong>Cohort B — Brien (Lead Coach)</strong>, Jason Lindmeyer (coverage, remote some weeks). Teams: Gino's team, Kevin McCracken (Subaru.com), Vladimir Goldsteyhn (QA), Sam Sharkay (DevOps).</li>
+    </ul>
+
+    <h4>Week 2 Coaching Focus</h4>
+    <p>This is the "observe, learn, establish trust" week. Coaches will attend team events, sit alongside teams during their regular work rhythm, and start building the relationship foundation that makes coaching effective. No corrections, no recommendations — just presence, curiosity, and pattern recognition.</p>
+    <ul>
+      <li><strong>Office Hours Q&A</strong> — Launching daily this week. Staffed by Dean and Brien. Open to any team member. This creates a low-stakes venue for questions that don't fit neatly into formal training or stand-ups.</li>
+      <li><strong>Event observation</strong> — Attending each team's existing events (stand-ups, refinement, retrospectives if they run them) to catalog behaviors, language, and dynamics.</li>
+      <li><strong>Manager 1:1 discovery</strong> — Continuing discovery conversations started in Week 0. Dean and Brien connecting with Gino, Kevin, Kadeem, Marc, Vlad, and Sam to understand their individual challenges, aspirations, and the political landscape they navigate.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Coaching Philosophy This Phase:</strong> "Earn the right to coach before coaching." The biggest risk in early engagement is moving to solutions before understanding the system. Week 2 is about absorbing, not prescribing.
+    </div>
+  </div>
+
+  <!-- JIRA / METRICS -->
+  <div class="detail-block" id="detail-jira">
+    <h3><span class="icon">📊</span> JIRA / Metrics — Environment Assessment & Baseline</h3>
+    <div class="detail-subtitle">Covers: JIRA current state, baseline data, Pulse Check launch</div>
+
+    <h4>JIRA Workstream</h4>
+    <p>JIRA onboarding and environment assessment kicked off during Week 1 with initial access setup. This week, Jason and Dean begin guided JIRA deep-dives team-by-team — documenting the current state of boards, issue types, workflows, and field usage. The goal is to understand what teams are doing <em>now</em> before introducing any standardization.</p>
+    <ul>
+      <li>Map current board configurations and workflow states per team</li>
+      <li>Identify inconsistencies in issue type usage, label conventions, and component structures</li>
+      <li>Document findings for the JIRA recommendations report (target: Week 4)</li>
+    </ul>
+
+    <h4>Baseline Metrics</h4>
+    <p>The Team Pulse Check and Leader Sentiment surveys are being sent this week as the <strong>engagement baseline</strong>. These will be re-administered approximately every 4–5 weeks to track trajectory. The Pulse Check captures team-level health signals (psychological safety, clarity, delivery confidence) while Leader Sentiment captures management-level alignment and engagement.</p>
+
+    <div class="callout callout-warn">
+      <strong>Note:</strong> Omar Rashid (JIRA Specialist) was temporarily removed from the engagement and has been re-added. His status and availability this week need confirmation from Jason.
+    </div>
+  </div>
+
+  <!-- OCM / COMMS -->
+  <div class="detail-block" id="detail-ocm">
+    <h3><span class="icon">📣</span> OCM / Communications — Stakeholder Mapping</h3>
+    <div class="detail-subtitle">Covers: Change management, stakeholder strategy, communication rhythm</div>
+
+    <h4>Week 2 OCM Activities</h4>
+    <p>Louise Teeter leads OCM and begins her manager meeting series this week — 30-minute structured conversations with each platform leader. These sessions serve three purposes: stakeholder mapping (who influences what), Subaru language and cultural norms capture (how do people talk about change here), and barrier identification (what has blocked previous improvement efforts).</p>
+
+    <h4>Communications Delivered</h4>
+    <ul>
+      <li>Pre-training leader handouts — delivered Week 0 <span class="status-chip chip-complete">Done</span></li>
+      <li>Kickoff language and framing guide — shared with all coaches Week 0</li>
+      <li>Week 1 training recap communication — drafting for distribution after Leader Readout</li>
+    </ul>
+
+    <h4>Coming Next</h4>
+    <p>Week 3–4 will introduce coaching plan communications and JIRA basics comms. The goal is to keep a steady, predictable rhythm of communication that normalizes the transformation activities rather than letting them feel like events imposed from outside.</p>
+  </div>
+
+  <!-- LOGISTICS -->
+  <div class="detail-block" id="detail-logistics">
+    <h3><span class="icon">📍</span> Logistics — On-Site Rhythm & Upcoming Milestones</h3>
+    <div class="detail-subtitle">Covers: Schedule, site logistics, key dates ahead</div>
+
+    <h4>This Week</h4>
+    <ul>
+      <li>Camden, NJ on-site — Mon/Tue/Wed (standard 3-day cadence)</li>
+      <li>Greg Giuffrida status update — scheduled this week (bi-weekly cadence through Phase 2)</li>
+      <li>Training rooms and coaching spaces confirmed through Week 6</li>
+    </ul>
+
+    <h4>Key Dates Ahead</h4>
+    <ul>
+      <li><strong>Week 3 (Mar 16)</strong> — Coaching-focused week (no classroom training), JIRA Deep Dives begin</li>
+      <li><strong>Week 4 (Mar 23)</strong> — Coaching-focused week (no classroom training), Greg status update, JIRA initial findings documented</li>
+      <li><strong>Week 5 (Mar 30)</strong> — Estimation: Story Pointing & Capacity Planning (all teams), Pre-Planning readiness check</li>
+      <li><strong>Week 6 (Apr 6)</strong> — 🏁 <strong>Pre-Planning Event</strong> — first major milestone. Leaders and teams articulate their work, build initial JIRA dashboards, and conduct leadership debrief.</li>
+      <li><strong>Week 7 (Apr 13)</strong> — User Story Writing and User Stories & Backlog Fundamentals Workshops (per team, individual sessions)</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Milestone Trajectory:</strong> Everything between now and Week 6 is building toward the Pre-Planning Event. Each week's activities are designed to incrementally equip teams and leaders to participate effectively in that milestone. If any team can't articulate "what we're working on, why, and what's next" by Week 5, that's our coaching signal.
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer-bar"></div>
+<div class="footer">
+  Subaru M.A.R.S. Agile Transformation · Bru Crew Coaching via Turnberry Solutions · Updated March 13, 2026<br>
+  Prepared by Brien · Transformation Advisory
+</div>
+
+</body>
+</html>

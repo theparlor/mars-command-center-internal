@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subaru M.A.R.S. — Calendar & Look-Ahead</title>
+<style>
+.accent-bar{height:4px;background:#00205B;width:100%}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Helvetica,Arial,sans-serif;background:#f8f9fa;color:#1A1A1A}
+.header{background:linear-gradient(135deg,#00205B 0%,#1D4F91 100%);border-bottom:1px solid #E5E7EB;color:#ffffff;padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:24px;font-weight:800;letter-spacing:-0.3px}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.7)}
+.hero{background:#F9FAFB;border-bottom:1px solid #E5E7EB;color:#1A1A1A;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.hero-card{background:rgba(255,255,255,.1);border-radius:8px;padding:16px}
+.hero-card h3{font-size:14px;font-weight:700;margin-bottom:8px;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:0.5px}
+.hero-card .big{font-size:36px;font-weight:700}
+.hero-card .sub{font-size:12px;opacity:.7}
+.controls{background:white;padding:12px 32px;border-bottom:1px solid #E5E7EB;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.filter-btn{padding:6px 14px;border:1px solid #ccc;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s;background:white}
+.filter-btn:hover{background:#e8f0fd}
+.filter-btn.active{background:#00205B;color:white;border-color:#00205B}
+.calendar{padding:16px 32px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.week-card{background:white;border-radius:8px;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:all .2s}
+.week-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.week-card.current{border-color:#1D4F91;border-width:2px}
+.week-card.past{opacity:.6}
+.wc-header{padding:12px 16px;font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.wc-header .dates{font-size:11px;font-weight:400;color:rgba(255,255,255,.8)}
+.wc-body{padding:12px 16px}
+.activity{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0}
+.activity:last-child{border-bottom:none}
+.act-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.act-label{font-size:12px;font-weight:700;line-height:1.3}
+.act-meta{font-size:11px;color:#4A4A4A}
+.act-lane{font-size:10px;padding:1px 6px;border-radius:10px;color:white;display:inline-block;margin-top:2px}
+.footer-bar{height:3px;background:linear-gradient(90deg,#00205B 0%,#1D4F91 50%,#00205B 100%);margin-top:24px}
+.footer{background:#F9FAFB;border-top:1px solid #E5E7EB;color:#6B7280;padding:12px 32px;font-size:11px;display:flex;justify-content:space-between;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="header">
+  <div>
+    <h1>Subaru M.A.R.S. — Engagement Calendar</h1>
+    <div class="meta">Weekly Look-Ahead · 20-Week Engagement · Feb 23 – Jul 17, 2026</div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:11px;opacity:.7">Updated Mar 13, 2026</div>
+    <div style="font-size:11px;opacity:.7">CONFIDENTIAL</div>
+  </div>
+</div>
+
+<div class="hero" id="hero"></div>
+
+<div class="controls">
+  <span style="font-size:12px;font-weight:700;color:#00205B">Filter:</span>
+  <div class="filter-btn active" data-filter="all" onclick="setFilter(this)">All</div>
+  <div class="filter-btn" data-filter="training" onclick="setFilter(this)">Training</div>
+  <div class="filter-btn" data-filter="coaching" onclick="setFilter(this)">Coaching</div>
+  <div class="filter-btn" data-filter="jira" onclick="setFilter(this)">JIRA & Metrics</div>
+  <div class="filter-btn" data-filter="ocm" onclick="setFilter(this)">OCM</div>
+  <div class="filter-btn" data-filter="planning" onclick="setFilter(this)">Planning</div>
+</div>
+
+<div class="calendar" id="calendar"></div>
+
+<div class="footer-bar"></div>
+<div class="footer">
+  <span>Subaru of America — M.A.R.S. Agile Transformation · Prepared by Turnberry Solutions</span>
+  <span>Source: Reconciled Schedule · Mar 13, 2026</span>
+</div>
+
+<script>
+const START = new Date(2026, 1, 23);
+/* Lane colors aligned to Visual Communication System */
+const COLORS = {training:'#1976D2',coaching:'#7B1FA2',jira:'#00897B',ocm:'#EF6C00',planning:'#C62828'};
+/* Phase header colors use Subaru chrome */
+const PHASE_COLORS = ['#1D4F91','#00205B','#1D4F91','#1D4F91','#1D4F91','#1D4F91','#C62828','#53565A','#53565A','#53565A','#53565A','#53565A','#53565A','#C62828','#53565A','#53565A','#53565A','#53565A','#53565A','#53565A','#C62828'];
+const PHASES = ['Prep','Kickoff & Discovery','Coaching Begins','Coaching Deepens','Foundational Training','Pre-Plan Prep','Pre-Planning','Applied Training','Applied Training','Applied Training','Applied Training','Applied Training','PI Readiness','PI Planning #1','Self-Sufficiency','Self-Sufficiency','Self-Sufficiency','Maturity','Maturity','Sustain','PI Planning #2 / Close'];
+
+const WEEK_ACTIVITIES = {
+  0: [{l:'Surveys Out',lane:'ocm',o:'Louise'},{l:'Coaching Prep',lane:'coaching',o:'Dean / Brien'}],
+  1: [{l:'Agile Mindset + Scrum (Full Week)',lane:'training',o:'Dean'},{l:'JIRA Environment Assessment',lane:'jira',o:'Omar'}],
+  2: [{l:'Begin Coaching (Cohort A & B)',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Initial Onboard',lane:'jira',o:'Omar'},{l:'Status Update → Greg',lane:'planning',o:'Jason'},{l:'Baseline Pulse Results',lane:'ocm',o:'Louise'},{l:'Manager Meetings',lane:'ocm',o:'Louise'},{l:'Office Hours Begin',lane:'coaching',o:'Dean / Brien'}],
+  3: [{l:'Embedded Coaching',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Deep Dives',lane:'jira',o:'Omar'},{l:'JIRA Comms',lane:'ocm',o:'Louise'},{l:'Platform Leader 1:1s Begin',lane:'coaching',o:'Dean / Brien'}],
+  4: [{l:'Embedded Coaching',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Findings',lane:'jira',o:'Omar'},{l:'Plans Comms',lane:'ocm',o:'Louise'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  5: [{l:'Estimation (Story Pointing & Capacity)',lane:'training',o:'Dean'},{l:'Pre-Plan Prep',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Job Aides',lane:'jira',o:'Omar'},{l:'Ongoing OCM',lane:'ocm',o:'Louise'}],
+  6: [{l:'Pre-Planning (PI #0)',lane:'planning',o:'Jason / Dean'},{l:'JIRA Dashboards',lane:'jira',o:'Omar'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  7: [{l:'User Story Writing',lane:'training',o:'Dean'},{l:'User Stories & Backlog Fundamentals',lane:'training',o:'Dean'},{l:'Sprint Execution Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Draft Future State',lane:'jira',o:'Omar'},{l:'Baseline Velocity & Predictability',lane:'jira',o:'Team'}],
+  8: [{l:'Sprint Execution Coaching',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Configuration',lane:'jira',o:'Omar'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  9: [{l:'Planning for Adaptability',lane:'training',o:'Dean'},{l:'Story Splitting',lane:'training',o:'Dean'},{l:'WIP / Flow Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Scorecards v1',lane:'jira',o:'Team'},{l:'Pulse #2',lane:'ocm',o:'Louise'}],
+  10: [{l:'Deepen Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Metrics Dashboards',lane:'jira',o:'Team'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  11: [{l:'Flow / WIP',lane:'training',o:'Dean'},{l:'Product Mindset',lane:'training',o:'Dean'},{l:'Deepen Coaching',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Configuration (cont.)',lane:'jira',o:'Omar'}],
+  12: [{l:'PI Readiness Coaching',lane:'coaching',o:'Dean / Brien'},{l:'JIRA Migration',lane:'jira',o:'Omar'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  13: [{l:'Navigating Change',lane:'training',o:'Dean'},{l:'PI Planning #1 (Midpoint)',lane:'planning',o:'Jason / Dean'},{l:'Baseline vs. Current Metrics',lane:'jira',o:'Team'}],
+  14: [{l:'Self-Sufficiency Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Metrics Playbook',lane:'jira',o:'Team'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  15: [{l:'On-Demand Training (Team Needs)',lane:'training',o:'Team'},{l:'Self-Sufficiency Coaching',lane:'coaching',o:'Dean / Brien'}],
+  16: [{l:'Self-Sufficiency Coaching',lane:'coaching',o:'Dean / Brien'}],
+  17: [{l:'Maturity Coaching',lane:'coaching',o:'Dean / Brien'}],
+  18: [{l:'Maturity Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Status Update → Greg',lane:'planning',o:'Jason'}],
+  19: [{l:'Sustain Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Final Pulse',lane:'ocm',o:'Louise'}],
+  20: [{l:'PI Planning #2 / Engagement Close',lane:'planning',o:'Jason / Dean'},{l:'Wrap Coaching',lane:'coaching',o:'Dean / Brien'},{l:'Final Metrics Handoff',lane:'jira',o:'Team'}],
+};
+
+function weekDate(w) {
+  const d = new Date(START);
+  d.setDate(d.getDate() + w * 7);
+  return d;
+}
+function fmtDate(d) {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[d.getMonth()] + ' ' + d.getDate();
+}
+function currentWeek() {
+  const now = new Date();
+  return Math.floor((now - START) / (7*24*60*60*1000));
+}
+
+let activeFilter = 'all';
+
+function renderHero() {
+  const cw = currentWeek();
+  const weeksLeft = Math.max(0, 20 - cw);
+  const pct = Math.min(100, Math.round((cw / 20) * 100));
+  document.getElementById('hero').innerHTML = `
+    <div class="hero-card">
+      <h3>Current Week</h3>
+      <div class="big">Week ${Math.max(0, Math.min(20, cw))}</div>
+      <div class="sub">${PHASES[Math.max(0, Math.min(20, cw))]}</div>
+    </div>
+    <div class="hero-card">
+      <h3>Progress</h3>
+      <div class="big">${pct}%</div>
+      <div class="sub">${weeksLeft} weeks remaining</div>
+      <div style="background:rgba(255,255,255,.2);height:6px;border-radius:3px;margin-top:8px">
+        <div style="background:#1D4F91;height:6px;border-radius:3px;width:${pct}%"></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Next Milestone</h3>
+      <div class="big" style="font-size:24px">${cw < 6 ? 'PI #0 (Wk 6)' : cw < 13 ? 'PI #1 (Wk 13)' : cw < 20 ? 'PI #2 (Wk 20)' : 'Complete'}</div>
+      <div class="sub">${cw < 6 ? fmtDate(weekDate(6)) : cw < 13 ? fmtDate(weekDate(13)) : cw < 20 ? fmtDate(weekDate(20)) : 'Jul 17'}</div>
+    </div>`;
+}
+
+function renderCalendar() {
+  const cw = currentWeek();
+  const cal = document.getElementById('calendar');
+  cal.innerHTML = '';
+
+  for (let w=0; w<=20; w++) {
+    const d = weekDate(w);
+    const dEnd = new Date(d); dEnd.setDate(dEnd.getDate() + 4);
+    const isPast = w < cw;
+    const isCurrent = w === cw;
+
+    let activities = WEEK_ACTIVITIES[w] || [];
+    if (activeFilter !== 'all') activities = activities.filter(a => a.lane === activeFilter);
+    if (activities.length === 0 && activeFilter !== 'all') continue;
+
+    const card = document.createElement('div');
+    card.className = 'week-card' + (isCurrent?' current':'') + (isPast?' past':'');
+
+    const headerColor = PHASE_COLORS[w];
+    card.innerHTML = `<div class="wc-header" style="background:${headerColor};color:white">
+      Week ${w} — ${PHASES[w]}
+      <span class="dates">${fmtDate(d)} – ${fmtDate(dEnd)}</span>
+    </div>`;
+
+    const body = document.createElement('div');
+    body.className = 'wc-body';
+
+    if (activities.length === 0) {
+      body.innerHTML = '<div style="font-size:12px;color:#999;padding:8px 0">No activities scheduled</div>';
+    } else {
+      activities.forEach(a => {
+        body.innerHTML += `<div class="activity">
+          <div class="act-dot" style="background:${COLORS[a.lane]}"></div>
+          <div>
+            <div class="act-label">${a.l}</div>
+            <div class="act-meta">${a.o}</div>
+            <div class="act-lane" style="background:${COLORS[a.lane]}">${a.lane}</div>
+          </div>
+        </div>`;
+      });
+    }
+
+    card.appendChild(body);
+    cal.appendChild(card);
+  }
+}
+
+function setFilter(el) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = el.dataset.filter;
+  renderCalendar();
+}
+
+renderHero();
+renderCalendar();
+</script>
+</body>
+</html>
