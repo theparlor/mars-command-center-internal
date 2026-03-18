@@ -1,0 +1,355 @@
+# =============================================================================
+# ASSET REGISTRY — Canonical source tracking and format versioning
+# Subaru M.A.R.S. Engagement
+# =============================================================================
+#
+# PURPOSE:
+#   Track every deliverable asset, its markdown canonical source, and the
+#   version status of each generated format. Enables:
+#   - "What formats are stale?" queries
+#   - Automated regeneration triggers
+#   - Content lineage tracing (which markdown produced which output)
+#
+# ARCHITECTURE:
+#   markdown (canonical) → [html, pdf, pptx, docx] (generated outputs)
+#
+#   When the markdown changes, its version bumps. All generated formats
+#   record which markdown version they were built from. If format_version
+#   < source_version, the format is STALE and needs regeneration.
+#
+# REGENERATION RULES:
+#   1. User requests a specific format update → deliver that format first
+#   2. After delivery, kick off background regeneration of other stale formats
+#   3. Never block the active request waiting for secondary formats
+#   4. Update this registry after each successful generation
+#
+# PORTABILITY:
+#   This registry pattern works for any engagement. Copy the structure,
+#   replace the assets, and the pipeline logic is the same.
+# =============================================================================
+
+registry_version: "1.0.0"
+updated: "2026-03-18"
+engagement: "Subaru M.A.R.S."
+
+# -----------------------------------------------------------------------------
+# ASSET CATALOG
+# -----------------------------------------------------------------------------
+# Each asset has:
+#   id:             Unique slug (used in filenames and cross-references)
+#   name:           Human-readable title
+#   category:       Grouping for navigation (schedule, org, curriculum, etc.)
+#   source:         Path to canonical markdown file (relative to deliverables/)
+#   source_version: Current version of the markdown source
+#   formats:        Map of output format → generation metadata
+#     path:         Output file path (relative to deliverables/)
+#     built_from:   Source version this format was generated from
+#     updated:      Date of last generation
+#     status:       CURRENT (matches source) | STALE (behind source) | MISSING
+#   archetype:      Page template type (hub, detail, dashboard, email)
+#   notes:          Any special generation considerations
+# -----------------------------------------------------------------------------
+
+assets:
+
+  # ─── COMMAND CENTER ───
+  - id: command-center
+    name: "MARS Command Center"
+    category: home
+    source: sources/command-center.md
+    source_version: "0.2.0"
+    archetype: hub
+    formats:
+      html:
+        path: Subaru_MARS_Command_Center.html
+        built_from: "0.2.0"
+        updated: "2026-03-18"
+        status: CURRENT
+
+  # ─── SCHEDULE & TIMELINE ───
+  - id: reconciled-schedule
+    name: "Engagement Schedule (Reconciled)"
+    category: schedule
+    source: sources/reconciled-schedule.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: schedule/Subaru_MARS_Reconciled_Schedule.html
+        built_from: "1.0.0"
+        updated: "2026-03-13"
+        status: CURRENT
+      xlsx:
+        path: schedule/Subaru_MARS_Schedule.xlsx
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+    notes: "Schedule data is also in XLSX; markdown captures the narrative + activity list"
+
+  - id: gantt-views
+    name: "Interactive Gantt Chart"
+    category: schedule
+    source: sources/gantt-views.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: schedule/Subaru_MARS_Gantt_Views.html
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      pptx:
+        path: schedule/Subaru_MARS_Gantt_Views.pptx
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      pdf:
+        path: schedule/Subaru_MARS_Gantt_Views.pdf
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+
+  - id: calendar-view
+    name: "Calendar View"
+    category: schedule
+    source: sources/calendar-view.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: schedule/Subaru_MARS_Calendar_View.html
+        built_from: "1.0.0"
+        updated: "2026-03-07"
+        status: CURRENT
+
+  - id: two-week-look-ahead
+    name: "Two-Week Look Ahead"
+    category: schedule
+    source: sources/two-week-look-ahead.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: schedule/Subaru_MARS_Two_Week_Look_Ahead.html
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      pptx:
+        path: schedule/Subaru_MARS_Two_Week_Look_Ahead.pptx
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      docx:
+        path: schedule/Subaru_MARS_Two_Week_Look_Ahead.docx
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+
+  - id: card-view
+    name: "Activity Cards"
+    category: schedule
+    source: sources/card-view.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: schedule/Subaru_MARS_Card_View.html
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+
+  - id: decision-log
+    name: "Decision Log"
+    category: schedule
+    source: sources/decision-log.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: schedule/Subaru_MARS_Decision_Log.html
+        built_from: "1.0.0"
+        updated: "2026-03-13"
+        status: CURRENT
+
+  # ─── ORGANIZATION ───
+  - id: org-chart
+    name: "Interactive Org Chart"
+    category: organization
+    source: sources/org-chart.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: org/Subaru_MARS_Org_Chart.html
+        built_from: "1.0.0"
+        updated: "2026-03-07"
+        status: CURRENT
+      xlsx:
+        path: org/Subaru_MARS_Org_Roster.xlsx
+        built_from: "1.0.0"
+        updated: "2026-03-07"
+        status: CURRENT
+
+  - id: team-explorer
+    name: "Team Explorer"
+    category: organization
+    source: sources/team-explorer.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: org/Subaru_MARS_Team_Explorer.html
+        built_from: "1.0.0"
+        updated: "2026-03-07"
+        status: CURRENT
+
+  # ─── CURRICULUM & TRAINING ───
+  - id: course-catalog
+    name: "Course Catalog"
+    category: curriculum
+    source: sources/course-catalog.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: curriculum/Subaru_MARS_Course_Catalog.html
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      docx:
+        path: curriculum/Subaru_MARS_Course_Catalog.docx
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      pptx:
+        path: curriculum/Subaru_MARS_Course_Catalog.pptx
+        built_from: "1.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+
+  - id: interview-guide
+    name: "Team Behavior Assessment (Interview Guide)"
+    category: curriculum
+    source: sources/interview-guide.md
+    source_version: "1.1.0"
+    archetype: detail
+    formats:
+      html:
+        path: Subaru_MARS_Interview_Guide.html
+        built_from: "1.1.0"
+        updated: "2026-03-18"
+        status: CURRENT
+    notes: "Interactive app with per-team state, 11 categories, 49 questions. Regenerated on MARS UI Kit v0.2. Zero hardcoded hex. All colors via CSS variables."
+
+  - id: observation-guide
+    name: "Roadmap Session Observation Guide"
+    category: curriculum
+    source: sources/observation-guide.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: Subaru_Roadmap_Session_Observation_Guide.html
+        built_from: "1.0.0"
+        updated: "2026-03-06"
+        status: STALE
+    notes: "Needs visual overhaul to MARS UI Kit. Content is stable."
+
+  # ─── FRAMEWORKS & MODELS ───
+  - id: leadership-altitude-model
+    name: "Leadership Altitude Model"
+    category: frameworks
+    source: sources/leadership-altitude-model.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: Leadership_Altitude_Model.html
+        built_from: "1.0.0"
+        updated: "2026-03-10"
+        status: CURRENT
+
+  - id: sow-overview
+    name: "SOW Overview Diagram"
+    category: frameworks
+    source: sources/sow-overview.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: SOW_Overview_Diagram.html
+        built_from: "1.0.0"
+        updated: "2026-03-05"
+        status: CURRENT
+
+  # ─── STATUS & REPORTING ───
+  - id: weekly-status
+    name: "Weekly Status Dashboard"
+    category: status
+    source: sources/weekly-status.md
+    source_version: "2.0.0"
+    archetype: dashboard
+    formats:
+      html:
+        path: ../status_updates/Subaru_MARS_Weekly_Status.html
+        built_from: "2.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+      pptx:
+        path: ../status_updates/Subaru_MARS_Week2_Status.pptx
+        built_from: "2.0.0"
+        updated: "2026-03-08"
+        status: CURRENT
+
+  - id: visual-communication-system
+    name: "Visual Communication System"
+    category: brand
+    source: sources/visual-communication-system.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: Subaru_Visual_Communication_System.html
+        built_from: "1.0.0"
+        updated: "2026-03-14"
+        status: CURRENT
+
+  # ─── BRAND & DESIGN ───
+  - id: design-system
+    name: "Engagement Design System"
+    category: brand
+    source: sources/design-system.md
+    source_version: "6.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: ../design/Design_System.html
+        built_from: "6.0.0"
+        updated: "2026-03-14"
+        status: CURRENT
+      yaml:
+        path: ../design/engagement-style.yaml
+        built_from: "6.0.0"
+        updated: "2026-03-18"
+        status: CURRENT
+
+  - id: co-branding-strategy
+    name: "Co-Branding Strategy"
+    category: brand
+    source: sources/co-branding-strategy.md
+    source_version: "1.0.0"
+    archetype: detail
+    formats:
+      html:
+        path: ../design/brand/Co_Branding_Strategy.html
+        built_from: "1.0.0"
+        updated: "2026-03-14"
+        status: CURRENT
+
+# -----------------------------------------------------------------------------
+# STALE ASSET SUMMARY (auto-generated section for quick scanning)
+# -----------------------------------------------------------------------------
+# To find stale assets: grep "status: STALE" in this file
+# Current stale count: 1
+#   - observation-guide (HTML needs visual overhaul)
+# -----------------------------------------------------------------------------

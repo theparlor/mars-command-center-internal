@@ -6,30 +6,16 @@
 <link rel="stylesheet" href="mars-ui/mars-ui.css">
 <title>Subaru M.A.R.S. — Team Behavior Assessment</title>
 <style>
-.accent-bar{height:4px;background:#00205B;width:100%}
-:root {
-  --subaru-blue: #00205B;
-  --subaru-blue: #1D4F91;
-  --star-cluster: #1D4F91;
-  --bright-blue: #D6EAF8;
-  --lane-ocm: #EF6C00;
-  --tint-ocm: #FFF3E0;
-  --status-ontrack-bg: #E8F5E9;
-  --stat-bg: #F5F5F5;
-  --white: #FFFFFF;
-  --text-primary: #1A1A1A;
-  --text-muted: #666666;
-}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  background: var(--stat-bg);
+  background: var(--surface-dim);
   color: var(--text-primary);
   -webkit-text-size-adjust: 100%;
 }
 .top-bar {
-  background: #ffffff;
-  color: #00205B;
+  background: var(--surface);
+  color: var(--subaru-blue);
   padding: 12px 16px;
   position: sticky;
   top: 0;
@@ -37,29 +23,29 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 1px solid var(--border-soft);
 }
-.top-bar h1 { font-size: 16px; font-weight: 600; color: #00205B; }
-.top-bar .progress { font-size: 13px; color: #6B7280; }
+.top-bar h1 { font-size: 16px; font-weight: 600; color: var(--subaru-blue); }
+.top-bar .progress { font-size: 13px; color: var(--text-secondary); }
 .team-selector {
   display: flex;
   gap: 6px;
   padding: 10px 12px;
-  background: #F9FAFB;
+  background: var(--surface-container);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   position: sticky;
   top: 46px;
   z-index: 99;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 1px solid var(--border-soft);
 }
 .team-btn {
   flex-shrink: 0;
   padding: 8px 14px;
-  border: 2px solid #E5E7EB;
-  border-radius: 20px;
-  background: white;
-  color: #1A1A1A;
+  border: 2px solid var(--border-soft);
+  border-radius: var(--shape-full);
+  background: var(--surface);
+  color: var(--text-primary);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -73,25 +59,25 @@ body {
   font-weight: 700;
 }
 .team-info {
-  background: #ffffff;
+  background: var(--surface);
   padding: 12px 16px;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 1px solid var(--border-soft);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
 }
-.team-info .name { font-size: 18px; font-weight: 700; color: #00205B; }
-.team-info .meta { font-size: 13px; color: #6B7280; }
+.team-info .name { font-size: 18px; font-weight: 700; color: var(--subaru-blue); }
+.team-info .meta { font-size: 13px; color: var(--text-secondary); }
 .category-nav {
   display: flex;
   gap: 4px;
   padding: 8px 12px;
-  background: var(--white);
+  background: var(--surface);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid var(--outline-variant);
   position: sticky;
   top: 92px;
   z-index: 98;
@@ -99,16 +85,21 @@ body {
 .cat-btn {
   flex-shrink: 0;
   padding: 6px 12px;
-  border: 1px solid #DDD;
+  border: 1px solid var(--outline-variant);
   border-radius: 16px;
-  background: var(--white);
+  background: var(--surface);
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
   position: relative;
 }
-.cat-btn.active { background: #E0F2FE; border-color: #1D4F91; font-weight: 600; color: #1D4F91; }
+.cat-btn.active {
+  background: var(--tint-coaching);
+  border-color: var(--star-cluster);
+  font-weight: 600;
+  color: var(--star-cluster);
+}
 .cat-btn .badge {
   position: absolute;
   top: -4px;
@@ -138,14 +129,14 @@ body {
   z-index: 50;
 }
 .question-card {
-  background: var(--white);
+  background: var(--surface);
   margin: 8px;
-  border-radius: 10px;
+  border-radius: var(--shape-md);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: var(--elevation-1);
   border-left: 4px solid var(--star-cluster);
 }
-.question-card.answered { border-left-color: #4CAF50; }
+.question-card.answered { border-left-color: var(--status-ontrack); }
 .q-header {
   padding: 12px 14px 8px;
   display: flex;
@@ -169,7 +160,7 @@ body {
 .q-why {
   padding: 4px 14px 8px 52px;
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-style: italic;
   line-height: 1.4;
 }
@@ -181,17 +172,18 @@ body {
 }
 .opt-btn {
   padding: 8px 14px;
-  border: 2px solid #E0E0E0;
-  border-radius: 8px;
-  background: var(--white);
+  border: 2px solid var(--outline-variant);
+  border-radius: var(--shape-sm);
+  background: var(--surface);
   font-size: 13px;
   cursor: pointer;
   transition: all 0.15s;
   line-height: 1.3;
+  color: var(--text-primary);
 }
 .opt-btn:active { transform: scale(0.97); }
 .opt-btn.selected {
-  background: var(--bright-blue);
+  background: var(--tint-coaching);
   border-color: var(--star-cluster);
   font-weight: 600;
   color: var(--subaru-blue);
@@ -206,41 +198,52 @@ body {
 .notes-area {
   width: 100%;
   min-height: 60px;
-  border: 1px solid #DDD;
-  border-radius: 8px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-sm);
   padding: 8px 10px;
   font-size: 14px;
   font-family: inherit;
   resize: vertical;
   -webkit-appearance: none;
+  color: var(--text-primary);
+  background: var(--surface);
 }
-.notes-area:focus { outline: none; border-color: var(--star-cluster); box-shadow: 0 0 0 2px rgba(36,158,216,0.2); }
+.notes-area:focus {
+  outline: none;
+  border-color: var(--star-cluster);
+  box-shadow: 0 0 0 2px rgba(29, 79, 145, 0.2);
+}
 .observations-section {
   margin: 8px;
-  background: var(--white);
-  border-radius: 10px;
+  background: var(--surface);
+  border-radius: var(--shape-md);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: var(--elevation-1);
 }
 .obs-header {
-  background: #00205B;
+  background: var(--subaru-blue);
   color: white;
   padding: 12px 16px;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
 }
-.obs-item { padding: 12px 16px; border-bottom: 1px solid #EEE; }
+.obs-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
 .obs-label { font-size: 13px; font-weight: 600; color: var(--subaru-blue); margin-bottom: 4px; }
 .obs-area {
   width: 100%;
   min-height: 50px;
-  border: 1px solid #DDD;
-  border-radius: 8px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-sm);
   padding: 8px 10px;
   font-size: 14px;
   font-family: inherit;
   resize: vertical;
+  color: var(--text-primary);
+  background: var(--surface);
 }
 .bottom-actions {
   padding: 16px;
@@ -252,31 +255,30 @@ body {
 .action-btn {
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--shape-sm);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 .btn-export { background: var(--subaru-blue); color: white; }
-.btn-clear { background: #EEE; color: var(--text-primary); }
+.btn-clear { background: var(--surface-container); color: var(--text-primary); }
 .btn-export:active, .btn-clear:active { transform: scale(0.97); }
 @media (max-width: 600px) {
   .opt-btn { width: 100%; text-align: left; }
 }
 @media print {
   .top-bar, .team-selector, .category-nav, .bottom-actions { display: none; }
-  .question-card { break-inside: avoid; page-break-inside: avoid; border: 1px solid #CCC; }
+  .question-card { break-inside: avoid; page-break-inside: avoid; border: 1px solid var(--outline); }
   .cat-header { position: static; }
 }
 </style>
 </head>
 <body>
-<div class="accent-bar"></div>
 
 <div class="top-bar">
   <h1>Team Behavior Assessment</h1>
-  <div class="progress" id="progress">0 / 43 answered</div>
+  <div class="progress" id="progress">0 / 49 answered</div>
 </div>
 
 <div class="team-selector" id="teamSelector"></div>
