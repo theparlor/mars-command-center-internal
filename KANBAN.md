@@ -4,9 +4,9 @@
 > Updated by Claude at the end of each work session.
 > Read this first when resuming after an interruption.
 
-**Last Updated:** 2026-03-18 (session 1, end of day)
-**Current Version:** v0.3 (tagged in both repos)
-**Next Version:** v0.4 (page content refresh, deeper pages)
+**Last Updated:** 2026-03-18 (session 1, late evening)
+**Current Version:** v0.3.1 (deployed, CDN cache busted)
+**Next Version:** v0.4 (deeper pages, content refresh, Turnberry Team section)
 
 ---
 
@@ -26,10 +26,9 @@
 
 | Task | Priority | Dependencies |
 |------|----------|--------------|
-| **Visual QA via browser** — check all pages render correctly with v0.3 shell | P0 | Browser access |
-| **Strip remaining per-page hero headers** that clash with shell topbar | P1 | — |
-| **Regenerate remaining pages** not yet fully on UI kit (Gantt, Calendar, Two-Week, Schedule Email, Weekly Status, Visual Comms, SOW Overview, Leadership Altitude, examples) | P1 | — |
-| **Harden deploy.sh sanitization** — add the 4 files that leaked to explicit pass | P2 | — |
+| **Clean up residual text** on Gantt page ("DRIVE" / subtitle leaking outside .header class) | P1 | — |
+| **Fix deploy.sh step 6b** — sed quoting issue causes script exit; needs bash escaping fix | P1 | — |
+| **Rename "Interactive Gantt"** to "Gantt Chart" in Command Center card title | P2 | — |
 | **Set up local git tracking** for Workspaces deliverables | P3 | — |
 
 ---
@@ -61,6 +60,10 @@
 | **Fixed sanitization leaks** in 9 files (two passes) | 2026-03-18 |
 | **Renamed "Interactive Gantt"** → "Gantt Chart" in nav SITE_MAP | 2026-03-18 |
 | **Added Turnberry Team** section to nav (placeholder) | 2026-03-18 |
+| **Regenerated 7 more pages** on UI kit (Gantt, Calendar, TwoWeek, VisComms, SOW, Leadership, Weekly Status) | 2026-03-18 |
+| **Fixed hero header suppression** — CSS rule hides .header, .top-bar, .header-bar, .accent-bar inside shell | 2026-03-18 |
+| **Fixed CDN cache** — force-busted GitHub Pages cache for CSS rule deployment | 2026-03-18 |
+| **Visual QA passed** — Card View, Gantt Chart, Interview Guide all rendering clean | 2026-03-18 |
 
 ---
 

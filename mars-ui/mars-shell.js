@@ -1,21 +1,22 @@
 /**
- * MARS Shell v0.3 — Navigation shell for all engagement artifacts
+ * MARS Shell v0.4 — Navigation shell for all engagement artifacts
  *
- * Features:
- *   - Fixed top bar with full breadcrumb (Command Center › Section › Page)
- *   - Modal navigation drawer (hamburger menu)
- *   - Pinned sidebar on viewports ≥1280px
- *   - Sibling tab navigation for multi-page sections
- *   - Turnberry Team section
- *   - Auto-detects page location and highlights active item
+ * Design Review Board v0.4 changes:
+ *   - REMOVED sibling tab bar (redundant with sidebar — Suki's recommendation)
+ *   - REMOVED quick-nav pill bar dependency (Command Center handles its own)
+ *   - CONSOLIDATED sidebar from 10 sections → 6 (Vera's taxonomy audit)
+ *   - SUBTLER breadcrumb (Elena's H8 — minimalist design)
+ *   - Sidebar is the SOLE primary navigation mechanism
+ *   - Breadcrumb is supplementary wayfinding only
  *
  * Usage: <script src="mars-ui/mars-shell.js"></script>
- *        (adjust relative path based on file depth)
  */
 (function () {
   'use strict';
 
-  // ── Site map — aligns to SOW engagement lanes ──────────────────
+  // ── Site map — consolidated per Design Review Board ────────────
+  // 6 primary sections (was 10). Vera's rule: if you can't cut one,
+  // you have too many. We merged single-item sections into logical groups.
   const SITE_MAP = [
     {
       section: 'Home',
@@ -23,93 +24,67 @@
         { label: 'Command Center', icon: '🏠', href: 'Subaru_MARS_Command_Center.html' }
       ]
     },
+    // ─── SOW LANE: Schedule & Planning ───
     {
-      section: 'Schedule & Timeline',
+      section: 'Schedule & Planning',
       icon: '📅',
       anchor: 'schedule',
       items: [
-        { label: 'Engagement Schedule', icon: '📋', href: 'schedule/Subaru_MARS_Reconciled_Schedule.html', primary: true },
+        { label: 'Engagement Schedule', icon: '📋', href: 'schedule/Subaru_MARS_Reconciled_Schedule.html' },
         { label: 'Gantt Chart', icon: '📊', href: 'schedule/Subaru_MARS_Gantt_Views.html' },
         { label: 'Calendar View', icon: '🗓️', href: 'schedule/Subaru_MARS_Calendar_View.html' },
         { label: 'Two-Week Look Ahead', icon: '👀', href: 'schedule/Subaru_MARS_Two_Week_Look_Ahead.html' },
         { label: 'Activity Cards', icon: '🃏', href: 'schedule/Subaru_MARS_Card_View.html' },
         { label: 'Decision Log', icon: '📝', href: 'schedule/Subaru_MARS_Decision_Log.html' },
-        { label: 'Schedule Email', icon: '✉️', href: 'schedule/Subaru_MARS_Schedule_Email.html' },
+        { label: 'Weekly Dashboard', icon: '📈', href: '../status_updates/Subaru_MARS_Weekly_Status.html' },
       ]
     },
+    // ─── SOW LANE: Training & Coaching ───
+    // Merged Curriculum + Coaching Insights (Vera: "one learning domain, not two")
     {
-      section: 'Curriculum & Training',
-      icon: '📚',
-      anchor: 'curriculum',
-      items: [
-        { label: 'Course Catalog', icon: '📖', href: 'curriculum/Subaru_MARS_Course_Catalog.html', primary: true },
-      ]
-    },
-    {
-      section: 'Coaching Insights',
+      section: 'Training & Coaching',
       icon: '🎯',
-      anchor: 'coaching',
+      anchor: 'training',
       items: [
-        { label: 'Team Assessment', icon: '🎤', href: 'Subaru_MARS_Interview_Guide.html', primary: true },
+        { label: 'Course Catalog', icon: '📖', href: 'curriculum/Subaru_MARS_Course_Catalog.html' },
+        { label: 'Team Assessment', icon: '🎤', href: 'Subaru_MARS_Interview_Guide.html' },
         { label: 'Session Observation', icon: '🔎', href: 'Subaru_Roadmap_Session_Observation_Guide.html' },
         { label: 'Leadership Altitude', icon: '🏔️', href: 'Leadership_Altitude_Model.html' },
       ]
     },
+    // ─── SOW LANE: Jira & Metrics ───
     {
       section: 'Jira & Metrics',
       icon: '⚙️',
       anchor: 'jira',
       items: []
     },
+    // ─── SOW LANE: Organization & People ───
+    // Merged Organization + OCM (Vera: "both about people and how they work")
     {
-      section: 'OCM & Comms',
-      icon: '📣',
-      anchor: 'ocm',
-      items: [
-        { label: 'Visual Comms System', icon: '📡', href: 'Subaru_Visual_Communication_System.html' },
-        { label: 'Schedule Email', icon: '✉️', href: 'schedule/Subaru_MARS_Schedule_Email.html' },
-      ]
-    },
-    {
-      section: 'Organization',
+      section: 'Organization & Change',
       icon: '👥',
       anchor: 'organization',
       items: [
-        { label: 'Org Chart', icon: '🏢', href: 'org/Subaru_MARS_Org_Chart.html', primary: true },
+        { label: 'Org Chart', icon: '🏢', href: 'org/Subaru_MARS_Org_Chart.html' },
         { label: 'Team Explorer', icon: '🔍', href: 'org/Subaru_MARS_Team_Explorer.html' },
+        { label: 'Visual Comms System', icon: '📡', href: 'Subaru_Visual_Communication_System.html' },
       ]
     },
+    // ─── Reference & Resources ───
+    // Merged Frameworks + Brand + Turnberry Team
+    // (Declan: "these are reference materials, not daily destinations")
     {
-      section: 'Status & Reporting',
-      icon: '📊',
-      anchor: 'status',
-      items: [
-        { label: 'Weekly Dashboard', icon: '📈', href: '../status_updates/Subaru_MARS_Weekly_Status.html', primary: true },
-      ]
-    },
-    {
-      section: 'Frameworks & Models',
-      icon: '🏗️',
-      anchor: 'frameworks',
+      section: 'Reference',
+      icon: '📚',
+      anchor: 'reference',
       items: [
         { label: 'SOW Overview', icon: '📜', href: 'SOW_Overview_Diagram.html' },
-      ]
-    },
-    {
-      section: 'Brand & Design',
-      icon: '🎨',
-      anchor: 'brand',
-      items: [
         { label: 'Design System', icon: '🎯', href: '../design/Design_System.html' },
         { label: 'Co-Branding Strategy', icon: '🤝', href: '../design/brand/Co_Branding_Strategy.html' },
+        { label: 'Schedule Email', icon: '✉️', href: 'schedule/Subaru_MARS_Schedule_Email.html' },
         { label: 'Co-Branded Examples', icon: '💎', href: 'examples/Co_Branded_Example.html' },
       ]
-    },
-    {
-      section: 'Turnberry Team',
-      icon: '🏢',
-      anchor: 'turnberry',
-      items: []
     },
   ];
 
@@ -132,8 +107,7 @@
   function resolveHref(href) { return getBasePath() + href; }
 
   function isCurrentPage(href) {
-    const resolved = resolveHref(href);
-    const resolvedFile = resolved.split('/').pop();
+    const resolvedFile = resolveHref(href).split('/').pop();
     const currentFile = window.location.pathname.split('/').pop();
     return resolvedFile === currentFile;
   }
@@ -147,7 +121,6 @@
             section: group.section,
             anchor: group.anchor || '',
             page: item.label,
-            siblings: group.items,
             isHome: group.section === 'Home'
           };
         }
@@ -157,7 +130,6 @@
       section: '',
       anchor: '',
       page: document.title.replace('Subaru M.A.R.S. — ', ''),
-      siblings: [],
       isHome: false
     };
   }
@@ -166,7 +138,7 @@
   let sidebarPinned = window.innerWidth >= 1280;
   const PINNED_CLASS = 'mars-sidebar-pinned';
 
-  // ── Build navigation drawer HTML ──────────────────────────────
+  // ── Build navigation drawer ────────────────────────────────────
   function buildNavHTML() {
     let html = `
       <div class="mars-nav-header">
@@ -180,7 +152,7 @@
 
       if (group.items.length === 0) {
         html += `<div class="mars-nav-section">
-          <div class="mars-nav-item" style="opacity:0.45;cursor:default;">
+          <div class="mars-nav-item" style="opacity:0.4;cursor:default;">
             <span class="nav-icon">${group.icon || '📁'}</span>
             <span class="nav-label">${group.section}</span>
             <span class="nav-badge" style="background:transparent;color:var(--text-muted,#9CA3AF);font-style:italic;font-weight:400;font-size:9px;">coming soon</span>
@@ -217,32 +189,22 @@
     }
 
     html += `<div style="margin-top:auto;padding:16px;border-top:1px solid var(--outline-variant,#E5E7EB);font-size:10px;color:var(--text-muted,#9CA3AF);">
-      MARS Command Center v0.3<br>Turnberry Solutions
+      MARS Command Center v0.4<br>Turnberry Solutions
     </div>`;
     return html;
   }
 
-  // ── Build sibling tab navigation ──────────────────────────────
-  function buildSiblingNav(ctx) {
-    if (ctx.isHome || ctx.siblings.length <= 1) return '';
-    let tabs = ctx.siblings.map(item => {
-      const active = isCurrentPage(item.href) ? ' active' : '';
-      return `<a class="mars-sibling-tab${active}" href="${resolveHref(item.href)}">${item.label}</a>`;
-    }).join('');
-    return `<div class="mars-sibling-nav">${tabs}</div>`;
-  }
-
-  // ── Build breadcrumb ──────────────────────────────────────────
+  // ── Build breadcrumb (subtle — wayfinding only, not navigation) ──
   function buildBreadcrumb(ctx) {
     const homeHref = resolveHref('Subaru_MARS_Command_Center.html');
-    let crumb = `<a href="${homeHref}" class="mars-bc-link">Command Center</a>`;
-    if (ctx.section && ctx.section !== 'Home') {
-      const sectionHref = homeHref + (ctx.anchor ? '#' + ctx.anchor : '');
-      crumb += `<span class="mars-bc-sep">›</span>`;
-      crumb += `<a href="${sectionHref}" class="mars-bc-link">${ctx.section}</a>`;
+    if (ctx.isHome) {
+      return `<span class="mars-bc-current">Command Center</span>`;
     }
-    crumb += `<span class="mars-bc-sep">›</span>`;
-    crumb += `<span class="mars-bc-current">${ctx.page}</span>`;
+    let crumb = `<a href="${homeHref}" class="mars-bc-link">Home</a>`;
+    if (ctx.section) {
+      crumb += `<span class="mars-bc-sep">/</span>`;
+      crumb += `<span class="mars-bc-current">${ctx.page}</span>`;
+    }
     return crumb;
   }
 
@@ -250,7 +212,6 @@
   function injectShell() {
     const ctx = getCurrentContext();
     const existingContent = document.body.innerHTML;
-    const siblingNav = buildSiblingNav(ctx);
 
     document.body.innerHTML = `
       <div class="mars-topbar" id="mars-topbar">
@@ -259,7 +220,7 @@
           <div class="mars-topbar-breadcrumb">${buildBreadcrumb(ctx)}</div>
         </div>
         <div class="mars-topbar-actions">
-          <a href="${resolveHref('Subaru_MARS_Command_Center.html')}" class="mars-home-btn">🏠 Home</a>
+          <a href="${resolveHref('Subaru_MARS_Command_Center.html')}" class="mars-home-btn">🏠</a>
         </div>
       </div>
 
@@ -272,7 +233,6 @@
       </nav>
 
       <div class="mars-content-wrapper${sidebarPinned ? ' ' + PINNED_CLASS : ''}" id="mars-content-wrapper">
-        ${siblingNav}
         <div class="mars-content">
           ${existingContent}
         </div>

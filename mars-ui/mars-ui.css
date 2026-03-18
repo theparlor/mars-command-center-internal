@@ -156,25 +156,26 @@ body {
 .mars-hamburger:hover { background: rgba(255,255,255,0.12); }
 .mars-hamburger:active { background: rgba(255,255,255,0.2); }
 
-/* Topbar breadcrumb (v0.3 — replaces title + subtitle) */
+/* Topbar breadcrumb (v0.4 — subtle wayfinding, not primary nav) */
 .mars-topbar-breadcrumb {
   display: flex; align-items: center; gap: 0;
-  font-size: 14px; white-space: nowrap; overflow: hidden;
+  font-size: 13px; white-space: nowrap; overflow: hidden;
 }
 .mars-bc-link {
-  color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500;
+  color: rgba(255,255,255,0.5); text-decoration: none; font-weight: 400;
   transition: color var(--duration-short) var(--motion-standard);
+  font-size: 12px;
 }
-.mars-bc-link:hover { color: #fff; }
-.mars-bc-sep { color: rgba(255,255,255,0.35); font-size: 14px; margin: 0 6px; }
-.mars-bc-current { color: #fff; font-weight: 700; }
+.mars-bc-link:hover { color: rgba(255,255,255,0.8); }
+.mars-bc-sep { color: rgba(255,255,255,0.25); font-size: 12px; margin: 0 5px; }
+.mars-bc-current { color: rgba(255,255,255,0.95); font-weight: 600; font-size: 15px; }
 
 /* Home button in topbar */
 .mars-home-btn {
-  color: rgba(255,255,255,0.8); text-decoration: none; font-size: 12px;
-  font-weight: 600; padding: 6px 12px; border-radius: var(--shape-full);
-  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6); text-decoration: none; font-size: 16px;
+  padding: 6px 10px; border-radius: var(--shape-full);
   transition: all var(--duration-short) var(--motion-standard);
+  display: flex; align-items: center;
 }
 .mars-home-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
 
